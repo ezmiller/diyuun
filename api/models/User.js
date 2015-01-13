@@ -22,6 +22,15 @@ module.exports = {
   		via: 'reviewer',
   		unique: true
   	}
+  },
+
+  beforeValidate: function(value, insert) {
+    if ( Utilities.isEmpty( value ) ) {
+      var InvalidArgumentException = new Exceptions.InvalidArgumentException('You must passed in some values fucker.');
+      // TODO: Log bad request to database
+      delete InvalidArgumentException.stack;
+      throw InvalidArgumentException;
+    }
   }
 
 };

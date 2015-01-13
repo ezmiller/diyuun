@@ -4,6 +4,12 @@ module.exports = {
 		this.name = 'ISBNError';
 		this.message = message;
 		this.stack = Error().stack;
+	},
+
+	InvalidArgumentException: function(message) {
+		this.name = 'InvalidArgumentException',
+		this.message = message;
+		this.stack = Error().stack;
 	}
 
 }
