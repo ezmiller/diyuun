@@ -25,6 +25,7 @@
     "sails": "~0.10.5",
     "sails-disk": "~0.10.0",
     "sails-mongo": "^0.10.5",
+    "underscore": "^1.7.0",
     "validator": "^3.27.0"
   },
   "scripts": {
