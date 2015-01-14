@@ -4,7 +4,7 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
-'strict';
+'use strict';
 var validator = require('validator');
 
 module.exports = {
@@ -12,7 +12,10 @@ module.exports = {
 	connection: 'mongodb',
 
 	attributes: {
-		title: 'STRING',
+		title: {
+			type: 'string',
+			required: true
+		},
 		ISBN: {
 			type: 'string',
 			unique: true,

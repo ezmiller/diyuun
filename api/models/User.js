@@ -4,13 +4,24 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
-'strict';
+'use strict';
 module.exports = {
 
     connection: 'mongodb',
 
     attributes: {
-        name: 'string',
+        userName: {
+            type: 'string',
+            required: true
+        },
+        firstName: {
+            type: 'string',
+            required: true
+        },
+        lastName: {
+            type: 'string',
+            required: true
+        }
         likedBooks: {
             collection: 'book',
             via: 'like'
@@ -33,6 +44,8 @@ module.exports = {
           delete InvalidArgumentException.stack;
           throw InvalidArgumentException;
         }
+
+        insert();
     }
 
 };
