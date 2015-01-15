@@ -1,5 +1,6 @@
 'use strict';
 var request = require('supertest');
+var should = require('should');
 
 var user = {};
 var book = {};
@@ -17,22 +18,54 @@ describe('Register User', function(done) {
 		});
 	});
 
-	describe('try to create user', function(){
+	describe('try to create user without first name', function() {
+		it('should return 400', function (done) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(false, true, true, true) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create user without last name', function() {
+		it('should return 400', function (done) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(true, false, true, true) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create user without email', function() {
+		it('should return 400', function (done) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(true, true, false, true) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create user without password', function() {
+		it('should return 500', function (done) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(true, true, true, false) )
+			.expect(500, done);
+		});
+	});
+
+	describe('try to create user', function() {
 		it('should return 200', function (done) {
-
-			var user = generateUser(true);
-
-		  request(sails.hooks.http.app)
-		    .post('/user')
-		    .send( user )
-		    .expect(200)
-		    .end(function(err, res) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(true, true, true, true) )
+			.expect(200)
+			.end(function(err, res) {
 		    	user = res.body;
 		    	done();
 		    });
 		});
 	});
-
 
 })
 
@@ -78,6 +111,8 @@ describe('Create Book', function(done) {
 		    });
 		});
 	});
+
+	
 
 })
 
@@ -138,13 +173,14 @@ describe('Create Review', function(done) {
 
 })
 
-function generateUser(isValid) {
+function generateUser(hasFName, hasLName, hasEmail, hasPassword) {
 
 	var user = {};
 
-	if ( isValid) {
-		user.name = "Bobbie Brown";
-	}
+	if ( hasFName ) user.firstName = 'Bobbie';
+	if ( hasLName ) user.lastName = 'Brown';
+	if ( hasEmail ) user.emailAddress = 'bobbie.brown@sky.net';
+	if ( hasPassword ) user.password = 'roughinitup';
 
 	return user;
 }
@@ -169,9 +205,3 @@ function generateReview(hasText, hasReviewer, hasBook) {
 
 	return review;
 }
-
-
-
-
-
-
