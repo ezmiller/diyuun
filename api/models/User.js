@@ -5,11 +5,17 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 'use strict';
+var Promise = require('promise');
 module.exports = {
 
     connection: 'mongodb',
 
     attributes: {
+        userName: {
+            type: 'string',
+            required: true,
+            unique: true
+        },
         firstName: {
             type: 'string',
             required: true
@@ -35,7 +41,7 @@ module.exports = {
         profilePicture: {
             type: 'string'
         },
-        encryptedPassword: {
+        password: {
             type: 'string',
             required: true,
             unique: true
@@ -54,7 +60,7 @@ module.exports = {
         }
     },
 
-    beforeValidate: function(values, insert) {
+    beforeValidate: function(values, next) {
 
         // Check for an empty user entry
         if ( Utilities.isEmpty( values ) ) {
@@ -64,28 +70,43 @@ module.exports = {
           throw InvalidArgumentException;
         }
 
-        if ( !values.password ) {
-            var InvalidArgumentException = new Exceptions.InvalidArgumentException('You must provide a password when creating a user.');
-            // TODO: Log bad request to database.
-            delete InvalidArgumentException.stack;
-            throw InvalidArgumentException;
-        }
+        next();
 
-        // Try to save encrypted password
-        require('bcrypt').hash(values.password, 8, function passwordEncrypted(err, encryptedPassword) {
-            if ( err ) {
-                var FailedToPersistDataException = new Exceptions.FailedToPersistDataException('Failed to save password.');
-                // TODO: Log failure to save password to database
-                delete FailedToPersistDataException.stack;
-                throw FailedToPersistDataException;
-            }
-            delete values.password;
-            values.encryptedPassword = encryptedPassword;
+    },
+
+    beforeCreate: function(values, next) {
+
+        // Use promise to encrypt password
+        bcryptAsyncHash(values.password)
+        .then(function (encryptedPassword) {
+            values.password = encryptedPassword;
+            next();
+        })
+        .catch(function (err) {
+            var FailedToPersistDataException = new Exceptions.FailedToPersistDataException('Failed to save password.');
+            // TODO: Log failure to save password to database
+            delete FailedToPersistDataException.stack;
+            throw FailedToPersistDataException;
         });
 
-        insert();
+    },
 
+    afterCreate: function(user, next) {
+
+        // delete the password so it's not exposed in response
+        delete user.password;
+
+        next();
     }
 
 };
 
+var bcryptAsyncHash = function(password) {
+    
+    return new Promise(function(resolve, reject) {
+        require('bcrypt').hash(password, 8, function passwordEncrypted(err, encryptedPassword) {
+            if ( err ) return reject( err );
+            resolve( encryptedPassword );
+        });
+    });
+};
