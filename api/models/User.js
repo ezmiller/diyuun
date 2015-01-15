@@ -102,11 +102,12 @@ module.exports = {
 };
 
 var bcryptAsyncHash = function(password) {
-    
+
     return new Promise(function(resolve, reject) {
         require('bcrypt').hash(password, 8, function passwordEncrypted(err, encryptedPassword) {
             if ( err ) return reject( err );
             resolve( encryptedPassword );
         });
     });
+
 };
