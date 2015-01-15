@@ -18,11 +18,20 @@ describe('Register User', function(done) {
 		});
 	});
 
+	// describe('try to create user without username', function() {
+	// 	it('should return 400', function (done) {
+	// 		request(sails.hooks.http.app)
+	// 		.post('/user')
+	// 		.send( generateUser(false, true, true, true, true) )
+	// 		.expect(400, done);
+	// 	});
+	// });
+
 	describe('try to create user without first name', function() {
 		it('should return 400', function (done) {
 			request(sails.hooks.http.app)
 			.post('/user')
-			.send( generateUser(false, true, true, true) )
+			.send( generateUser(true, false, true, true, true) )
 			.expect(400, done);
 		});
 	});
@@ -31,7 +40,7 @@ describe('Register User', function(done) {
 		it('should return 400', function (done) {
 			request(sails.hooks.http.app)
 			.post('/user')
-			.send( generateUser(true, false, true, true) )
+			.send( generateUser(true, true, false, true, true) )
 			.expect(400, done);
 		});
 	});
@@ -40,17 +49,17 @@ describe('Register User', function(done) {
 		it('should return 400', function (done) {
 			request(sails.hooks.http.app)
 			.post('/user')
-			.send( generateUser(true, true, false, true) )
+			.send( generateUser(true, true, true, false, true) )
 			.expect(400, done);
 		});
 	});
 
 	describe('try to create user without password', function() {
-		it('should return 500', function (done) {
+		it('should return 400', function (done) {
 			request(sails.hooks.http.app)
 			.post('/user')
-			.send( generateUser(true, true, true, false) )
-			.expect(500, done);
+			.send( generateUser(true, true, true, true, false) )
+			.expect(400, done);
 		});
 	});
 
@@ -58,14 +67,46 @@ describe('Register User', function(done) {
 		it('should return 200', function (done) {
 			request(sails.hooks.http.app)
 			.post('/user')
-			.send( generateUser(true, true, true, true) )
+			.send( generateUser(true, true, true, true, true) )
 			.expect(200)
 			.end(function(err, res) {
-		    	user = res.body;
+				user = res.body;
 		    	done();
 		    });
 		});
+		it('user data from get request should match user data returned by create action', function (done) {
+			request(sails.hooks.http.app)
+			.get('/user?id='+user.id)
+			.expect(200, function (err,res) {
+				var dbUser = res.body[0];
+				(dbUser.firstName).should.eql(user.firstName);
+				(dbUser.lastName).should.eql(user.lastName);
+				(dbUser.emailAddress).should.eql(user.emailAddress);
+				done();
+			});
+		});
+		it('user data from get request should not include password', function (done) {
+			request(sails.hooks.http.app)
+			.get('/user?id='+user.id)
+			.expect(200, function(err,res) {
+				var dbUser = res.body[0];
+				(dbUser.password === undefined).should.be.true;
+				done();
+			})
+		});
 	});
+
+	// describe('try to create user that already exists', function() {
+	// 	it('should return 500', function (done) {
+	// 		request(sails.hooks.http.app)
+	// 		.post('/user')
+	// 		.send( generateUser(true, true, true, true) )
+	// 		.expect(500, done);
+	// 	});
+	// });
+
+	// TODO: try to create a user that already exists
+	// TODO: test login with created user
 
 })
 
@@ -111,8 +152,6 @@ describe('Create Book', function(done) {
 		    });
 		});
 	});
-
-	
 
 })
 
@@ -173,7 +212,7 @@ describe('Create Review', function(done) {
 
 })
 
-function generateUser(hasFName, hasLName, hasEmail, hasPassword) {
+function generateUser(hasUserName, hasFName, hasLName, hasEmail, hasPassword) {
 
 	var user = {};
 
@@ -181,6 +220,7 @@ function generateUser(hasFName, hasLName, hasEmail, hasPassword) {
 	if ( hasLName ) user.lastName = 'Brown';
 	if ( hasEmail ) user.emailAddress = 'bobbie.brown@sky.net';
 	if ( hasPassword ) user.password = 'roughinitup';
+	if ( hasUserName ) user.userName = user.emailAddress;
 
 	return user;
 }
