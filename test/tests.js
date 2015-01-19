@@ -198,8 +198,6 @@ describe('Create Review', function(done) {
 		});
 	});
 
-	// console.log( User.find() );
-
 });
 
 function generateUser(hasUserName, hasFName, hasLName, hasEmail, hasPassword) {
