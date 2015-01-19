@@ -1,9 +1,13 @@
+'use strict';
 var Sails = require('sails'),
   sails;
+var Promise = require('promise');
 
 before(function(done) {
   Sails.lift({
-    // configuration for testing purposes
+    log: {
+        level: 'error'
+    }
   }, function(err, server) {
     sails = server;
     if (err) return done(err);
@@ -13,6 +17,15 @@ before(function(done) {
 });
 
 after(function(done) {
-  // here you can clear fixtures, etc.
-  sails.lower(done);
+
+  // clean up data from tests
+  Promise.all([User.destroy(), Book.destroy(), Review.destroy()])
+  .then()
+  .catch(function(err) {
+    console.log(err);
+  })
+  .done(function() {
+    sails.lower(done);
+  });
+
 });
