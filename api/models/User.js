@@ -6,12 +6,13 @@
 */
 'use strict';
 var Promise = require('promise');
+
 module.exports = {
 
     connection: 'mongodb',
 
     attributes: {
-        userName: {
+        username: {
             type: 'string',
             required: true,
             unique: true
