@@ -27,7 +27,8 @@
     "sails-disk": "~0.10.0",
     "sails-mongo": "^0.10.5",
     "underscore": "^1.7.0",
-    "validator": "^3.27.0"
+    "validator": "^3.27.0",
+    "winston": "^0.8.3"
   },
   "scripts": {
     "start": "node app.js",
