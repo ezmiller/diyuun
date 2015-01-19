@@ -5,9 +5,9 @@ var should = require('should');
 var user = {};
 var book = {};
 var review = {};
+var mytest = 'test';
 
 describe('Register User', function(done) {
-	//this.timeout(3000);
 
 	describe('try to create user with no values', function(){
 		it('should return 500', function (done) {
@@ -18,14 +18,14 @@ describe('Register User', function(done) {
 		});
 	});
 
-	// describe('try to create user without username', function() {
-	// 	it('should return 400', function (done) {
-	// 		request(sails.hooks.http.app)
-	// 		.post('/user')
-	// 		.send( generateUser(false, true, true, true, true) )
-	// 		.expect(400, done);
-	// 	});
-	// });
+	describe('try to create user without username', function() {
+		it('should return 400', function (done) {
+			request(sails.hooks.http.app)
+			.post('/user')
+			.send( generateUser(false, true, true, true, true) )
+			.expect(400, done);
+		});
+	});
 
 	describe('try to create user without first name', function() {
 		it('should return 400', function (done) {
@@ -96,15 +96,6 @@ describe('Register User', function(done) {
 		});
 	});
 
-	// describe('try to create user that already exists', function() {
-	// 	it('should return 500', function (done) {
-	// 		request(sails.hooks.http.app)
-	// 		.post('/user')
-	// 		.send( generateUser(true, true, true, true) )
-	// 		.expect(500, done);
-	// 	});
-	// });
-
 	// TODO: try to create a user that already exists
 	// TODO: test login with created user
 
@@ -154,9 +145,6 @@ describe('Create Book', function(done) {
 	});
 
 })
-
-'use strict';
-var request = require('supertest');
 
 describe('Create Review', function(done) {
 	//this.timeout(3000);
@@ -210,7 +198,9 @@ describe('Create Review', function(done) {
 		});
 	});
 
-})
+	// console.log( User.find() );
+
+});
 
 function generateUser(hasUserName, hasFName, hasLName, hasEmail, hasPassword) {
 
@@ -220,7 +210,7 @@ function generateUser(hasUserName, hasFName, hasLName, hasEmail, hasPassword) {
 	if ( hasLName ) user.lastName = 'Brown';
 	if ( hasEmail ) user.emailAddress = 'bobbie.brown@sky.net';
 	if ( hasPassword ) user.password = 'roughinitup';
-	if ( hasUserName ) user.userName = user.emailAddress;
+	if ( hasUserName ) user.username = user.emailAddress;
 
 	return user;
 }
