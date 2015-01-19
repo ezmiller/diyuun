@@ -10,6 +10,51 @@
  * http://sailsjs.org/#/documentation/concepts/Logging
  */
 
+/***************************************************************************
+*                                                                          *
+* Instaniate a Winson logger                                               *
+* See documentation Winston:  https://github.com/flatiron/winston          *
+*                                                                          *
+***************************************************************************/
+var winston = require('winston');
+require('winston-mongodb').MongoDB;
+
+var logger = new winston.Logger({
+    transports: [
+        new winston.transports.File({
+            level: 'info',
+            filename: './logs/debug.log',
+            handleExceptions: false,
+            json: true,
+            maxsize: ( 5000 * 1024 ),  // 5MB
+            maxFiles: 5,
+            colorize: false
+        }),
+        new winston.transports.Console({
+            level: 'debug',
+            handleExceptions: true,
+            json: false,
+            colorize: true
+        })
+    ],
+    exitOnError: false
+});
+
+// add transport or db log
+logger.add(winston.transports.MongoDB, {
+    level: 'warn',
+    db: 'kanon',
+    collection: 'logs',
+    safe: false,
+    host: 'localhost',
+    port: 27017,
+    //username: '',
+    //password: '',
+    errorTimeout: 10000,
+    name: 'dblog',
+    handleExceptions: true
+});
+
 module.exports.log = {
 
   /***************************************************************************
@@ -24,6 +69,7 @@ module.exports.log = {
   *                                                                          *
   ***************************************************************************/
 
-  // level: 'info'
+  level: 'info',
+  custom: logger
 
 };
