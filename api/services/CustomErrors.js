@@ -15,7 +15,8 @@ function InvalidArgumentException(message, stack) {
 	this.message = message || 'Invalid Argument';
 	this.stack = stack;
 }
-InvalidArgumentException.prototype = Error.prototype;
+InvalidArgumentException.prototype = new Error();
+InvalidArgumentException.prototype.constructor = InvalidArgumentException;
 
 /**
  * Indicates an error in which the system has failed to save or "persist" some
@@ -29,7 +30,8 @@ function FailedToPersistDataException(message, stack) {
 	this.message = message || 'Failed to persist data.';
 	this.stack = stack;
 }
-FailedToPersistDataException.prototype = Error.prototype;
+FailedToPersistDataException.prototype = new Error();
+FailedToPersistDataException.prototype.constructor = FailedToPersistDataException;
 
 /**
  * Indicates an error in which a user has submitted a malformed ISBN.
@@ -42,6 +44,7 @@ function ISBNError(message, stack) {
 	this.stack = stack;
 }
 ISBNError.prototype = new Error();
+ISBNError.prototype.constructor = ISBNError;
 
 
 module.exports = {
