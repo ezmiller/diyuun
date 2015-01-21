@@ -65,8 +65,7 @@ module.exports = {
 
         // Check for an empty user entry
         if ( Utilities.isEmpty( values ) ) {
-          var InvalidArgumentException = new Exceptions.InvalidArgumentException('You must pass in some values to create a user.');
-          // TODO: Log bad request to database
+          var InvalidArgumentException = new CustomErrors.InvalidArgumentException('You must pass in some values to create a user.');
           delete InvalidArgumentException.stack;
           throw InvalidArgumentException;
         }
@@ -84,8 +83,7 @@ module.exports = {
             next();
         })
         .catch(function (err) {
-            var FailedToPersistDataException = new Exceptions.FailedToPersistDataException('Failed to save password.');
-            // TODO: Log failure to save password to database
+            var FailedToPersistDataException = new CustomErrors.FailedToPersistDataException('Failed to save password.');
             delete FailedToPersistDataException.stack;
             throw FailedToPersistDataException;
         });

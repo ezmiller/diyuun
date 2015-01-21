@@ -38,8 +38,8 @@ module.exports = {
 		if ( validator.isISBN( value.ISBN ) ) {
 			insert();
 		} else {
-			var ISBNError = new Exceptions.ISBNError('ISBN invalid.');
-			// TODO: Log bad request to database
+			var ISBNError = new CustomErrors.ISBNError('ISBN is invalid.', new Error().stack);
+			// TODO: Log invalid ISBN on book create to database? 
 			delete ISBNError.stack;
 			throw ISBNError;
 		}
