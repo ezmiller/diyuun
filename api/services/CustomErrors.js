@@ -1,6 +1,18 @@
 'use strict';
 
 /**
+ * Makes the custom errors accessible globally
+ * @module CustomErrors
+ */
+module.exports = {
+
+	InvalidArgumentException: InvalidArgumentException,
+	FailedToPersistDataException: FailedToPersistDataException,
+	ISBNError: ISBNError
+
+};
+
+/**
  * Indicates an error where an invalid argument or input to a method.
  * @param {string} message The error message.
  * @param {string} stack   The stack trace.
@@ -40,12 +52,3 @@ function ISBNError(message, stack) {
 }
 ISBNError.prototype = new Error();
 ISBNError.prototype.constructor = ISBNError;
-
-
-module.exports = {
-
-	InvalidArgumentException: InvalidArgumentException,
-	FailedToPersistDataException: FailedToPersistDataException,
-	ISBNError: ISBNError
-
-};

@@ -39,7 +39,7 @@ module.exports = {
 			insert();
 		} else {
 			var ISBNError = new CustomErrors.ISBNError('ISBN is invalid.', new Error().stack);
-			// TODO: Log invalid ISBN on book create to database? 
+			// TODO: Log invalid ISBN on book create to database?
 			delete ISBNError.stack;
 			throw ISBNError;
 		}
