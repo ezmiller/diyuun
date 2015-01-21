@@ -41,6 +41,7 @@ var logger = new winston.Logger({
 });
 
 // add transport or db log
+// TODO: Figure out why winston is replacing Exception messages with stack trace.
 logger.add(winston.transports.MongoDB, {
     level: 'warn',
     db: 'kanon',
