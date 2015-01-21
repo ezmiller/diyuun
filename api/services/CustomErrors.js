@@ -1,5 +1,4 @@
 'use strict';
-var ce = require('node-custom-errors');
 
 /**
  * Indicates an error where an invalid argument or input to a method.
@@ -42,7 +41,7 @@ function ISBNError(message, stack) {
 	this.message = message || 'ISBN Invalid.';
 	this.stack = stack;
 }
-ISBNError.prototype = Error.prototype;
+ISBNError.prototype = new Error();
 
 
 module.exports = {
