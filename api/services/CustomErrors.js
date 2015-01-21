@@ -2,11 +2,6 @@
 
 /**
  * Indicates an error where an invalid argument or input to a method.
- * @type {InvalidArgumentException}
- */
-
-/**
- * Indicates an error where an invalid argument or input to a method.
  * @param {string} message The error message.
  * @param {string} stack   The stack trace.
  */
