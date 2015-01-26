@@ -26,7 +26,7 @@ function InvalidArgumentError(message) {
 	Error.captureStackTrace(this);
 }
 InvalidArgumentError.prototype = new Error();
-InvalidArgumentError.prototype.constructor = InvalidArgumentException;
+InvalidArgumentError.prototype.constructor = InvalidArgumentError;
 
 /**
  * Indicates an error in which the system has failed to save or "persist" some
