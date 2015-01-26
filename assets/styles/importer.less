@@ -14,17 +14,20 @@
  * or any other Grunt tasks you like.)
  */
 
+// Core variables and mixins
+@import "variables";
+@import "mixins.less";
 
+// Core CSS
+@import "scaffolding.less";
+@import "type.less";
+@import "code.less";
+@import "grid.less";
+@import "tables.less";
+@import "forms.less";
+@import "buttons.less";
 
-// For example:
-//
-// @import 'variables/colors.less';
-// @import 'mixins/foo.less';
-// @import 'mixins/bar.less';
-// @import 'mixins/baz.less';
-//
-// @import 'styleguide.less';
-// @import 'pages/login.less';
-// @import 'pages/signup.less';
-//
-// etc.
+// Reset
+@import "normalize.less";
+@import "print.less";
+
