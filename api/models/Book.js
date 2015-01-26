@@ -11,6 +11,12 @@ module.exports = {
 
 	connection: 'mongodb',
 
+	types: {
+		isValidISBN: function(isbn) {
+			return validator.isISBN( isbn );
+		}
+	},
+
 	attributes: {
 		title: {
 			type: 'string',
@@ -18,6 +24,7 @@ module.exports = {
 		},
 		ISBN: {
 			type: 'string',
+			isValidISBN: true,
 			unique: true,
 			required: true
 		},
@@ -31,18 +38,7 @@ module.exports = {
 			collection: 'review',
 			via: 'book'
 		}
-	},
-
-	// beforeCreate: function(value, insert) {
-
-	// 	if ( validator.isISBN( value.ISBN ) ) {
-	// 		insert();
-	// 	} else {
-	// 		var ISBNError = new CustomErrors.ISBNError('ISBN is invalid.');
-	// 		delete ISBNError.stack;
-	// 		throw ISBNError;
-	// 	}
-	// }
+	}
 
 };
 
