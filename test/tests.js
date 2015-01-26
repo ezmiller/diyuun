@@ -102,7 +102,6 @@ describe('Register User', function(done) {
 })
 
 describe('Create Book', function(done) {
-	//this.timeout(3000);
 
 	describe('try to create book with no values', function(){
 		it('should return 400', function (done) {
