@@ -33,16 +33,16 @@ module.exports = {
 		}
 	},
 
-	beforeCreate: function(value, insert) {
+	// beforeCreate: function(value, insert) {
 
-		if ( validator.isISBN( value.ISBN ) ) {
-			insert();
-		} else {
-			var ISBNError = new CustomErrors.ISBNError('ISBN is invalid.');
-			delete ISBNError.stack;
-			throw ISBNError;
-		}
-	}
+	// 	if ( validator.isISBN( value.ISBN ) ) {
+	// 		insert();
+	// 	} else {
+	// 		var ISBNError = new CustomErrors.ISBNError('ISBN is invalid.');
+	// 		delete ISBNError.stack;
+	// 		throw ISBNError;
+	// 	}
+	// }
 
 };
 
