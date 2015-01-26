@@ -1,14 +1,17 @@
 'use strict';
 
+// TODO: Set this up with a factory function instead of defining each error repeatedly.
+// NOTE: This could also be done using the extend-error module: http://goo.gl/gbq5Iz
+
 /**
  * Makes the custom errors accessible globally
  * @module CustomErrors
  */
 module.exports = {
 
-	InvalidArgumentException: InvalidArgumentException,
-	FailedToPersistDataException: FailedToPersistDataException,
-	ISBNError: ISBNError
+	'InvalidArgumentError': InvalidArgumentError,
+	'FailedToPersistDataError': FailedToPersistDataError,
+	'ISBNError': ISBNError
 
 };
 
@@ -17,13 +20,13 @@ module.exports = {
  * @param {string} message The error message.
  * @param {string} stack   The stack trace.
  */
-function InvalidArgumentException(message, stack) {
-	this.name = 'InvalidArgumentException';
+function InvalidArgumentError(message) {
+	this.name = 'InvalidArgumentError';
 	this.message = message || 'Invalid Argument';
-	this.stack = stack;
+	Error.captureStackTrace(this);
 }
-InvalidArgumentException.prototype = new Error();
-InvalidArgumentException.prototype.constructor = InvalidArgumentException;
+InvalidArgumentError.prototype = new Error();
+InvalidArgumentError.prototype.constructor = InvalidArgumentException;
 
 /**
  * Indicates an error in which the system has failed to save or "persist" some
@@ -32,23 +35,23 @@ InvalidArgumentException.prototype.constructor = InvalidArgumentException;
  * @param {string} message The error message.
  * @param {string} stack   The stack trace.
  */
-function FailedToPersistDataException(message, stack) {
-	this.name = 'FailedToPersistDataException';
+function FailedToPersistDataError(message) {
+	this.name = 'FailedToPersistDataError';
 	this.message = message || 'Failed to persist data.';
-	this.stack = stack;
+	Error.captureStackTrace(this);
 }
-FailedToPersistDataException.prototype = new Error();
-FailedToPersistDataException.prototype.constructor = FailedToPersistDataException;
+FailedToPersistDataError.prototype = new Error();
+FailedToPersistDataError.prototype.constructor = FailedToPersistDataError;
 
 /**
  * Indicates an error in which a user has submitted a malformed ISBN.
  * @param {string} message The error message.
  * @param {string} stack   The stack trace.
  */
-function ISBNError(message, stack) {
+function ISBNError(message) {
 	this.name = 'ISBNError';
 	this.message = message || 'ISBN Invalid.';
-	this.stack = stack;
+	Error.captureStackTrace(this);
 }
 ISBNError.prototype = new Error();
 ISBNError.prototype.constructor = ISBNError;
