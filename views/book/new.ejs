@@ -1,4 +1,13 @@
 <h1>Add a Book</h1>
+
+<% if (flash && flash.err) { %>
+	<ul class="bg-warning">
+		<% Object.keys(flash.err.invalidAttributes).forEach(function(key) { %>
+			<li><%= key %>: <%- JSON.stringify(flash.err.invalidAttributes[key]) %></li>
+		<% }) %>
+	</ul>
+<% } %>
+
 <form action="/book/create" method="POST" class="form-add-book">
 	<label for="title">Title:</label>
 	<input type="title" name="title" />

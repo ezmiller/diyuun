@@ -45,7 +45,7 @@ module.exports = {
 		reviews: {
 			collection: 'review',
 			via: 'book'
-		}
+		}	
 	}
 
 };
