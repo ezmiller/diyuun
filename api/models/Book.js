@@ -11,6 +11,8 @@ module.exports = {
 
 	connection: 'mongodb',
 
+	schema: true,
+
 	types: {
 		isValidISBN: function(isbn) {
 			return validator.isISBN( isbn );
@@ -18,22 +20,28 @@ module.exports = {
 	},
 
 	attributes: {
+
 		title: {
 			type: 'string',
 			required: true
 		},
+
 		ISBN: {
 			type: 'string',
 			isValidISBN: true,
 			unique: true,
 			required: true
 		},
+
 		blurb: 'text',
+
 		image: 'string',
+
 		like: {
 			collection: 'user',
 			via: 'likedBooks'
 		},
+
 		reviews: {
 			collection: 'review',
 			via: 'book'
