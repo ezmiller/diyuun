@@ -1,57 +1,80 @@
+/**
+ * CustomErrors.js
+ * @module CustomErrors
+ *
+ * Description: Provides custom errors. The errors are specified in 
+ *    the errors[] array. When an error is a top-level error it is declared
+ *    in that array as a string. When it has a parent the declaration 
+ *    involves an array specifying the error name and its parent, e.g.
+ *    [<errorname>, <parent errorname>].
+ *
+ *    The errors then can be created in the project like so
+ *        var sample = CustomErrors.createSampleError('<message>')
+ *    And you can test whether an error is of a certain category like so:
+ *        sample.isAnSampleError; // will return true
+ *
+ *   //TODO: Simplify the implementation of errors!
+ */
 'use strict';
 
-// TODO: Set this up with a factory function instead of defining each error repeatedly.
-// NOTE: This could also be done using the extend-error module: http://goo.gl/gbq5Iz
+var errors = [
+    'InvalidArgument',
+    'FailedToPersist',
+    ['ISBN', 'InvalidArgument'],
+    ['GermanISBN', 'ISBN']
+];
 
-/**
- * Makes the custom errors accessible globally
- * @module CustomErrors
- */
-module.exports = {
+var customError = Object.create( new Error(), {
+    parent: {value: null}
+});
 
-	'InvalidArgumentError': InvalidArgumentError,
-	'FailedToPersistDataError': FailedToPersistDataError,
-	'ISBNError': ISBNError
+var createErrorCreator = function(errorName, parentError) {
+	var error;
 
-};
+    var createError = function(message) {
+        error = Object.create(parentError || customError, {
+            name: {value: errorName},
+            message: {value: message },
+            parent: {value: parentError}
+        });
+        Error.captureStackTrace(error, createError);
+        return error;
+    };
 
-/**
- * Indicates an error where an invalid argument or input to a method.
- * @param {string} message The error message.
- * @param {string} stack   The stack trace.
- */
-function InvalidArgumentError(message) {
-	this.name = 'InvalidArgumentError';
-	this.message = message || 'Invalid Argument';
-	Error.captureStackTrace(this);
+    return createError;
 }
-InvalidArgumentError.prototype = new Error();
-InvalidArgumentError.prototype.constructor = InvalidArgumentError;
 
-/**
- * Indicates an error in which the system has failed to save or "persist" some
- * piece of data.  E.g. when it has not been possible to save some piece of data
- * to the db.
- * @param {string} message The error message.
- * @param {string} stack   The stack trace.
- */
-function FailedToPersistDataError(message) {
-	this.name = 'FailedToPersistDataError';
-	this.message = message || 'Failed to persist data.';
-	Error.captureStackTrace(this);
-}
-FailedToPersistDataError.prototype = new Error();
-FailedToPersistDataError.prototype.constructor = FailedToPersistDataError;
+errors.forEach(function(item) {
+    var parentError = null, createParentError,
+        s, p, errorName, parentName;
 
-/**
- * Indicates an error in which a user has submitted a malformed ISBN.
- * @param {string} message The error message.
- * @param {string} stack   The stack trace.
- */
-function ISBNError(message) {
-	this.name = 'ISBNError';
-	this.message = message || 'ISBN Invalid.';
-	Error.captureStackTrace(this);
-}
-ISBNError.prototype = new Error();
-ISBNError.prototype.constructor = ISBNError;
+    if ( typeof item !== 'string' ) {
+        s = item[0];
+        p = item[1];
+    } else {
+        s = item;
+    }
+
+    errorName = s+'Error';
+
+    if ( typeof p !== 'undefined' ) {
+        parentName = p+'Error';
+        createParentError = module.exports['create' + parentName];
+        module.exports['create'+errorName] = createErrorCreator(errorName, createParentError());
+    } else {
+        module.exports['create'+errorName] = createErrorCreator(errorName, null)
+    }
+
+
+    Object.defineProperty(customError, 'isAn' + errorName, {
+        get: function() {
+            if ( this.name === errorName ) {
+                return true;
+            } else if ( this.parent === null ) {
+                return false;
+            } else {
+                return this.parent['isAn' + errorName];
+            }
+        }
+    });
+});
