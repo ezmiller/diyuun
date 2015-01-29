@@ -7,11 +7,13 @@
 
 module.exports = {
 
-	'new': function(req, res) {
+	new: function(req, res) {
+		var test = new CustomErrors.createISBNError('test');
+		throw test;
 		res.view();
 	},
 
-	'create': function(req, res, next) {
+	create: function(req, res, next) {
 
 		// Create a user with the parameters sent from the add form 
 		// --> book/new.ejs
