@@ -33,10 +33,7 @@
     <!--STYLES END-->
   </head>
 
-  <body>
-    <%- body %>
-
-
+  <body id="container">
 
     <!--
         Client-side Templates
@@ -87,8 +84,13 @@
 
     -->
 
+    <!-- TODO: Change layout so that require and socket scripts are loaded at appropriate point. -->
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/bower_components/requirejs/require.js"></script>
     <!--SCRIPTS END-->
+
+    <%- body %>
+
   </body>
 </html>
