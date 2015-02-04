@@ -1,3 +1,4 @@
+'use strict';
 /**
  * BookController
  *
@@ -7,27 +8,28 @@
 
 module.exports = {
 
+
+
 	new: function(req, res) {
-		var test = new CustomErrors.createISBNError('test');
-		throw test;
+		console.log('BookController: "new" action called.');
 		res.view();
 	},
 
 	create: function(req, res, next) {
+		console.log('BookController: "create" action called.');
 
-		// Create a user with the parameters sent from the add form 
-		// --> book/new.ejs
-		Book.create( req.params.all(), function(err, book) {
+		var book = req.allParams();
+
+		Book.create(book, function(err, book) {
 
 			if (err) {
-				req.session.flash = {
-					'err': err
-				}
+				sails.error(err);
 				return res.redirect('/book/new');
 			}
 
-			// send new book as response
+			// Send new book as response.
 			res.json(book);
+
 		});
 	}
 
