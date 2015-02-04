@@ -1,3 +1,4 @@
+'use strict';
 /**
  * NewBookForm
  */
@@ -9,8 +10,6 @@ define(
   'stores/BookStore'
 ],
 function(React, BookActions, BookStore) {
-
-console.log('BookStore: ', BookStore);
 
 var NewBookForm = React.createClass({
 
@@ -39,7 +38,6 @@ var NewBookForm = React.createClass({
     var book = {};
     book.title = this.state.title.trim();
     book.ISBN = this.state.ISBN.trim();
-    console.log(book);
     BookActions.create(book);
   },
 

@@ -1,9 +1,11 @@
+'use strict';
+
 requirejs.config({
 	baseUrl: "/assets",
     paths: {
+    	'jquery': '/bower_components/jquery/dist/jquery',
     	'react': '/bower_components/react/react',
-    	'mootools': '/bower_components/mootools/dist/mootools-core',
-    	'eventEmitter': '/bower_components/eventEmitter/EventEmitter',
+    	'backbone': '/bower_components/backbone/backbone',
     	'flux': '/bower_components/flux/dist/Flux',
     	'underscore': '/bower_components/underscore/underscore',
 		'ourDispatcher': '/js/dispatcher/OurDispatcher',
@@ -14,7 +16,7 @@ requirejs.config({
     },
 });
 
-require(['react', 'mootools', 'components/NewBookForm'], function(React, Mootools, NewBookForm) {
+require(['react', 'components/NewBookForm'], function(React, NewBookForm) {
 
 	function render() {
 		React.render(

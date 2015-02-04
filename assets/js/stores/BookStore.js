@@ -1,3 +1,4 @@
+'use strict';
 /**
  * BookStore
  */
@@ -6,14 +7,51 @@ define(
 [
 	'ourDispatcher',
 	'constants/BookConstants',
-	'eventEmitter',
+	'backbone',
 	'underscore'
 ],
-function(OurDispatcher, BookConstants, EventEmitter, _) {
+function(OurDispatcher, BookConstants, EventEmitter, Backbone, _) {
 
-var CHANGE_EVENT = 'change';
+/**
+ * Contains event name indicating view updates.
+ * @type {String}
+ */
+var CHANGE_EVENT = 'sync';
 
-var _books = {};
+// Define our BookStore as a Backbone Collection.
+var BookStore = new (Backbone.Collection.extend({
+
+	// The Url for books /api/models/Book.js
+	url: '/books',
+
+	initialize: function() {
+
+		// Register store callback with dispatcher.
+		OurDispatcher.register(actionCallback);
+
+	},
+
+	addChangeListener: function(callback) {
+		console.log('BookStore: add change listener');
+		this.on(CHANGE_EVENT, callback);
+	},
+
+	removeChangeListener: function(callback) {
+		console.log('BookStore: remove change listener');
+		this.on(CHANGE_EVENT, callback);
+	}
+
+}) );
+
+function actionCallback(action) {
+
+	switch(action.actionType) {
+		case BookConstants.BOOK_CREATE:
+			create(action.book);
+			break;
+	}
+
+}
 
 /**
  * Create a new book
@@ -21,48 +59,8 @@ var _books = {};
  */
 function create(book) {
 	console.log('BookStore: Create new book.');
-	// TODO: Write BookStore's create(book) function.
+	BookStore.create(book);
 };
-
-var BookStore = _.extend({}, EventEmitter.prototype, {
-
-	/**
-	 * Get the entire collection of books
-	 * @return {object}
-	 */
-	getAll: function() {
-		return _books;
-	},
-
-	emitChange: function(evt) {
-		console.log('BookStore: Emit change');
-		this.emit(evt);
-	},
-
-	addChangeListener: function(callback) {
-		console.log('BookStore: add change listener');
-		this.addListener(BookConstants.BOOK_CREATE, callback)
-	},
-
-	removeChangeListener: function() {
-		console.log('BookStore: remove change listener');
-		this.removeListener(BookConstants.BOOK_CREATE, callback);
-	}
-
-});// BookStore
-
-OurDispatcher.register(function(action) {
-
-	console.log('BookStore callback called with: ', action);
-
-	switch(action.actionType) {
-		case BookConstants.BOOK_CREATE:
-			console.log('BookStore: BOOK_CREATE callback called');
-			BookStore.emitChange(BookConstants.BOOK_CREATE);
-			break;
-	}
-
-});
 
 return BookStore;
 
