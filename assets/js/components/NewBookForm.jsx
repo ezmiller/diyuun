@@ -44,23 +44,21 @@ var NewBookForm = React.createClass({
   render: function() {
     return (
       <form  className="form-add-book" onSubmit={this.onSubmit} role="form">
-        <div className="form-group">
-          <label htmlFor="title">Title:</label>
+        <div className="input-field">
+          <label htmlFor="title">Title</label>
           <input type="text"
                  name="title"
                  ref="title"
-                 className="form-control"
-                 placeholder="Enter a Title"
+                 className="validate"
                  value={this.state.title}
                  onChange={this.handleChange} />
         </div>
-        <div className="form-group">
+        <div className="input-field">
           <label htmlFor="ISBN">ISBN:</label>
           <input type="text"
                  name="ISBN"
                  ref="ISBN"
-                 className="form-control"
-                 placeholder="Enter a valid ISBN"
+                 className="validate"
                  value={this.state.ISBN}
                  onChange={this.handleChange} />
         </div>
