@@ -4,6 +4,7 @@
 
 define([], function() {
 
+	// TODO: Make this keyMirror globallly available! 
 	var keyMirror = function(obj) {
 	  var ret = {};
 	  var key;
