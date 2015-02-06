@@ -7,9 +7,10 @@ define(
 [
   'react',
   'actions/BookActions',
+  'actions/ErrorActions',
   'stores/BookStore'
 ],
-function(React, BookActions, BookStore) {
+function(React, BookActions, ErrorActions, BookStore) {
 
 var NewBookForm = React.createClass({
 
@@ -18,13 +19,16 @@ var NewBookForm = React.createClass({
   },
 
   componentDidMount: function () {
-    console.log('NewBookForm: add change listener.');
+    console.log('NewBookForm: add change & error listener.');
+    console.log(BookStore);
     BookStore.addChangeListener(this._onChange);
+    BookStore.addErrorListener(this._onError);
   },
 
   componentWillUnmount: function () {
-    console.log('NewBookForm: remove change listener');
+    console.log('NewBookForm: remove change & error listener');
     BookStore.removeChangeListener(this._onChange);
+    BookStore.removeErrorListener(this._onError);
   },
 
   handleChange: function() {
@@ -54,7 +58,7 @@ var NewBookForm = React.createClass({
                  onChange={this.handleChange} />
         </div>
         <div className="input-field">
-          <label htmlFor="ISBN">ISBN:</label>
+          <label htmlFor="ISBN">ISBN</label>
           <input type="text"
                  name="ISBN"
                  ref="ISBN"
@@ -70,6 +74,12 @@ var NewBookForm = React.createClass({
 
   _onChange: function() {
     console.log('NewBookForm:  There was a change');
+  },
+
+  _onError: function(model, resp, options) {
+    var err = ( resp.responseJSON && resp.responseJSON.err ) ? resp.responseJSON.err : null;
+    console.log('NewBookForm::_onError()  sending err.');
+    ErrorActions.display(err);
   }
 
 }); //NewBookForm

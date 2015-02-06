@@ -16,11 +16,11 @@ requirejs.config({
     },
 });
 
-require(['react', 'components/NewBookForm'], function(React, NewBookForm) {
+require(['jquery', 'react', 'components/AddBook'], function(jQuery, React, AddBook) {
 
 	function render() {
 		React.render(
-			<NewBookForm url="/book" />,
+			<AddBook />,
 			document.getElementById('new-book-form')
 		);
 	}

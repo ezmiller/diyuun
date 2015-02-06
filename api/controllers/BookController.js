@@ -8,8 +8,6 @@
 
 module.exports = {
 
-
-
 	new: function(req, res) {
 		console.log('BookController: "new" action called.');
 		res.view();
@@ -22,9 +20,12 @@ module.exports = {
 
 		Book.create(book, function(err, book) {
 
-			if (err) {
-				sails.error(err);
-				return res.redirect('/book/new');
+			// Check for validation error.
+			if (err && err.code === 'E_VALIDATION') {
+				req.session.flash = {
+					'err': err
+				}
+				return res.status(400).send({err: err});
 			}
 
 			// Send new book as response.
