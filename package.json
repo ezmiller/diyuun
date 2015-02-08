@@ -54,6 +54,7 @@
     "grunt-browserify": "^3.3.0",
     "grunt-mocha-test": "^0.12.6",
     "mocha": "^2.1.0",
+    "reactify": "^1.0.0",
     "should": "^4.6.0",
     "sinon": "^1.12.2",
     "supertest": "^0.15.0"
