@@ -1,16 +1,12 @@
 'use strict';
-/**
- * Error
- */
 
-define(
-[
-	'react',
-	'ourDispatcher',
-	'constants/ErrorConstants',
-	'underscore'
-],
-function(React, OurDispatcher, ErrorConstants, _) {
+var React = require('react');
+var OurDispatcher = require('../dispatcher/OurDispatcher.js');
+var ErrorConstants = require('../constants/ErrorConstants.js');
+
+
+
+var _ = require('underscore');
 
 var Errors = React.createClass({
 
@@ -55,6 +51,4 @@ var Errors = React.createClass({
 
 });
 
-return Errors;
-
-}); //define
+module.exports = Errors;

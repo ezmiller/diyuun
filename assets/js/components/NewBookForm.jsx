@@ -3,14 +3,19 @@
  * NewBookForm
  */
 
-define(
-[
-  'react',
-  'actions/BookActions',
-  'actions/ErrorActions',
-  'stores/BookStore'
-],
-function(React, BookActions, ErrorActions, BookStore) {
+// define(
+// [
+//   'react',
+//   'actions/BookActions',
+//   'actions/ErrorActions',
+//   'stores/BookStore'
+// ],
+// function(React, BookActions, ErrorActions, BookStore) {
+
+var React = require('react');
+var BookActions = require('../actions/BookActions.js');
+var ErrorActions = require('../actions/ErrorActions.js');
+var BookStore = require('../stores/BookStore.js');
 
 var NewBookForm = React.createClass({
 
@@ -84,6 +89,8 @@ var NewBookForm = React.createClass({
 
 }); //NewBookForm
 
-return NewBookForm;
+module.exports = NewBookForm;
 
-}); //define
+// return NewBookForm;
+
+// }); //define

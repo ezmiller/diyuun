@@ -2,7 +2,7 @@
  * ErrorConstants
  */
 
-define([], function() {
+// define([], function() {
 
 	// TODO: Make this keyMirror globallly available! 
 	var keyMirror = function(obj) {
@@ -25,6 +25,8 @@ define([], function() {
 		E_VALIDATION: null
 	});
 
-	return ErrorConstants;
+	module.exports = ErrorConstants;
 
-}); // define
+	// return ErrorConstants;
+
+// }); // define

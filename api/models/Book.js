@@ -26,6 +26,28 @@ module.exports = {
 			required: true
 		},
 
+		author: {
+			type: 'string',
+			required: true
+		},
+
+		editor: {
+			type: 'string'
+		},
+
+		translator: {
+			type: 'string'
+		},
+
+		// publisher_info: {
+		// 	type: 'json',
+		// 	pub_info_complete
+		// },
+
+		// subjects: {
+		// 	type: 'string'
+		// },
+
 		ISBN: {
 			type: 'string',
 			isValidISBN: true,
@@ -45,7 +67,7 @@ module.exports = {
 		reviews: {
 			collection: 'review',
 			via: 'book'
-		}	
+		}
 	}
 
 };

@@ -3,15 +3,14 @@
  * BookStore
  */
 
-define(
-[
-	'ourDispatcher',
-	'constants/BookConstants',
-	'backbone',
-	'underscore',
-	'jquery'
-],
-function(OurDispatcher, BookConstants, Backbone, _) {
+// Get necessary components and libraries
+var OurDispatcher = require('../dispatcher/OurDispatcher.js');
+var BookConstants = require('../constants/BookConstants.js');
+var Backbone = require('backbone');
+var _ = require('underscore');
+
+// Tell backbone to use jQuery
+Backbone.$ = $;
 
 /**
  * Contains event name indicating view updates.
@@ -76,6 +75,4 @@ function create(book) {
 	BookStore.create(book);
 }
 
-return BookStore;
-
-}); // define
+module.exports = BookStore;

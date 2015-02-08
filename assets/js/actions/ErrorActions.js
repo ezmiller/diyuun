@@ -2,7 +2,8 @@
  * ErrorActions
  */
 
-define(['ourDispatcher', 'constants/ErrorConstants'], function(OurDispatcher, ErrorConstants) {
+var OurDispatcher = require('../dispatcher/OurDispatcher.js');
+var ErrorConstants = require('../constants/ErrorConstants.js');
 
 var ErrorActions = {
 
@@ -16,6 +17,4 @@ var ErrorActions = {
 
 } // ErrorActions
 
-return ErrorActions;
-
-}); // define
+module.exports = ErrorActions;

@@ -3,13 +3,9 @@
  * AddBook
  */
 
-define(
-[
-	'react',
-	'components/Errors',
-	'components/NewBookForm',
-],
-function(React, Errors, NewBookForm) {
+var React = require('react');
+var Errors = require('./Errors.jsx');
+var NewBookForm = require('./NewBookForm.jsx');
 
 var AddBook = React.createClass({
 
@@ -23,6 +19,4 @@ var AddBook = React.createClass({
 	}
 });
 
-return AddBook;
-
-}); // define
+module.exports = AddBook;

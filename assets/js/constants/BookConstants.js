@@ -2,7 +2,7 @@
  * BookConstants
  */
 
-define([], function() {
+// define([], function() {
 
 	// TODO: Make this keyMirror globallly available! 
 	var keyMirror = function(obj) {
@@ -24,6 +24,8 @@ define([], function() {
 		BOOK_CREATE: null
 	});
 
-	return BookConstants;
+	module.exports = BookConstants;
 
-}); // define
+	// return BookConstants;
+
+// }); // define

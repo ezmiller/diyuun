@@ -2,7 +2,8 @@
  * BookActions
  */
 
-define(['ourDispatcher', 'constants/BookConstants'], function(OurDispatcher, BookConstants) {
+var OurDispatcher = require('../dispatcher/OurDispatcher.js');
+var BookConstants = require('../constants/BookConstants.js');
 
 var BookActions = {
 
@@ -16,6 +17,4 @@ var BookActions = {
 
 } // BookActions
 
-return BookActions;
-
-}); // define
+module.exports = BookActions;
