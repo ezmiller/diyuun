@@ -38,7 +38,7 @@ var jsFilesToInject = [
   // 'js/**/*.js'
 
   // RequireJS will handle loading of js files
-  'bower_components/requirejs/require.js'
+  // 'bower_components/requirejs/require.js'
 ];
 
 
