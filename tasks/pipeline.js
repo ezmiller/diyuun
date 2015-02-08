@@ -31,7 +31,7 @@ var jsFilesToInject = [
 
   // TODO: Load jQuery and materialize.js the right way!
   'bower_components/jquery/dist/jquery.js',
-  'bower_components/materialize/dist/js/materialize.js',
+  // 'bower_components/materialize/dist/js/materialize.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
