@@ -98,8 +98,18 @@ var NewBookForm = React.createClass({
 
   _onError: function(model, resp, options) {
     var err = ( resp.responseJSON && resp.responseJSON.err ) ? resp.responseJSON.err : null;
-    console.log('NewBookForm::_onError()  sending err.');
-    ErrorActions.display(err);
+    var fields = this.refs;
+
+    console.log('NewBookForm::_onError()  sending err', err);
+
+    _.map(this.refs, function(value,key) {
+      if (key !== '_csrf')
+        fields[key].setErrorText('');
+    });
+
+    _.map(err.invalidAttributes, function(value, key) {
+      fields[key].setErrorText('Invalid ' + key);
+    });
   }
 
 }); //NewBookForm
