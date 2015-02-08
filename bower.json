@@ -14,10 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "react": "~0.12.2",
-    "requirejs": "~2.1.15",
-    "flux": "~2.0.2",
-    "backbone": "~1.1.2",
-    "materialize": "~0.95.1"
+    "materialize": "~0.95.1",
+    "jquery": "~2.1.3"
   }
 }
