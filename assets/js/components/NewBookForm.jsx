@@ -12,15 +12,22 @@
 // ],
 // function(React, BookActions, ErrorActions, BookStore) {
 
-var React = require('react');
+// Load Flux componenets
 var BookActions = require('../actions/BookActions.js');
 var ErrorActions = require('../actions/ErrorActions.js');
 var BookStore = require('../stores/BookStore.js');
+var _ = require('underscore');
+
+// Load React components
+var React = require('react');
+var mui = require('material-ui');
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
 
 var NewBookForm = React.createClass({
 
   getInitialState: function() {
-    return {title: '', ISBN: ''};
+    return {title: '', author: '', ISBN: ''};
   },
 
   componentDidMount: function () {
@@ -46,6 +53,7 @@ var NewBookForm = React.createClass({
     e.preventDefault();
     var book = {};
     book.title = this.state.title.trim();
+    book.author = this.state.author.trim();
     book.ISBN = this.state.ISBN.trim();
     BookActions.create(book);
   },
@@ -53,25 +61,32 @@ var NewBookForm = React.createClass({
   render: function() {
     return (
       <form  className="form-add-book" onSubmit={this.onSubmit} role="form">
-        <div className="input-field">
-          <label htmlFor="title">Title</label>
-          <input type="text"
-                 name="title"
-                 ref="title"
-                 className="validate"
-                 value={this.state.title}
-                 onChange={this.handleChange} />
+        <div>
+        <TextField
+          name="title"
+          ref="title"
+          hintText="Title"
+          floatingLabelText="Title"
+          onChange={this.handleChange} />
         </div>
-        <div className="input-field">
-          <label htmlFor="ISBN">ISBN</label>
-          <input type="text"
-                 name="ISBN"
-                 ref="ISBN"
-                 className="validate"
-                 value={this.state.ISBN}
-                 onChange={this.handleChange} />
+        <div>
+        <TextField
+          name="author"
+          ref="author"
+          hintText="Author"
+          floatingLabelText="Author"
+          onChange={this.handleChange} />
         </div>
-        <input type="submit" value="Submit" className="btn btn-default"/>
+        <div>
+        <TextField
+          name="ISBN"
+          ref="ISBN"
+          hintText="ISBN"
+          floatingLabelText="ISBN"
+          onChange={this.handleChange} />
+        </div>
+        <br/>
+        <RaisedButton label="Submit" />
         <input type="hidden" name="_csrf" ref="_csrf" value="<%= _csrf %>" />
      </form>
     );
