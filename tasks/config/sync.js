@@ -17,7 +17,18 @@ module.exports = function(grunt) {
 		dev: {
 			files: [{
 				cwd: './assets',
-				src: ['**/*.!(coffee)', '!**/*.jsx'],
+				src: [
+					// include everything in assets
+					'**/*.!(coffee|less|scss|sass)',
+					// then exclude certain js files
+					'!js/main.jsx',
+					'!**/actions/**',
+					'!**/components/**',
+					'!**/constants/**',
+					'!**/dispatcher/**',
+					'!**/helpers/**',
+					'!**/stores/**',
+				],
 				dest: '.tmp/public'
 			}]
 		}
