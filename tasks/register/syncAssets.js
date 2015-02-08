@@ -5,6 +5,6 @@ module.exports = function (grunt) {
 		'sass:dev',
 		'sync:dev',
 		'coffee:dev',
-		'react:dev'
+		'browserify:dev',
 	]);
 };
