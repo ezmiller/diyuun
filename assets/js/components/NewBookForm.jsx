@@ -85,6 +85,14 @@ var NewBookForm = React.createClass({
           floatingLabelText="ISBN"
           onChange={this.handleChange} />
         </div>
+        <TextField
+          name="blurb"
+          ref="blurb"
+          hintText="Description"
+          floatingLabelText="Description"
+          multiLine={true}
+          onChange={this.handleChange} />
+        </div>
         <br/>
         <RaisedButton label="Submit" />
         <input type="hidden" name="_csrf" ref="_csrf" value="<%= _csrf %>" />
