@@ -5,6 +5,7 @@ var should = require('should');
 var user = {};
 var book = {};
 var review = {};
+var comment = {};
 var mytest = 'test';
 
 describe('Register User', function(done) {
@@ -199,6 +200,51 @@ describe('Create Review', function(done) {
 
 });
 
+describe('Create Comment', function(done) {
+
+	describe('try to create a comment with no values', function() {
+		it('should return 400', function(done) {
+			request(sails.hooks.http.app)
+			.post('/comments')
+			.send( generateReview(false, false, false) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create a comment with only a user and no text or book', function() {
+		it('should return 400', function(done) {
+			request(sails.hooks.http.app)
+			.post('/comments')
+			.send( generateReview(user.id, false, false) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create a comment with only a book and no user or text', function() {
+		it('should return 400', function(done) {
+			request(sails.hooks.http.app)
+			.post('/comments')
+			.send( generateReview(false, book.id, false) )
+			.expect(400, done);
+		});
+	});
+
+	describe('try to create a comment with all values provided', function() {
+		it('should return 200', function(done) {
+			request(sails.hooks.http.app)
+			.post('/comments')
+			.send( generateReview(false, book.id, false) )
+			.expect(200)
+			.end(function(req, res) {
+				comment = res.body;
+				done();
+			});
+		});
+	});
+
+});
+
+
 function generateUser(hasUserName, hasFName, hasLName, hasEmail, hasPassword) {
 
 	var user = {};
@@ -232,3 +278,15 @@ function generateReview(hasText, hasReviewer, hasBook) {
 
 	return review;
 }
+
+function generateComment(hasUser, hasBook, hasText) {
+
+	var comment = {};
+
+	if ( hasUser ) comment.user = hasUser;
+	if ( hasBook ) comment.book = hasBook;
+	if ( hasText ) comment.text = 'This is a very short comment';
+
+	return comment;
+
+};

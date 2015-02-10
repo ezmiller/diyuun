@@ -19,7 +19,7 @@ before(function(done) {
 after(function(done) {
 
   // clean up data from tests
-  Promise.all([User.destroy(), Book.destroy(), Review.destroy()])
+  Promise.all([User.destroy(), Book.destroy(), Review.destroy(), Comment.destroy()])
   .then()
   .catch(function(err) {
     console.log(err);
