@@ -3,15 +3,6 @@
  * NewBookForm
  */
 
-// define(
-// [
-//   'react',
-//   'actions/BookActions',
-//   'actions/ErrorActions',
-//   'stores/BookStore'
-// ],
-// function(React, BookActions, ErrorActions, BookStore) {
-
 // Load Flux componenets
 var BookActions = require('../actions/BookActions.js');
 var ErrorActions = require('../actions/ErrorActions.js');
@@ -124,7 +115,3 @@ var NewBookForm = React.createClass({
 }); //NewBookForm
 
 module.exports = NewBookForm;
-
-// return NewBookForm;
-
-// }); //define
