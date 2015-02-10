@@ -58,20 +58,11 @@ module.exports = {
         reviews: {
             collection: 'review',
             via: 'reviewer'
+        },
+        comments: {
+            collection: 'comment',
+            via: 'user'
         }
-    },
-
-    beforeValidate: function(values, next) {
-
-        // Check for an empty user entry
-        if ( Utilities.isEmpty( values ) ) {
-          var InvalidArgumentError = new CustomErrors.InvalidArgumentError('You must pass in some values to create a user.');
-          delete InvalidArgumentError.stack;
-          throw InvalidArgumentError;
-        }
-
-        next();
-
     },
 
     beforeCreate: function(values, next) {
@@ -79,13 +70,15 @@ module.exports = {
         // Use promise to encrypt password
         bcryptAsyncHash(values.password)
         .then(function (encryptedPassword) {
+            console.log('encrypted: ', encryptedPassword);
             values.password = encryptedPassword;
             next();
         })
         .catch(function (err) {
-            var FailedToPersistDataError = new CustomErrors.FailedToPersistDataError('Failed to save password.');
-            delete FailedToPersistDataError.stack;
-            throw FailedToPersistDataError;
+            // var FailedToPersistDataError = new CustomErrors.FailedToPersistDataError('Failed to save password.');
+            // delete FailedToPersistDataError.stack;
+            // throw FailedToPersistDataError;
+            sails.log.error(err);
         });
 
     },
