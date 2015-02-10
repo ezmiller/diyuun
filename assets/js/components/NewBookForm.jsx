@@ -85,6 +85,7 @@ var NewBookForm = React.createClass({
           floatingLabelText="ISBN"
           onChange={this.handleChange} />
         </div>
+        <div>
         <TextField
           name="blurb"
           ref="blurb"
