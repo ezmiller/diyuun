@@ -6,16 +6,15 @@
  */
 
 module.exports = {
-	
-
 
   /**
    * `AuthController.login()`
    */
   login: function (req, res) {
-    return res.json({
-      todo: 'login() is not implemented yet!'
-    });
+    res.view();
+    // return res.json({
+    //   todo: 'login() is not implemented yet!'
+    // });
   },
 
 
@@ -37,5 +36,6 @@ module.exports = {
       todo: 'logout() is not implemented yet!'
     });
   }
+
 };
 
