@@ -46,6 +46,16 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /user': 'ProfileController.index'
+  'GET /user': 'ProfileController.index',
+
+  'GET /login': {
+    controller: 'AuthController',
+    action: 'login'
+  },
+
+  'GET /logout': {
+    controller: 'AuthController',
+    action: 'logout'
+  }
 
 };
