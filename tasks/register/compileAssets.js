@@ -6,5 +6,6 @@ module.exports = function (grunt) {
 		'copy:dev',
 		'coffee:dev',
 		'browserify:dev',
+		'notify:server'
 	]);
 };
