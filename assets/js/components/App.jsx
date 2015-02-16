@@ -18,6 +18,8 @@ var App = React.createClass({
 		return (
 			<div>
 			<header>
+				<Link to="login">Login</Link><br/>
+				<Link to="register">Register</Link><br/>
 				<Link to="add-book">Add Book</Link>
 			</header>
     	<RouteHandler />
