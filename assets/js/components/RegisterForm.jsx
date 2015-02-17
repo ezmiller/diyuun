@@ -10,6 +10,7 @@
 	var UserActions = require('../actions/UserActions.js');
 	var mui = require('material-ui');
 	var TextField = mui.TextField;
+	var Dialog = mui.Dialog;
 	var RaisedButton = mui.RaisedButton;
 
 	var RegisterForm = React.createClass({
@@ -23,10 +24,12 @@
 
 		componentDidMount: function () {
 			console.log('RegistrationForm::componentDidMount() called');
+			UserStore.currentUser.addFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		componentWillUnmount: function () {
 			console.log('RegistrationForm::componentWillMount() called');
+			UserStore.currentUser.removeFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		onSubmit: function(e) {
@@ -38,7 +41,8 @@
 			user.username = user.email;
 			user.password = this.state.password.trim();
 
-			this.register(user);
+			// this.register(user);
+			UserActions.register(user);
 		},
 
 		handleChange: function(e) {
@@ -48,30 +52,20 @@
 		    this.setState(newState);
 		},
 
-		register: function(user) {
-			console.log('RegistrationForm:authenticate() will try to authenticate user: ', user);
-
-			// Make Ajax call to authentication endpoint.
-			$.ajax({
-				type: 'POST',
-				url: '/auth/local/register',
-				data: user
-			})
-			.done(function(data, textStatus) {
-				console.log(textStatus);
-				console.log(data);
-			})
-			.fail(function(jqXHR, textStatus, errorThrown) {
-				console.log(textStatus);
-			});
-
-		},
-
 		render: function() {
+
+			var standardActions = [
+				{ text: 'OK' }
+			];
+
 			return (
-				<form  className="login" onSubmit={this.onSubmit} role="form">
-				<h4>Register</h4>
 				<div>
+					<Dialog ref="dialog" title="Registration Failed" actions={standardActions}>
+	        	{this.state.error}
+	        </Dialog>
+					<form  className="login" onSubmit={this.onSubmit} role="form">
+					<h4>Please register...</h4>
+					<div>
 	        	<TextField
 	         	  type="email"
 		          name="email"
@@ -93,7 +87,14 @@
 		        <br/>
 		        <RaisedButton label="Login" />
 		        </form>
+	        </div>
 			);
+		},
+
+		_onFailedRegistration: function(jqXhr, responseJSON) {
+			console.log('RegisterForm::_onFailedRegistration: ', jqXhr, responseJSON);
+			this.setState({error: responseJSON.error});
+			this.refs.dialog.show();
 		}
 
 	});

@@ -144,13 +144,13 @@ var AuthController = {
 
       switch (action) {
         case 'register':
-          res.send({error: flashError});
+          res.send(401, {error: flashError});
           break;
         case 'disconnect':
           res.redirect('back');
           break;
         default:
-          res.redirect('/login');
+          res.send(401, {error: flashError});
       }
     }
 

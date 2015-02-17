@@ -7,16 +7,20 @@
 
 	// Load React and necessary components.
 	var React = require('react');
+	var Router = require('react-router');
+	var Link = Router.Link;
 	var UserStore = require('../stores/UserStore.js');
 	var UserActions = require('../actions/UserActions.js');
 	var mui = require('material-ui');
 	var TextField = mui.TextField;
 	var RaisedButton = mui.RaisedButton;
+	var Dialog = mui.Dialog;
 
 	var LoginForm = React.createClass({
 
 		getInitialState: function () {
 		    return {
+		    	  error: '',
 		        identfier: '',
 		        password: ''
 		    };
@@ -24,10 +28,12 @@
 
 		componentDidMount: function () {
 			console.log('LoginForm::componentDidMount() called');
+			UserStore.currentUser.addFailedLoginListener(this._onFailedLogin);
 		},
 
 		componentWillUnmount: function () {
 			console.log('LoginForm::componentWillMount() called');
+			UserStore.currentUser.removeFailedLoginListener(this._onFailedLogin);
 		},
 
 		onSubmit: function(e) {
@@ -36,7 +42,8 @@
 			var user = {};
 			user.identifier = this.state.identifier.trim();
 			user.password = this.state.password.trim();
-			this.authenticate(user);
+			// this.authenticate(user);
+			UserActions.login(user);
 		},
 
 		handleChange: function(e) {
@@ -46,51 +53,52 @@
 		    this.setState(newState);
 		},
 
-		authenticate: function(user) {
-			console.log('LoginForm:authenticate() will try to authenticate user: ', user);
+		render: function() {
 
-			// Make Ajax call to authentication endpoint.
-			$.ajax({
-				type: 'POST',
-				url: '/auth/local',
-				data: user
-			})
-			.done(function(data, textStatus) {
-				console.log(textStatus);
-			})
-			.fail(function(jqXHR, textStatus, errorThrown) {
-				console.log(textStatus);
-			});
+			var standardActions = [
+				{ text: 'OK' }
+			];
 
+			return (
+				<div>
+					<Dialog ref="dialog" title="Login Failed" actions={standardActions}>
+	        	{this.state.error}
+	        </Dialog>
+					<form  className="login" onSubmit={this.onSubmit} role="form">
+					<h4>Please login...</h4>
+					<div>
+	      	<TextField
+	       	  type="email"
+	          name="identifier"
+	          ref="identifier"
+	          required="required"
+	          hintText="Email"
+	          floatingLabelText="Email"
+	          onChange={this.handleChange} />
+	        </div>
+	        <div>
+	        	<TextField
+	          name="password"
+	          ref="password"
+	          required="required"
+	          hintText="Password"
+	          floatingLabelText="Password" 
+	          onChange={this.handleChange} />
+	        </div>
+	        <br/>
+	        <RaisedButton label="Login" />
+	        <br/>
+	        <Link to="register">Register</Link>
+	        </form>
+	      </div>
+			);
 		},
 
-		render: function() {
-			return (
-				<form  className="login" onSubmit={this.onSubmit} role="form">
-				<div>
-	        	<TextField
-	         	  type="email"
-		          name="identifier"
-		          ref="identifier"
-		          required="required"
-		          hintText="Email"
-		          floatingLabelText="Email"
-		          onChange={this.handleChange} />
-		        </div>
-		        <div>
-	          	<TextField
-		          name="password"
-		          ref="password"
-		          required="required"
-		          hintText="Password"
-		          floatingLabelText="Password" 
-		          onChange={this.handleChange} />
-		        </div>
-		        <br/>
-		        <RaisedButton label="Login" />
-		        </form>
-			);
-		}
+		_onFailedLogin: function(jqXhr, responseJSON) {
+			console.log('LoginForm::_onFailedLogin: jqXhr: ', jqXhr, responseJSON);
+			this.setState({error: responseJSON.error});
+			this.refs.dialog.show();
+		},
 
 	});
 
