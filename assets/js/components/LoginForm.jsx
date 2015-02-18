@@ -12,6 +12,7 @@
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');
 	var mui = require('material-ui');
+	var Paper = mui.Paper;
 	var TextField = mui.TextField;
 	var RaisedButton = mui.RaisedButton;
 	var Dialog = mui.Dialog;
@@ -28,12 +29,12 @@
 
 		componentDidMount: function () {
 			console.log('LoginForm::componentDidMount() called');
-			AuthStore.currentUser.addFailedLoginListener(this._onFailedLogin);
+			AuthStore.addFailedLoginListener(this._onFailedLogin);
 		},
 
 		componentWillUnmount: function () {
 			console.log('LoginForm::componentWillMount() called');
-			AuthStore.currentUser.removeFailedLoginListener(this._onFailedLogin);
+			AuthStore.removeFailedLoginListener(this._onFailedLogin);
 		},
 
 		onSubmit: function(e) {
@@ -60,37 +61,37 @@
 			];
 
 			return (
-				<div>
-					<Dialog ref="dialog" title="Login Failed" actions={standardActions}>
+				<Paper zDepth={1} className="form-wrap">
+				<Dialog ref="dialog" className="dialog login-dialog" title="Login Failed" actions={standardActions}>
 	        	{this.state.error}
-	        </Dialog>
-					<form  className="login" onSubmit={this.onSubmit} role="form">
+        </Dialog>
+				<form  className="login" onSubmit={this.onSubmit} role="form">
 					<h4>Please login...</h4>
 					<div>
-	      	<TextField
-	       	  type="email"
-	          name="identifier"
-	          ref="identifier"
-	          required="required"
-	          hintText="Email"
-	          floatingLabelText="Email"
-	          onChange={this.handleChange} />
-	        </div>
-	        <div>
-	        	<TextField
-	          name="password"
-	          ref="password"
-	          required="required"
-	          hintText="Password"
-	          floatingLabelText="Password" 
-	          onChange={this.handleChange} />
-	        </div>
-	        <br/>
-	        <RaisedButton label="Login" />
-	        <br/>
-	        <Link to="register">Register</Link>
-	        </form>
-	      </div>
+		      	<TextField
+		       	  type="email"
+		          name="identifier"
+		          ref="identifier"
+		          required="required"
+		          hintText="Email"
+		          floatingLabelText="Email"
+		          onChange={this.handleChange} />
+		        </div>
+		        <div>
+		        	<TextField
+		          name="password"
+		          ref="password"
+		          required="required"
+		          hintText="Password"
+		          floatingLabelText="Password" 
+		          onChange={this.handleChange} />
+		        </div>
+		        <br/>
+		        <RaisedButton label="Login" />
+		        <br/>
+		        <Link to="register">Register</Link>
+        </form>
+	      </Paper>
 			);
 		},
 
