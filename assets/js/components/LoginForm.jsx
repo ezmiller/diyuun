@@ -9,8 +9,8 @@
 	var React = require('react');
 	var Router = require('react-router');
 	var Link = Router.Link;
-	var UserStore = require('../stores/UserStore.js');
-	var UserActions = require('../actions/UserActions.js');
+	var AuthStore = require('../stores/AuthStore.js');
+	var AuthActions = require('../actions/AuthActions.js');
 	var mui = require('material-ui');
 	var TextField = mui.TextField;
 	var RaisedButton = mui.RaisedButton;
@@ -28,12 +28,12 @@
 
 		componentDidMount: function () {
 			console.log('LoginForm::componentDidMount() called');
-			UserStore.currentUser.addFailedLoginListener(this._onFailedLogin);
+			AuthStore.currentUser.addFailedLoginListener(this._onFailedLogin);
 		},
 
 		componentWillUnmount: function () {
 			console.log('LoginForm::componentWillMount() called');
-			UserStore.currentUser.removeFailedLoginListener(this._onFailedLogin);
+			AuthStore.currentUser.removeFailedLoginListener(this._onFailedLogin);
 		},
 
 		onSubmit: function(e) {
@@ -43,7 +43,7 @@
 			user.identifier = this.state.identifier.trim();
 			user.password = this.state.password.trim();
 			// this.authenticate(user);
-			UserActions.login(user);
+			AuthActions.login(user);
 		},
 
 		handleChange: function(e) {

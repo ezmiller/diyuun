@@ -6,8 +6,8 @@
 
 	// Load React and necessary components.
 	var React = require('react');
-	var UserStore = require('../stores/UserStore.js');
-	var UserActions = require('../actions/UserActions.js');
+	var AuthStore = require('../stores/AuthStore.js');
+	var AuthActions = require('../actions/AuthActions.js');
 	var mui = require('material-ui');
 	var TextField = mui.TextField;
 	var Dialog = mui.Dialog;
@@ -24,12 +24,12 @@
 
 		componentDidMount: function () {
 			console.log('RegistrationForm::componentDidMount() called');
-			UserStore.currentUser.addFailedRegistrationListener(this._onFailedRegistration);
+			AuthStore.addFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		componentWillUnmount: function () {
 			console.log('RegistrationForm::componentWillMount() called');
-			UserStore.currentUser.removeFailedRegistrationListener(this._onFailedRegistration);
+			AuthStore.removeFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		onSubmit: function(e) {
@@ -42,7 +42,7 @@
 			user.password = this.state.password.trim();
 
 			// this.register(user);
-			UserActions.register(user);
+			AuthActions.register(user);
 		},
 
 		handleChange: function(e) {

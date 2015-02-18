@@ -1,16 +1,16 @@
 /**
- * UserConstants
+ * AuthConstants
  */
 (function() {
 	'use this';
 
 	var keyMirror = require('keymirror');
 
-	var UserConstants = keyMirror({
+	var AuthConstants = keyMirror({
 		LOGIN_USER: null,
 		REGISTER_USER: null
 	});
 
-	module.exports = UserConstants;
+	module.exports = AuthConstants;
 
 }());

@@ -18,7 +18,6 @@
 
 var AUTHENTICATED = ['passport', 'sessionAuth'];
 
-
 module.exports.policies = {
 
   /***************************************************************************

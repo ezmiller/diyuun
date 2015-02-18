@@ -4,7 +4,7 @@
 (function() {
 	'use strict';
 
-	var UserStore = require('../stores/UserStore.js');
+	var AuthStore = require('../stores/AuthStore.js');
 
 	var React = require('react');
 	var mui = require('material-ui');
