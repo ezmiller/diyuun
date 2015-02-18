@@ -16,6 +16,8 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
  */
 
+var AUTHENTICATED = ['passport', 'sessionAuth'];
+
 
 module.exports.policies = {
 
@@ -26,8 +28,11 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': [ 'passport' ],
-  // '*': 'flash',
+  '*': [ 'passport'],
+
+  BookController: {
+    new: AUTHENTICATED,
+  }
 
   /***************************************************************************
   *                                                                          *
