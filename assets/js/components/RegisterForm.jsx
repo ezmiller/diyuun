@@ -9,6 +9,7 @@
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');
 	var mui = require('material-ui');
+	var Paper = mui.Paper;
 	var TextField = mui.TextField;
 	var Dialog = mui.Dialog;
 	var RaisedButton = mui.RaisedButton;
@@ -59,8 +60,8 @@
 			];
 
 			return (
-				<div>
-					<Dialog ref="dialog" title="Registration Failed" actions={standardActions}>
+				<Paper zDepth={1} className="form-wrap">
+					<Dialog ref="dialog" clasName="dialog register-dialog" title="Registration Failed" actions={standardActions}>
 	        	{this.state.error}
 	        </Dialog>
 					<form  className="login" onSubmit={this.onSubmit} role="form">
@@ -87,7 +88,7 @@
 		        <br/>
 		        <RaisedButton label="Login" />
 		        </form>
-	        </div>
+	        </Paper>
 			);
 		},
 

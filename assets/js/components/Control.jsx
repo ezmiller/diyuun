@@ -24,11 +24,12 @@
 			return(
 				<Toolbar className="control">
 					<ToolbarGroup>
-						<FlatButton 
-							className="login-btn"
-							linkButton={true} 
-							href='#login' 
-							label="Login" />
+						<Link to="login">
+							<FlatButton 
+								className="login-btn"
+								linkButton={true} 
+								label="Login" />
+						</Link>
 					</ToolbarGroup>
 				</Toolbar>
 			);
