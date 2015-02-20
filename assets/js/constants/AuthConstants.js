@@ -7,8 +7,8 @@
 	var keyMirror = require('keymirror');
 
 	var AuthConstants = keyMirror({
-		LOGIN_USER: null,
-		REGISTER_USER: null
+		USER_LOGIN: null,
+		USER_LOGOUT: null
 	});
 
 	module.exports = AuthConstants;

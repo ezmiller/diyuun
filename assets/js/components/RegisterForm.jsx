@@ -25,12 +25,10 @@
 
 		componentDidMount: function () {
 			console.log('RegistrationForm::componentDidMount() called');
-			AuthStore.addFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		componentWillUnmount: function () {
 			console.log('RegistrationForm::componentWillMount() called');
-			AuthStore.removeFailedRegistrationListener(this._onFailedRegistration);
 		},
 
 		onSubmit: function(e) {
@@ -42,8 +40,7 @@
 			user.username = user.email;
 			user.password = this.state.password.trim();
 
-			// this.register(user);
-			AuthActions.register(user);
+			this.register(user);
 		},
 
 		handleChange: function(e) {
@@ -53,7 +50,24 @@
 		    this.setState(newState);
 		},
 
+		register: function(user) {
+			var self = this;
+
+			console.log('UserStore::register() called.');
+
+			// Make Ajax call to authentication endpoint.
+			$.ajax({
+				type: 'POST',
+				url: '/auth/local/register',
+				data: user
+			})
+			.done(this.onRegistrationSuccess)
+			.fail(this.onFailedRegistration);
+		},
+
 		render: function() {
+
+			var dialogTitle = '';
 
 			var standardActions = [
 				{ text: 'OK' }
@@ -61,7 +75,10 @@
 
 			return (
 				<Paper zDepth={1} className="form-wrap">
-					<Dialog ref="dialog" clasName="dialog register-dialog" title="Registration Failed" actions={standardActions}>
+					<Dialog ref="successDialog" clasName="dialog register-dialog" title="Success" actions={standardActions}>
+	        	{this.state.error}
+	        </Dialog>
+					<Dialog ref="errDialog" clasName="dialog register-dialog" title="Registration Failed" actions={standardActions}>
 	        	{this.state.error}
 	        </Dialog>
 					<form  className="login" onSubmit={this.onSubmit} role="form">
@@ -86,16 +103,23 @@
 		          onChange={this.handleChange} />
 		        </div>
 		        <br/>
-		        <RaisedButton label="Login" />
+		        <RaisedButton label="Register" />
 		        </form>
 	        </Paper>
 			);
 		},
 
-		_onFailedRegistration: function(jqXhr, responseJSON) {
-			console.log('RegisterForm::_onFailedRegistration: ', jqXhr, responseJSON);
+		onRegistrationSuccess: function(user) {
+			console.log('RegistrationForm::onRegistrationSuccess(): ', user);
+			this.setState({error: JSON.stringify(user)});
+			// this.refs.successDialog.show();
+			AuthActions.login(user);
+		},
+
+		onFailedRegistration: function(jqXhr, responseJSON) {
+			console.log('RegisterForm::onFailedRegistration(): ', jqXhr, responseJSON);
 			this.setState({error: responseJSON.error});
-			this.refs.dialog.show();
+			this.refs.errDialog.show();
 		}
 
 	});

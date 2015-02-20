@@ -128,14 +128,14 @@ var AuthController = {
       // We do return a generic error and the original request body.
       var flashError = req.flash('error')[0];
 
-      console.log('AuthController::callback() flashError: ', flashError);
-
       if (err && !flashError ) {
         req.flash('error', 'Error.Passport.Generic');
       } else if (flashError) {
         req.flash('error', flashError);
       }
       req.flash('form', req.body);
+
+      console.log('AuthController::callback() flashError: ', flashError);
 
       // If an error was thrown, redirect the user to the
       // login, register or disconnect action initiator view.

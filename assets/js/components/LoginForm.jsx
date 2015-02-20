@@ -29,12 +29,17 @@
 
 		componentDidMount: function () {
 			console.log('LoginForm::componentDidMount() called');
-			AuthStore.addFailedLoginListener(this._onFailedLogin);
 		},
 
 		componentWillUnmount: function () {
 			console.log('LoginForm::componentWillMount() called');
-			AuthStore.removeFailedLoginListener(this._onFailedLogin);
+		},
+
+		handleChange: function(e) {
+			var newState = {};
+		    newState[e.target.name] = e.target.value;
+		    console.log('LoginForm::handleChange() newstate', newState);
+		    this.setState(newState);
 		},
 
 		onSubmit: function(e) {
@@ -43,15 +48,22 @@
 			var user = {};
 			user.identifier = this.state.identifier.trim();
 			user.password = this.state.password.trim();
-			// this.authenticate(user);
-			AuthActions.login(user);
+			this.login(user);
 		},
 
-		handleChange: function(e) {
-			var newState = {};
-		    newState[e.target.name] = e.target.value;
-		    console.log('LoginForm::handleChange() newstate', newState);
-		    this.setState(newState);
+		login: function(user) {
+			var that = this;
+			console.log('LoginForm::login() called with user: ', user);
+
+			// Make Ajax call to authentication endpoint.
+			$.ajax({
+				type: 'POST',
+				url: '/auth/local',
+				data: user
+			})
+			.done(this.onLoginSuccess)
+			.fail(this.onFailedLogin);
+			
 		},
 
 		render: function() {
@@ -95,9 +107,14 @@
 			);
 		},
 
-		_onFailedLogin: function(jqXhr, responseJSON) {
-			console.log('LoginForm::_onFailedLogin: jqXhr: ', jqXhr, responseJSON);
-			this.setState({error: responseJSON.error});
+		onLoginSuccess: function(user, textStatus) {
+			console.log('LoginForm::onLoginSuccess() user: ', user);
+			AuthActions.login(user);
+		},
+
+		onFailedLogin: function(jqXhr, textStatus, errorThrown) {
+			console.log('LoginForm::onFailedLogin: jqXhr: ', jqXhr);
+			this.setState({error: jqXhr.responseJSON.error});
 			this.refs.dialog.show();
 		},
 
