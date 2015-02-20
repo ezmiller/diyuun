@@ -121,48 +121,23 @@ var AuthController = {
    */
   callback: function (req, res) {
     console.log('AuthController::callback() called.');
-    function tryAgain (err) {
 
-      // Only certain error messages are returned via req.flash('error', someError)
-      // because we shouldn't expose internal authorization errors to the user.
-      // We do return a generic error and the original request body.
-      var flashError = req.flash('error')[0];
+    function handleAuthErr (err) {
+      var action = req.param('action')
+          , flashError = req.flash('error')[0];
 
-      if (err && !flashError ) {
-        req.flash('error', 'Error.Passport.Generic');
-      } else if (flashError) {
-        req.flash('error', flashError);
-      }
-      req.flash('form', req.body);
-
-      console.log('AuthController::callback() flashError: ', flashError);
-
-      // If an error was thrown, redirect the user to the
-      // login, register or disconnect action initiator view.
-      // These views should take care of rendering the error messages.
-      var action = req.param('action');
-
-      switch (action) {
-        case 'register':
-          res.send(401, {error: flashError});
-          break;
-        case 'disconnect':
-          res.redirect('back');
-          break;
-        default:
-          res.send(401, {error: flashError});
-      }
+      // COMMENT: Here I could resopnd to different actions differently.
+      res.send(401, {error: flashError});
     }
 
     passport.callback(req, res, function (err, user) {
       if (err) {
-        return tryAgain();
+        return handleAuthErr(err);
       }
 
       req.login(user, function (err) {
         if (err) {
-          console.log('req.login() error: ', err);
-          return tryAgain();
+          return handleAuthErr();
         }
 
         // Upon successful login, send the user to the homepage were req.user
@@ -170,6 +145,7 @@ var AuthController = {
         res.send(user);
       });
     });
+
   },
 
   /**

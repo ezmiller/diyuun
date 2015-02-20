@@ -224,20 +224,25 @@ passport.callback = function (req, res, next) {
   var provider = req.param('provider', 'local')
     , action   = req.param('action');
 
+  // Pass along error is user already logged in
+  if ( req.user ) {
+    return next(CustomErrors.createAuthorizationError('User Already Logged In.'));
+  }
+
   // Passport.js wasn't really built for local user registration, but it's nice
   // having it tied into everything else.
   if (provider === 'local' && action !== undefined) {
-    if (action === 'register' && !req.user) {
+    if (action === 'register') {
       this.protocols.local.register(req, res, next);
     }
-    else if (action === 'connect' && req.user) {
+    else if (action === 'connect') {
       this.protocols.local.connect(req, res, next);
     }
-    else if (action === 'disconnect' && req.user) {
+    else if (action === 'disconnect') {
       this.protocols.local.disconnect(req, res, next);
     }
     else {
-      next(new Error('Invalid action'));
+      return next(CustomErrors.createAuthorizationError('Invalid Action.'));
     }
   } else {
     if (action === 'disconnect' && req.user) {
@@ -248,7 +253,6 @@ passport.callback = function (req, res, next) {
       // access was granted, the user will be logged in. Otherwise, authentication
       // has failed.
       this.authenticate(provider, next)(req, res, req.next);
-      console.log('PassportService::callback() after authenticate user: ', req.user === false ? 'failed': req.user );
     }
   }
 };

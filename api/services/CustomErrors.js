@@ -20,6 +20,7 @@
 var errors = [
     'InvalidArgument',
     'FailedToPersist',
+    'Authorization',
     ['ISBN', 'InvalidArgument'],
     ['GermanISBN', 'ISBN']
 ];
