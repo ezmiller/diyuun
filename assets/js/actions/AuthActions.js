@@ -15,6 +15,13 @@
 				'actionType': AuthConstants.USER_LOGIN,
 				'user': user
 			});
+		},
+
+		logout: function() {
+			console.log('UserActions::logout() dispatching action');
+			OurDispatcher.dispatch({
+				'actionType': AuthConstants.USER_LOGOUT
+			});
 		}
 
 	}; // UserActions

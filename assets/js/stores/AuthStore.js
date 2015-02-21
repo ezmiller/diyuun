@@ -13,8 +13,8 @@
 	// Tell backgone to use jQuery
 	Backbone.$ = $;
 
-	var REGISTRATION_FAILED = 'registration:failed';
-	var REGISTRATION_SUCCEEDED = 'registration:succeeded';
+	var LOGIN = 'login';
+	var LOGOUT = 'logout';
 
 	/**
 	 * A model for the individual user. Also contains a series of method 
@@ -32,27 +32,52 @@
 		},
 
 		initialize: function() {
+			var that = this;
 			console.log('AuthStore::initialize()');
+
+			// Register store with dispatcher.
 			OurDispatcher.register(actionCallback);
+
+			// Check if a user is logged in. If so, set.
+			$.ajax({url: '/authorized'})
+				.done(function(user) {
+					console.log('Logged in?:', user);
+					that.set(user);
+				});
+
+		},
+
+		getCurrentUserId: function() {
+			return this.get('id');
 		},
 
 		getCurrentUser: function() {
-			return ( this.currentUser ) ? this.currentUser: false;
+			var u = this.toJSON();
+			return ( u ) ? u : false;
 		},
 
 		isLoggedIn: function() {
-			return ( this.currentUser ) ? true: false;
+			console.log(this.getCurrentUserId());
+			return ( this.getCurrentUserId() ) ? true: false;
 		},
 
 		addLoginListener: function(callback) {
 			console.log('AuthStore::addLoginListener()');
-			this.on(AuthConstants.USER_LOGIN, callback);
+			this.on(LOGIN, callback);
 		},
 
 		removeLoginListener: function(callback) {
 			console.log('AuthStore::removeLoginListener()');
-			this.on(AuthConstants.USER_LOGIN, callback);
+			this.off(LOGIN, callback);
 		},
+
+		addLogoutListener: function(callback) {
+			this.on(LOGOUT, callback);
+		},
+
+		removeLogoutListener: function(callback) {
+			this.off(LOGOUT, callback);
+		}
 
 	}) );
 
@@ -61,8 +86,11 @@
 		switch(action.actionType) {
 			case AuthConstants.USER_LOGIN:
 				AuthStore.set(action.user);
-				console.log( 'LoggedIn User email: ', AuthStore.get('email') );
+				AuthStore.trigger(LOGIN);
 				break;
+			case AuthConstants.USER_LOGOUT:
+				AuthStore.clear();
+				AuthStore.trigger(LOGOUT);
 		}
 	}
 

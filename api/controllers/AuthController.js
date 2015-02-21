@@ -68,8 +68,19 @@ var AuthController = {
    * @param {Object} res
    */
   logout: function (req, res) {
+    console.log('AuthController::logout');
     req.logout();
-    res.redirect('/');
+    res.ok();
+  },
+
+  /**
+   * Returns the user id of the logged in user; otherwise, false.
+   * @param  {[type]} req [description]
+   * @param  {[type]} res [description]
+   */
+  authorized: function(req, res) {
+    var user = (req.user) ? req.user : false
+    res.json(user);
   },
 
   /**
