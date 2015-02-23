@@ -3,8 +3,8 @@
  *
  * A singleton that operates as the central hub for application state.
  */
-
-// define(['flux'], function(Flux) {
+(function() {
+	'use strict';
 
 	var Flux = require('flux');
 
@@ -12,6 +12,4 @@
 
 	module.exports = new Dispatcher();
 
-	// return new Dispatcher();
-
-// }); // define
+}());

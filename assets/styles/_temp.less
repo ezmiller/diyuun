@@ -1,6 +1,45 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
 .mui-app-content-canvas {
-	width: 80%;
-	margin: 30px auto;
+	background: @canvas-color;
 }
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+
+	.control {
+		background: @app-bar-color;
+	}
+
+	.login-btn,
+	.logout-btn {
+		float: right;
+		background: @app-bar-color;
+		color: @app-bar-text-color;
+	}
+}
+
+#main {
+	width: 100%;
+	margin-top: 56px; // Below App Control
+}
+
+/** Modules */
+
+.dialog {
+	padding-top: 60px !important;
+}
+
+.form-wrap {
+	margin: 130px auto;
+	width: 340px;
+	height: 300px;
+}
+
+/** Login & Registration */
+
+.login[role=form] {
+	text-align: center;
+}
+

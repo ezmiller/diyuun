@@ -32,9 +32,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'root'
-  },
+  'GET /': 'IndexController.index',
+
 
   /***************************************************************************
   *                                                                          *
@@ -46,6 +45,17 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /user': 'ProfileController.index'
+  'GET /login': 'AuthController.login',
+  'GET /logout': 'AuthController.logout',
+  'GET /register': 'AuthController.register',
+  'GET /authorized': 'AuthController.authorized',
+
+  'post /auth/local': 'AuthController.callback',
+  'post /auth/local/:action': 'AuthController.callback',
+
+  // 'get /auth/:provider': 'AuthController.provider',
+  // 'get /auth/:provider/callback': 'AuthController.callback',
+  // 'get /auth/:provider/:action': 'AuthController.callback',
+
 
 };
