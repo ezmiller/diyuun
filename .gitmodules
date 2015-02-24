@@ -1,0 +1,3 @@
+[submodule "assets/material-ui-sass"]
+	path = assets/material-ui-sass
+	url = git@github.com:codecuts/material-ui-sass.git
