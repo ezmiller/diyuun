@@ -3,7 +3,8 @@ module.exports = function(grunt) {
     grunt.config.set('sass', {
         dev: {
             options: {
-                style: 'expanded'
+                style: 'expanded',
+                loadPath: ['node_modules/material-ui-sass']
             },
             files: [
                 {
