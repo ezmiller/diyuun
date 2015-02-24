@@ -1,6 +1,6 @@
 
 .mui-app-content-canvas {
-	background: @canvas-color;
+
 }
 
 header {
@@ -9,14 +9,14 @@ header {
 	width: 100%;
 
 	.control {
-		background: @app-bar-color;
+		background: $app-bar-color;
 	}
 
 	.login-btn,
 	.logout-btn {
 		float: right;
-		background: @app-bar-color;
-		color: @app-bar-text-color;
+		background: $app-bar-color;
+		color: $app-bar-text-color;
 	}
 }
 
