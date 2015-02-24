@@ -1,0 +1,16 @@
+/**
+ * _layout.scss
+ *
+ * Style rules that divide the page into
+ * sections and hold one or modules together.
+ */
+
+#container {
+	@extend .row;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
