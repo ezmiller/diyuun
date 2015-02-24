@@ -59,6 +59,10 @@ module.exports = {
         reviews: {
             collection: 'review',
             via: 'reviewer'
+        },
+        comments: {
+            collection: 'comment',
+            via: 'user'
         }
     },
 

@@ -8,6 +8,10 @@
 
 module.exports = {
 
+	one: function(req, res) {
+		res.view();
+	},
+
 	new: function(req, res) {
 		console.log('BookController: "new" action called.');
 		res.view();
