@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.config.set('compass', {
     dev: {                    // Another target
       options: {
-        importPath: ['node_modules/material-ui-sass'],
+        importPath: ['assets/material-ui-sass'],
         sassDir: 'assets/styles/',
         cssDir: '.tmp/public/styles',
         environment: 'development'
