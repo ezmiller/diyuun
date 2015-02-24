@@ -1,0 +1,42 @@
+/**
+ * _modules.scss
+ */
+
+
+/** Dialog */
+
+.dialog {
+	padding-top: 60px !important;
+}
+
+/** Control */
+
+.control {
+	background: $app-bar-color;
+}
+
+.form-wrap {
+	margin: 130px auto;
+	width: 340px;
+	height: 300px;
+}
+
+.login[role=form] {
+	text-align: center;
+}
+
+.login-btn {
+	float: right;
+	padding: 9px;
+
+	&:hover {
+		@include opacity(0.8);
+	}
+}
+
+/** Page related modules */
+
+.section {
+	@extend .s12;
+}
+
