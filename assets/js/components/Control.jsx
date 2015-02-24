@@ -8,12 +8,15 @@
 	var AuthActions = require('../actions/AuthActions.js');
 
 	var React = require('react');
+
 	var mui = require('material-ui');
-	var Router = require('react-router');
-	var Link = Router.Link;
 	var Toolbar = mui.Toolbar;
 	var ToolbarGroup = mui.ToolbarGroup;
 	var FlatButton = mui.FlatButton;
+
+
+	var Router = require('react-router');
+	var Link = Router.Link;
 
 	var Control = React.createClass({
 
@@ -53,12 +56,11 @@
 			if (this.state.loggedIn) {
 				authButton = <FlatButton className="logout-btn" label="Logout" onClick={this.logout} />;
 			} else {
-				console.log('Control: not logged in');
-				authButton = <Link to="login"><FlatButton className="login-btn" label="Login" /></Link>;
+				authButton = <Link to="login" className="login-btn"><FlatButton label="Login" /></Link>;
 			}
 
 			return(
-				<Toolbar className="control">
+				<Toolbar className="control col s12">
 					<ToolbarGroup>
 						{authButton}
 					</ToolbarGroup>

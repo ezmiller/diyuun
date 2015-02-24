@@ -18,12 +18,12 @@
 
 		render: function() {
 			return (
-				<div>
-					<header>
-						<Control />
+				<div id="container">
+					<header className="row">
+						<Control className="col s5" />
 					</header>
 					<div id="main">
-		    		<RouteHandler />
+	    			<RouteHandler />
 		    	</div>
 				</div>
 			);
