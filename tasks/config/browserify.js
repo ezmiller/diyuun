@@ -15,7 +15,9 @@ module.exports = function(grunt) {
       options: {
         debug: true,
         extensions: ['.jsx'],
-        transform: ['reactify'],
+        transform: [
+          [ 'reactify', {'es6': true} ]
+        ]
       }
     }
   });
