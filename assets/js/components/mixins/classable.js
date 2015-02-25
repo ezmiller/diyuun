@@ -10,8 +10,6 @@ module.exports = {
   getClasses: function(initialClasses, additionalClassObj) {
     var classString = '';
 
-    console.log('classable: ', this.props.className);
-
     //Initialize the classString with the classNames that were passed in
     if (this.props.className) classString += ' ' + this.props.className;
 
