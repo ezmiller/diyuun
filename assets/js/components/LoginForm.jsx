@@ -5,19 +5,26 @@
 (function() {
 	'use strict';
 
-	// Load React and necessary components.
-	var React = require('react');
-	var Router = require('react-router');
-	var Link = Router.Link;
+
+	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');
-	var mui = require('material-ui');
-	var Paper = mui.Paper;
-	var TextField = mui.TextField;
-	var RaisedButton = mui.RaisedButton;
-	var Dialog = mui.Dialog;
+
+	// Router
+	var Router = require('react-router');
+	var Link = Router.Link;
+
+	// Load React and necessary components.
+	var React = require('react');
+	var Classable = require('./mixins/classable.js');
+	var Input = require('./Input.jsx');
+	var PrimaryButton = require('./PrimaryButton.jsx');
+
+	var Dialog = require('./Dialog.jsx');
 
 	var LoginForm = React.createClass({
+
+		mixins: [Classable],
 
 		getInitialState: function () {
 		    return {
@@ -63,7 +70,6 @@
 			})
 			.done(this.onLoginSuccess)
 			.fail(this.onFailedLogin);
-			
 		},
 
 		render: function() {
@@ -72,38 +78,40 @@
 				{ text: 'OK' }
 			];
 
+			var gridClasses =this.getClasses('col s4 offset-s4', {});
+			var wrapClasses = this.getClasses('login form-wrap z-depth-1', {});
+
 			return (
-				<Paper zDepth={1} className="form-wrap">
-				<Dialog ref="dialog" className="dialog login-dialog" title="Login Failed" actions={standardActions}>
-	        	{this.state.error}
-        </Dialog>
-				<form  className="login" onSubmit={this.onSubmit} role="form">
-					<h4>Please login...</h4>
-					<div>
-		      	<TextField
-		       	  type="email"
-		          name="identifier"
-		          ref="identifier"
-		          required="required"
-		          hintText="Email"
-		          floatingLabelText="Email"
-		          onChange={this.handleChange} />
-		        </div>
-		        <div>
-		        	<TextField
-		          name="password"
-		          ref="password"
-		          required="required"
-		          hintText="Password"
-		          floatingLabelText="Password" 
-		          onChange={this.handleChange} />
-		        </div>
-		        <br/>
-		        <RaisedButton label="Login" />
-		        <br/>
-		        <Link to="register">Register</Link>
-        </form>
-	      </Paper>
+				<div className={gridClasses}>
+					<div className={wrapClasses}>
+						<Dialog ref="dialog" className="dialog login-dialog" title="Login Failed" actions={standardActions}>
+			        	{this.state.error}
+		        </Dialog>
+						<form className="login-form" onSubmit={this.onSubmit} role="form">
+							<h4>Please login...</h4>
+							<div>
+				      	<Input
+				      		label="Email"
+				       	  type="email"
+				          name="identifier"
+				          ref="identifier"
+				          onChange={this.handleChange} />
+				        </div>
+				        <div>
+				        	<Input
+				        		label="Password"
+					        	type="text"
+					          name="password"
+					          ref="password"
+					          onChange={this.handleChange} />
+				        </div>
+				        <br/>
+				        <PrimaryButton label="Login" />
+				        <br/>
+				        <Link to="register">Register</Link>
+		        </form>
+		      </div>
+		    </div>
 			);
 		},
 

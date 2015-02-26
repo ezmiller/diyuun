@@ -4,16 +4,15 @@
 (function() {
 	'use strict';
 
+	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');
 
+	// React.
 	var React = require('react');
-
-	var mui = require('material-ui');
-	var Toolbar = mui.Toolbar;
-	var ToolbarGroup = mui.ToolbarGroup;
-	var FlatButton = mui.FlatButton;
-
+	var Toolbar = require('./Toolbar.jsx');
+	var ToolbarGroup = require('./ToolbarGroup.jsx');
+	var PrimaryButton = require('./PrimaryButton.jsx');
 
 	var Router = require('react-router');
 	var Link = Router.Link;
@@ -54,9 +53,9 @@
 			console.log('Control::render() loggedIn:', this.state.loggedIn);
 
 			if (this.state.loggedIn) {
-				authButton = <FlatButton className="logout-btn" label="Logout" onClick={this.logout} />;
+				authButton = <PrimaryButton label="Logout" className="logout-btn" onClick={this.logout} />;
 			} else {
-				authButton = <Link to="login" className="login-btn"><FlatButton label="Login" /></Link>;
+				authButton = <PrimaryButton label="Login" linkButton={true} to="login" className="login-btn" />;
 			}
 
 			return(

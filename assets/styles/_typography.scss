@@ -3,7 +3,11 @@
  */
 
 html {
-	font-size: 62.5%; /* sets root font size to ~10px */
+	// font-size: 62.5%;	 /* sets root font size to ~10px */
 }
 
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic);
+body {
+	font-size: 1em;
+}
+
+@import url("http://fonts.googleapis.com/css?family=Lato:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic");
