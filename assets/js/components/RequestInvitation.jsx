@@ -25,9 +25,9 @@
 						<h4>Kanon is a place to discuss scholarship and ideas</h4>
 						<br/>
 						<form class="invitation-form">
-							<Input label="Name" ref="name" />
+							<Input id="name" ref="name" label="Name"  />
 							<br/>
-							<Input label="Email" ref="email" />
+							<Input id="email" ref="email" label="Email"  />
 							<br/>
 							<PrimaryButton linkButton={true} to="signup" label="Request Invitation" />
 						</form>
