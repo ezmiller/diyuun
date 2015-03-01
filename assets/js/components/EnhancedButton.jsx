@@ -22,7 +22,7 @@
 		},
 
 		getInitialState: function () {
-			return null;
+			return {};
 		},
 
 		render: function() {
@@ -31,6 +31,8 @@
 				disabled,
 				linkButton,
 				...other } = this.props;
+
+			var linkButton = linkButton ? true : false;
 
 			var classes = this.getClasses('btn', {
 				'waves-effect': true
@@ -42,8 +44,6 @@
 	    var buttonChildren = [
 		      this.props.children,
 		  ];
-
-		  console.log('EnhancedButton::render() linkButton: ', linkButton);
 
 		  return linkButton ? (
 		  	<Link {...other} {...buttonProps} >
