@@ -15,31 +15,43 @@
 			id: React.PropTypes.string,
 			ref: React.PropTypes.string,
 			type: React.PropTypes.string,
-			label: React.PropTypes.string,
+			label: React.PropTypes.string
 		},
 
 		getDefaultProps: function () {
 		    return {
-		        type: 'text'
+		        type: 'text',
 		    };
+		},
+
+		componentDidMount: function() {
+			console.log('input refs:', this.refs);
 		},
 
 		render: function() {
 
 			var {
 				id,
-				ref,
 				type,
 				label,
+				name,
 				...other
 			} = this.props;
 
-			var classes = this.getClasses('input-field', {});
+
+			var wrapClasses = this.getClasses('input-field', {});
+
+			var inputProps = {
+				id: name,
+				ref: name,
+				type: type,
+				name: name
+			};
 
 			return (
-				<div className={classes}>
-					<input id={id} type={type} />
-					<label for={id}>{label}</label>
+				<div className={wrapClasses}>
+					<input {...inputProps} {...other} />
+					<label htmlFor={id}>{label}</label>
 				</div>
 			);
 		}
