@@ -94,7 +94,8 @@
       //prevent scrolling
       var body = document.getElementsByTagName('body')[0];
       body.style.overflow = 'hidden';
-      body.style.position = 'fixed';
+      // body.style.position = 'fixed';
+      // COMMENT: disabled because was causing container to resize when overlay was displayed
 
       this.setState({ open: true });
       if (this.props.onShow) this.props.onShow();
