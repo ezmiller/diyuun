@@ -41,8 +41,10 @@
 			// Check if a user is logged in. If so, set.
 			$.ajax({url: '/authorized'})
 				.done(function(user) {
-					that.set(user);
-					that.trigger(LOGIN);
+					if ( user ) {
+						that.set(user);
+						that.trigger(LOGIN);
+					}
 				});
 
 		},
