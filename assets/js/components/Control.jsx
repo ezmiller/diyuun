@@ -21,7 +21,7 @@
 
 		getInitialState: function () {
 	    return {
-	    	loggedIn: AuthStore.isLoggedIn()
+	    	loggedIn: false
 	    };
 		},
 

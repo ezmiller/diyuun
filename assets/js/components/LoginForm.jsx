@@ -107,8 +107,6 @@
 				        </div>
 				        <br/>
 				        <PrimaryButton label="Login" />
-				        <br/>
-				        <Link to="register">Register</Link>
 		        </form>
 		      </div>
 		    </div>
