@@ -15,5 +15,6 @@
   ],
   "dependencies": {
     "jquery": "~2.1.3",
+    "skeleton": "~2.0.4"
   }
 }
