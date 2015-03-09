@@ -14,11 +14,12 @@
 	var Link = Router.Link;
 	var Route = Router.Route;
 	var RouteHandler = Router.RouteHandler;
+	var Classable = require('./mixins/classable.js');
 	var Navigation = require('react-router').Navigation;
 
 	var App = React.createClass({
 
-		mixins: [Navigation],
+		mixins: [Classable, Navigation],
 
 		getInitialState: function () {
 		    return {
@@ -37,8 +38,12 @@
 		},
 
 		render: function() {
+			var classes = this.getClasses('app', {
+				'not-logged-in': !this.state.loggedIn,
+				'logged-in': this.state.loggedIn
+			});
 			return (
-				<div id="container">
+				<div id="app" className={classes}>
 					<header>
 						<Controlbar />
 					</header>

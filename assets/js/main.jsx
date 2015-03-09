@@ -10,6 +10,6 @@ var routes = require('./routes');
 Router.run(routes, Router.HistoryLocation, function(Handler) {
   React.render(
   	<Handler />,
-  	document.getElementById('app')
+  	document.getElementById('container')
   );
 });
