@@ -29,16 +29,9 @@ var jsFilesToInject = [
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
-  // TODO: Load jQuery and materialize.js the right way!
-  'bower_components/jquery/dist/jquery.js',
-  'bower_components/materialize/dist/js/materialize.js',
-
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
   // 'js/**/*.js'
-
-  // RequireJS will handle loading of js files
-  // 'bower_components/requirejs/require.js'
 ];
 
 
