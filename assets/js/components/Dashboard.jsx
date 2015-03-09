@@ -1,17 +1,18 @@
 /**
- * AuthStore
+ * Dashboard
  */
 (function() {
 	'use strict';
 
 	var React = require('react');
+	var Section = require('./Section.jsx');
 
 	var Dashboard = React.createClass({
 		render:function() {
 			return(
-				<div className="main dashboard">
+				<Section className="dashboard">
 					<p>This is your dashboard.</p>
-				</div>
+				</Section>
 			);
 		}
 	});

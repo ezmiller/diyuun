@@ -38,7 +38,7 @@
 		},
 
 		render: function() {
-			var classes = this.getClasses('app', {
+			var classes = this.getClasses('', {
 				'not-logged-in': !this.state.loggedIn,
 				'logged-in': this.state.loggedIn
 			});
@@ -47,7 +47,9 @@
 					<header>
 						<Controlbar />
 					</header>
-					<RouteHandler />
+					<div className="content">
+						<RouteHandler />
+					</div>
 				</div>
 			);
 		},

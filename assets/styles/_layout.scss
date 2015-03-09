@@ -1,0 +1,14 @@
+/**
+ * _laytout.scss
+ */
+
+#container {
+	@extend .container; 
+}
+
+header {
+	height: $controlbar-mobile-height;
+	@media screen and (min-width: $larger-than-phablet) {
+		height: $controlbar-height;
+	}
+}

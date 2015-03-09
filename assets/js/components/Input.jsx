@@ -46,8 +46,7 @@
 
 			return (
 				<div className={wrapClasses}>
-					<input {...inputProps} {...other} />
-					<label htmlFor={id}>{label}</label>
+					<input {...inputProps} {...other}/>
 				</div>
 			);
 		}

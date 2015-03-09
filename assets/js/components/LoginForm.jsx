@@ -73,32 +73,29 @@
 
 		render: function() {
 
-			var standardActions = [
-				{ text: 'OK' }
-			];
-
-			var gridClasses =this.getClasses('col s4 offset-s4', {});
+			var gridClasses =this.getClasses('column one-third offset-by-one-third', {});
 			var wrapClasses = this.getClasses('login form-wrap z-depth-1', {});
 
 			return (
 				<div className={gridClasses}>
 					<div className={wrapClasses}>
+						<h1>Kanon</h1>
 						<form className="login-form" onSubmit={this.onSubmit} role="form">
 							<h4>Please login...</h4>
 							<div>
 				      	<Input
-				      		label="Email"
 				       	  type="email"
 				          name="identifier"
 				          ref="identifier"
+				          placeholder="email"
 				          onChange={this.handleChange} />
 				        </div>
 				        <div>
 				        	<Input
-				        		label="Password"
 					        	type="text"
 					          name="password"
 					          ref="password"
+					          placeholder="password"
 					          onChange={this.handleChange} />
 				        </div>
 				        <br/>

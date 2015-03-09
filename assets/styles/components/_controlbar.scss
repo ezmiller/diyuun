@@ -1,11 +1,10 @@
-$controlbar-height: 80px;
-$controlbar-mobile-height: 64px;
-
 .not-logged-in #controlbar {
   visibility: hidden;
 }
 
 #controlbar {
+  position: fixed;
+  top: 0; left: 0;
 	width: 100%;
 	height: $controlbar-mobile-height;
 	background-color: #333;
