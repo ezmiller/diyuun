@@ -1,0 +1,81 @@
+$controlbar-height: 80px;
+$controlbar-mobile-height: 64px;
+
+#controlbar {
+	width: 100%;
+	height: $controlbar-mobile-height;
+	background-color: #333;
+	@extend .z-depth-1;
+	overflow: hidden;
+
+	a {
+		font-size: 1.5rem;
+		color: #fff;
+	}
+
+	.controlbar-wrapper {
+		position: relative;
+		height: 100%;
+	}
+
+	@media screen and (min-width: $larger-than-phablet) {
+		height: $controlbar-height;
+		a { font-size: 2.2rem }
+	}
+
+	// Logo
+  .brand-logo {
+  	display: inline-block;
+    position: absolute;
+    padding: 0 25px;
+    font-family: 'Lato', sans-serif;
+    font-size: 3rem;
+    line-height: $controlbar-mobile-height;
+    color: #fff;
+
+    @media screen and (min-width: $larger-than-phablet) {
+      font-size: 5rem;
+      line-height: $controlbar-height;
+    }
+  }
+
+	// Controlbar links
+	ul {
+		height: inherit;
+    margin: 0;
+
+    li {
+      @include transition(background-color .3s);
+      float: left;
+      padding: 0px;
+
+      &:hover, &.active {
+        background-color: rgba(0,0,0,.1);
+      }
+    }
+
+    a {
+    	display: block;
+    	height: $controlbar-mobile-height;
+    	margin-top: -25px; // Necessary for some reason to get element flush with top.
+    	padding: 0px 25px;
+    	line-height: $controlbar-mobile-height;
+      color: #fff;
+    }
+
+    &.right-controlbar-group {
+    	float: right;
+    }
+
+    @media screen and (min-width: $larger-than-phablet) {
+			a {
+				margin-top:0;
+				height: $controlbar-height;
+				line-height: $controlbar-height;
+			}
+		}
+
+  }
+
+}
+

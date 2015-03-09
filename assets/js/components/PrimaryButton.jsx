@@ -1,41 +1,58 @@
-/**
- * PrimaryButton
- */
 (function() {
 	'use strict';
 
+	// React & components.
 	var React = require('react');
+	var Router = require('react-router');
+	var Link = Router.Link;
+
+	// Mixins.
 	var Classable = require('./mixins/classable.js');
-	var EnhancedButton = require('./Enhancedbutton.jsx');
+	var WindowListenable = require('./mixins/window-listenable.js');
 
 	var PrimaryButton = React.createClass({
 
-		mixins: [Classable],
+		mixins: [Classable, WindowListenable],
 
-	  propTypes: {
-	    className: React.PropTypes.string,
+		propTypes: {
+			disabled: React.PropTypes.bool,
+			linkButton: React.PropTypes.bool,
+			className: React.PropTypes.string,
 	    label: React.PropTypes.string.isRequired,
-	  },
+		},
 
-	  render: function() {
+		getInitialState: function () {
+			return {};
+		},
 
-	    var {
-	        label,
-	        ...other
-	      } = this.props;
+		render: function() {
+			var {
+				label,
+				disabled,
+				linkButton,
+				...other } = this.props;
 
-	    var classes = this.getClasses('primary', {});
+			var linkButton = linkButton ? true : false;
 
-	    return (
-	      <EnhancedButton 
-	      	{...other}
-	        className={classes} >
-	        <span className="primary-button-label">{label}</span>
-	      </EnhancedButton>
-	    );
-	  }
+			var classes = this.getClasses('button primary', {});
 
-	});
+			var buttonProps = {
+				className: classes,
+				disabled: disabled,
+	    };
+
+		  return linkButton ? (
+		  	<Link {...other} {...buttonProps} >
+		  		<span className="primary-button-label">{label}</span>
+		  	</Link>
+		  ) : (
+		  	<button {...other} {...buttonProps}>
+		  		<span className="primary-button-label">{label}</span>
+		  	</button>
+		  );
+
+		},
+	})
 
 	module.exports = PrimaryButton;
 
