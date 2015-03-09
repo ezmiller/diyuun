@@ -5,7 +5,6 @@
 (function() {
 	'use strict';
 
-
 	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');
@@ -84,9 +83,6 @@
 			return (
 				<div className={gridClasses}>
 					<div className={wrapClasses}>
-						<Dialog ref="dialog" className="dialog login-dialog" title="Login Failed" actions={standardActions}>
-			        	{this.state.error}
-		        </Dialog>
 						<form className="login-form" onSubmit={this.onSubmit} role="form">
 							<h4>Please login...</h4>
 							<div>
@@ -121,7 +117,6 @@
 		onFailedLogin: function(jqXhr, textStatus, errorThrown) {
 			console.log('LoginForm::onFailedLogin: jqXhr: ', jqXhr);
 			this.setState({error: jqXhr.responseJSON.error});
-			this.refs.dialog.show();
 		},
 
 	});

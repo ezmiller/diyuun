@@ -9,8 +9,8 @@
 	var Dashboard = React.createClass({
 		render:function() {
 			return(
-				<div class="dashboard">
-				<p>This is your dashboard.</p>
+				<div className="main dashboard">
+					<p>This is your dashboard.</p>
 				</div>
 			);
 		}

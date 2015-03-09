@@ -13,13 +13,15 @@ var Home = require('./components/Home.jsx');
 var Login = require('./components/Login.jsx');
 var Signup = require('./components/Signup.jsx');
 var Register = require('./components/Register.jsx');
+var Dashboard = require('./components/Dashboard.jsx');
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-  	<DefaultRoute handler={Home} />
+  	<DefaultRoute handler={Login} />
   	<Route name="login" handler={Login} />
   	<Route name="signup" handler={Signup} />
     <Route name="register" handler={Register} />
+    <Route name="dashboard" handler={Dashboard} />
   </Route>
 );
 
