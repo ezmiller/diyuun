@@ -24,10 +24,6 @@
 		    };
 		},
 
-		componentDidMount: function() {
-			console.log('input refs:', this.refs);
-		},
-
 		render: function() {
 
 			var {
