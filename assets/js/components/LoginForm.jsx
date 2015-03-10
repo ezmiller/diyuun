@@ -92,7 +92,7 @@
 				        </div>
 				        <div>
 				        	<Input
-					        	type="text"
+					        	type="password"
 					          name="password"
 					          ref="password"
 					          placeholder="password"

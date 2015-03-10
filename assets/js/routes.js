@@ -14,6 +14,7 @@ var Login = require('./components/Login.jsx');
 var Signup = require('./components/Signup.jsx');
 var Register = require('./components/Register.jsx');
 var Dashboard = require('./components/Dashboard.jsx');
+var SendInvite = require('./components/SendInvite.jsx');
 
 var routes = (
   <Route name="app" path="/" handler={App}>
@@ -22,6 +23,7 @@ var routes = (
   	<Route name="signup" handler={Signup} />
     <Route name="register" handler={Register} />
     <Route name="dashboard" handler={Dashboard} />
+    <Route name="send-invite" handler={SendInvite} />
   </Route>
 );
 
