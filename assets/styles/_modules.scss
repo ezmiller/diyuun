@@ -109,7 +109,8 @@ textarea {
 textarea {
   min-height: 65px;
   padding-top: 6px;
-  padding-bottom: 6px; }
+  padding-bottom: 6px; 
+  border: 1.2px solid #D1D1D1; }
 input[type="email"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
@@ -125,7 +126,9 @@ label,
 legend {
   display: block;
   margin-bottom: .5rem;
-  font-weight: 600; }
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  font-weight: normal; }
 fieldset {
   padding: 0;
   border-width: 0; }
@@ -136,6 +139,11 @@ label > .label-body {
   display: inline-block;
   margin-left: .5rem;
   font-weight: normal; }
+
+.box-style-input {
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+}
 
 
 /* Lists

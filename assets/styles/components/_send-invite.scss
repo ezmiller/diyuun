@@ -1,0 +1,47 @@
+@import "compass/css3/flexbox";
+.send-invite-form {
+	h3 { margin-bottom: 0; }
+	legend {
+		width: 100%;
+		font-size: 1.4em;
+	}
+	.to-fields-wrap,
+	.message-fields-wrap {
+		margin-left: 10%;
+
+		input {
+			width: 80%;
+		}
+	}
+
+	.message-fields-wrap {
+		label[for=recipient] {
+			display: inline;
+			text-transform: none;
+			margin-right: 10px;
+		}
+		input[name=recipient] {
+			display: inline;
+			width: 180px;
+			@extend .box-style-input;
+		}
+		.comma {
+			font-size: 1.5em;
+			margin: 0 5px;
+			vertical-align: text-top;
+		}
+		textarea {
+			width: 80%;
+			min-height: 300px;
+			font-size: 1.2em;
+			line-height: 1.5em;
+		}
+		input[name="link"] {
+			@extend .box-style-input;
+		}
+	}
+
+	input[type="submit"] {
+		margin-left: 65% !important;
+	}
+}
