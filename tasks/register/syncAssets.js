@@ -5,7 +5,7 @@ module.exports = function (grunt) {
 		'compass:dev',
 		'sync:dev',
 		'coffee:dev',
-		'browserify:dev',
+		'browserify',
 		'notify:server'
 	]);
 };

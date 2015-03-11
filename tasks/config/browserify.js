@@ -9,9 +9,20 @@
 module.exports = function(grunt) {
 
   grunt.config.set('browserify', {
-    dev: {
+    main: {
       src: 'assets/js/main.jsx',
       dest: '.tmp/public/js/main.js',
+      options: {
+        debug: true,
+        extensions: ['.jsx'],
+        transform: [
+          [ 'reactify', {'es6': true} ]
+        ]
+      }
+    },
+    signup: {
+      src: 'assets/js/signup.jsx',
+      dest: '.tmp/public/js/signup.js',
       options: {
         debug: true,
         extensions: ['.jsx'],
