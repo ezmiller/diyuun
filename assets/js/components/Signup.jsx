@@ -5,12 +5,14 @@
 	'use strict';
 
 	var React = require('react');
+	var Onboarding = require('./Onboarding.jsx');
 
 	var Signup = React.createClass({
+
 		render: function() {
 			return(
-				<div class="signup">
-					<p>Signup</p>
+				<div id="signup-app" className="not-logged-in">
+					<Onboarding />
 				</div>
 			);
 		}

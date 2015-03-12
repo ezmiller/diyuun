@@ -220,34 +220,18 @@ hr {
 
 .form-wrap {
   padding: 20px;
+  border-radius: 10px;
   @extend .z-depth-1;
 }
 
-
-#app.not-logged-in:before {
-  content: '';
-  display: block;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100vh;
-  background: url('../images/nypl.jpg') no-repeat;
-  background-position: center;
-  background-size: auto 100%;
-
-  @media screen and (min-width: $larger-than-tablet) {
-    background-size: 100% auto;
-  }
-}
-
-/* Login
+/* Not Logged-In
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.login.form-wrap {
+
+.not-logged-in .form-wrap {
   background: #333;
   opacity: 0.8;
 
-  h1, h4,label {
+   h1, h2, h3, h4, h5, p, label {
     color: $light-text;
   }
 
@@ -264,4 +248,25 @@ hr {
     color: $light-text;
     width: 100%;
   }
+
 }
+
+#app.not-logged-in:before,
+#signup-app.not-logged-in:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  background: url('../images/nypl.jpg') no-repeat;
+  background-position: center;
+  background-size: auto 100%;
+  opacity: 0.8;
+
+  @media screen and (min-width: $larger-than-tablet) {
+    background-size: 100% auto;
+  }
+}
+
