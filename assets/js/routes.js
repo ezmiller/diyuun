@@ -17,13 +17,14 @@ var Dashboard = require('./components/Dashboard.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
 
 var routes = (
-  <Route name="app" path="/" handler={App}>
-  	<DefaultRoute handler={Login} />
-  	<Route name="login" handler={Login} />
-  	<Route name="signup" handler={Signup} />
-    <Route name="register" handler={Register} />
-    <Route name="dashboard" handler={Dashboard} />
-    <Route name="send-invite" handler={SendInvite} />
+	<Route path="/">
+		<Route name="login" path="/login" handler={App} />
+		<Route name="join" path="/join/:token" handler={Signup} />
+    <Route name="app" path="/" handler={App}>
+    	<DefaultRoute handler={Login} />
+      <Route name="send-invite" handler={SendInvite} />
+ 		  <Route name="dashboard" handler={Dashboard} />
+    </Route>
   </Route>
 );
 
