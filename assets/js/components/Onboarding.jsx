@@ -24,14 +24,12 @@
 
 		render: function() {
 
-			console.log(this.state);
-
 			var content = !this.state.userCreated ? (
 				<div>
 					<div className="message"><h3>Kanon</h3><br/><p>Your inviter filled in some details for you.</p></div>
 					<Register valueLink={this.linkState('userCreated')} />
 				</div>
-			) : ( <DiscoverInterests /> );
+			) : ( <DiscoverInterests userId={this.state.userCreated} /> );
 
 			var classes = this.getClasses('columns', {
 				'eight offset-by-two': this.state.userCreated,

@@ -34,7 +34,8 @@
 			var newSuggestions = [],
 					isValid = this.validate(e.target.value);
 
-			this.props.valueLink.requestChange(isValid); // Set state on parent.
+			if (isValid)
+				publish('discipline', [isValid]);
 
 			// Filter the suggestions based on the user input.
 			newSuggestions = this.state.suggestions.filter(function(o) {
@@ -53,13 +54,12 @@
 
 		onClick: function(e) {
 			var isValid = this.validate(e.target.innerHTML);
-			this.props.valueLink.requestChange(isValid);  // Set state in parent
+			publish('discipline', [isValid]);
 			this.setState({
 				'discipline': e.target.innerHTML,
 				'hideSuggestions': true,
 				'primaryDisciplineIsValid': true
 			});
-
 		},
 
 		onKeyDown: function(e) {
@@ -78,7 +78,7 @@
 					'primaryDisciplineIsValid': true,
 					'hideSuggestions': true
 				});
-				this.props.valueLink.requestChange( this.validate(list[currIndex].discipline) );  // Set state in parent
+				publish('discipline', this.validate(list[currIndex].discipline) );  // Set state in parent
 			}
 		},
 

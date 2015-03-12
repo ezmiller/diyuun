@@ -56,8 +56,6 @@
 			user.title = this.state.title.trim();
 			user.affiliation = this.state.affiliation.trim();
 
-			console.log(user);
-
 			// Now register the user.
 			this.register(user);
 		},
@@ -66,20 +64,20 @@
 			var self = this;
 
 			this.props.valueLink.requestChange(true);
-			
+
 			// Make Ajax call to authentication endpoint.
-			// $.ajax({
-			// 	type: 'POST',
-			// 	url: '/auth/local/register',
-			// 	data: user
-			// })
-			// .done(function(data) {
-			// 	console.log(data);
-			// 	self.props.valueLink.requestChange(true);
-			// })
-			// .fail(function(jqXhr) {
-			// 	console.log('failed to register');
-			// });
+			$.ajax({
+				type: 'POST',
+				url: '/auth/local/register',
+				data: user
+			})
+			.done(function(data) {
+				console.log(data);
+				self.props.valueLink.requestChange(data.id);
+			})
+			.fail(function(jqXhr) {
+				console.log('failed to register');
+			});
 		},
 
 		render: function() {

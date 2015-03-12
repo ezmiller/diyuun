@@ -10,21 +10,44 @@
 
 	var DiscoverInterests = React.createClass({
 
-		mixins: [React.addons.LinkedStateMixin],
-
 		getInitialState: function() {
 			return {
 				'discipline': false,
 			}
 		},
 
+		componentDidMount: function() {
+			var self = this;
+			var handle = subscribe('discipline', function(discipline) {
+				self.setState({'discipline': discipline});
+			})
+		},
+
 		handleSubmit: function(e) {
 			e.preventDefault();
-			console.log('DiscoverInterests::handleSubmit()');
+
+			var update = {};
+			update.discipline = this.state.discipline;
+			update.interests = this.refs.interests.state.selectedTags;
+			console.log(JSON.stringify(update));
+
+			$.ajax({
+				method: 'POST',
+				url: '/users/'+ this.props.userId,
+				contentType: 'application/json',
+				data: JSON.stringify(update),
+			})
+			.done(function(data) {
+				console.log('DiscoverInterests::handleSubmit() success: ', data);
+			})
+			.fail(function(jqXhr) {
+				console.log('DiscoverInterests::handleSubmit() err: ', jqXhr);
+			});
 		},
 
 		render: function() {
-			var message = '';
+			var self = this,
+					message = '';
 
 		 	if (!this.state.discipline) {
 				message = <div className="message"><h4>It is a pleasure to meet you Clare! What is your academic field?</h4></div>;
@@ -35,9 +58,9 @@
 			return (
 				<form className="interests-form" onSubmit={this.handleSubmit}>
 					{message}
-					<SelectDiscipline valueLink={this.linkState('discipline')} />
+					<SelectDiscipline />
 					<br/>
-					<OtherInterests className={ (!this.state.discipline) ? 'hide' : '' } />
+					<OtherInterests ref="interests" className={ (!this.state.discipline) ? 'hide' : '' } />
 					<input type="submit" value="Submit" className={ (!this.state.discipline) ? 'hide' : '' } />
 				</form>
 			);

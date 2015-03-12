@@ -27,7 +27,7 @@ module.exports = {
 			}
 
 			// Generate token & link
-			link = 'http://' + req.headers.host + '/join?token=' + pending.id;
+			link = 'http://' + req.headers.host + '/join/' + pending.id;
 
 			// Respond with link.
 			res.json({'joinLink': link});

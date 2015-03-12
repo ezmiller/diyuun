@@ -42,10 +42,10 @@ module.exports = {
             type: 'text'
         },
         discipline: {
-            type: 'string',
+            type: 'json',
         },
         interests: {
-            type: 'json'
+            type: 'array'
         },
         profilePicture: {
             type: 'string'
