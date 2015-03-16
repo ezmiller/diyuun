@@ -29,7 +29,7 @@
 					<div className="message"><h3>Kanon</h3><br/><p>Your inviter filled in some details for you.</p></div>
 					<Register valueLink={this.linkState('userCreated')} />
 				</div>
-			) : ( <DiscoverInterests userId={this.state.userCreated} /> );
+			) : ( <DiscoverInterests user={this.state.userCreated} /> );
 
 			var classes = this.getClasses('columns', {
 				'eight offset-by-two': this.state.userCreated,

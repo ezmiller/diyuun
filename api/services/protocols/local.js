@@ -26,6 +26,8 @@ exports.register = function (req, res, next) {
   var email    = req.param('email')
     , username = req.param('username')
     , password = req.param('password')
+    , firstName = req.param('firstName')
+    , lastName = req.param('lastName')
     , title = req.param('title')
     , affiliation = req.param('affiliation');
 
@@ -48,6 +50,8 @@ exports.register = function (req, res, next) {
 
   User.create({
     username: username,
+    firstName: firstName,
+    lastName: lastName,
     email: email,
     title: title,
     affiliation: affiliation

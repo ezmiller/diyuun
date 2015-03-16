@@ -13,14 +13,23 @@
 		getInitialState: function() {
 			return {
 				'discipline': false,
+				'user': null
 			}
+		},
+
+		componentWillMount: function () {
+			var self = this;
+		  $.get('/users/' + this.props.user.id, function(data) {
+		  	console.log('DiscoverInterests::componentWillMount() ', data);
+		  	this.setState({user: data});
+		  });
 		},
 
 		componentDidMount: function() {
 			var self = this;
 			var handle = subscribe('discipline', function(discipline) {
 				self.setState({'discipline': discipline});
-			})
+			});
 		},
 
 		handleSubmit: function(e) {
@@ -33,7 +42,7 @@
 
 			$.ajax({
 				method: 'POST',
-				url: '/users/'+ this.props.userId,
+				url: '/users/'+ this.props.user.id,
 				contentType: 'application/json',
 				data: JSON.stringify(update),
 			})
@@ -50,7 +59,7 @@
 					message = '';
 
 		 	if (!this.state.discipline) {
-				message = <div className="message"><h4>It is a pleasure to meet you Clare! What is your academic field?</h4></div>;
+				message = <div className="message"><h4>It is a pleasure to meet you {this.props.user.firstName}! What is your academic field?</h4></div>;
 			} else {
 				message = <div className="message"><h4>What a great field! What other areas of scholarship do you follow?</h4></div>
 			}
