@@ -48,18 +48,5 @@ module.exports = {
 		});
 	},
 
-	// join: function(req, res, next) {
-	// 	PendingUser.find({id: req.params.token}, function(err, found) {
-	// 		if (err) {
-	// 			console.log('PendingUserController::join  error: ', err);
-	// 			res.status(500);
-	// 		}
-	// 		if ( _.isEmpty(found) ) {
-	// 			return res.status(404).send(false);
-	// 		}
-	// 		res.redirect('/signup');
-	// 	});
-	// }
-
 };
 
