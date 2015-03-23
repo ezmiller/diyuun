@@ -63,8 +63,6 @@
 		register: function(user) {
 			var self = this;
 
-			this.props.valueLink.requestChange(true);
-
 			// Make Ajax call to authentication endpoint.
 			$.ajax({
 				type: 'POST',
@@ -72,8 +70,7 @@
 				data: user
 			})
 			.done(function(data) {
-				console.log(data);
-				self.props.valueLink.requestChange(data.id);
+				self.props.valueLink.requestChange(data);
 			})
 			.fail(function(jqXhr) {
 				console.log('failed to register');

@@ -26,9 +26,12 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
-  	link: {
-  		type: 'url'
-  	}
+    discipline: {
+        type: 'json',
+    },
+    interests: {
+        type: 'array'
+    },
   }
 
 };

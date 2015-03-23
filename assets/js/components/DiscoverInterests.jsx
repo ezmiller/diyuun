@@ -17,14 +17,6 @@
 			}
 		},
 
-		componentWillMount: function () {
-			var self = this;
-		  $.get('/users/' + this.props.user.id, function(data) {
-		  	console.log('DiscoverInterests::componentWillMount() ', data);
-		  	this.setState({user: data});
-		  });
-		},
-
 		componentDidMount: function() {
 			var self = this;
 			var handle = subscribe('discipline', function(discipline) {
@@ -33,24 +25,38 @@
 		},
 
 		handleSubmit: function(e) {
+			var self = this;
+
 			e.preventDefault();
 
+			// Gather the user's interests
 			var update = {};
 			update.discipline = this.state.discipline;
 			update.interests = this.refs.interests.state.selectedTags;
-			console.log(JSON.stringify(update));
 
+			// Update and then save
+			this.updateUser(update, this.saveUser);
+		},
+
+		updateUser: function(data, callback) {
 			$.ajax({
 				method: 'POST',
-				url: '/users/'+ this.props.user.id,
+				url: '/pendingusers/update/'+ this.props.user.id,
 				contentType: 'application/json',
-				data: JSON.stringify(update),
+				data: JSON.stringify(data),
 			})
 			.done(function(data) {
 				console.log('DiscoverInterests::handleSubmit() success: ', data);
+				callback();
 			})
 			.fail(function(jqXhr) {
 				console.log('DiscoverInterests::handleSubmit() err: ', jqXhr);
+			});
+		},
+
+		saveUser: function() {
+			$.get('/pendingusers/save/' + this.props.user.id, function(data) {
+				console.log('DiscoverInterests::saveUser() returned: ', data);
 			});
 		},
 

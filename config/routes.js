@@ -45,17 +45,18 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  // Auth
   'GET /login': 'AuthController.login',
   'GET /logout': 'AuthController.logout',
   'GET /register': 'AuthController.register',
   'GET /authorized': 'AuthController.authorized',
-
-  'post /auth/local': 'AuthController.callback',
-  'post /auth/local/:action': 'AuthController.callback',
+  'POST /auth/local': 'AuthController.callback',
+  'POST /auth/local/:action': 'AuthController.callback',
 
   // Pending Users
   'GET /pendingusers/:token': 'PendingUserController.find',
+  'POST /pendingusers/:token': 'PendingUserController.update',
+  'GET /pendingusers/save/:id': 'PendingUserController.save',
   'POST /invite': 'PendingUserController.create',
-  // 'GET /join/:token': 'PendingUserController.join',
 
 };

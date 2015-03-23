@@ -19,10 +19,11 @@
 
 var errors = [
     'InvalidArgument',
+    ['MissingId', 'InvalidArgument'],
     'FailedToPersist',
     'Authorization',
-    ['ISBN', 'InvalidArgument'],
-    ['GermanISBN', 'ISBN']
+    'Onboarding',
+
 ];
 
 var customError = Object.create( new Error(), {

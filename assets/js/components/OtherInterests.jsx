@@ -83,8 +83,9 @@
 
 		componentDidMount: function() {
 			var self = this;
-			$.get('http://private-20206-kanon.apiary-mock.com/disciplines', function(data) {
-				self.setState({'suggestedTags': data.disciplines.map(function(o) {return o.discipline}) });
+			$.get('/disciplines', function(data) {
+				console.log('disciplines: ', data);
+				self.setState({'suggestedTags': data.map(function(o) {return o.name}) });
 			});
 		},
 
