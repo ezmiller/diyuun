@@ -25,8 +25,9 @@
 
 		componentDidMount: function() {
 				var self = this;
-				$.get('http://private-20206-kanon.apiary-mock.com/disciplines', function(data) {
-					self.setState({'suggestions': data.disciplines})
+				$.get('/disciplines', function(data) {
+					console.log('disciplines: ', data);
+					self.setState({'suggestions': data})
 				});
 		},
 
@@ -39,7 +40,7 @@
 
 			// Filter the suggestions based on the user input.
 			newSuggestions = this.state.suggestions.filter(function(o) {
-				if ( o.discipline.indexOf(e.target.value) === 0 )
+				if ( o.name.indexOf(e.target.value) === 0 )
 					return o;
 			});
 
@@ -74,17 +75,17 @@
 			}
 			else if (e.keyCode === 13 || e.keyCode === 9) { // Enter or Tab.
 				this.setState({
-					'discipline': list[currIndex].discipline,
+					'discipline': list[currIndex].name,
 					'primaryDisciplineIsValid': true,
 					'hideSuggestions': true
 				});
-				publish('discipline', this.validate(list[currIndex].discipline) );  // Set state in parent
+				publish('discipline', this.validate(list[currIndex].name) );  // Set state in parent
 			}
 		},
 
 		validate: function(s) {
 			var found = _.find(this.state.suggestions, function(o) {
-				if ( o.discipline === s ) return true;
+				if ( o.name === s ) return true;
 			});
 			return (found) ? found : false;
 		},
@@ -108,7 +109,7 @@
 
 		  var suggestions = this.state.filteredSuggestions.map(function(o,i) {
 		  	var selectedClass = (i === self.state.suggestionSelected) ? 'selected' : '';
-		  	return <li key={o.id} className={selectedClass} onClick={self.onClick}>{o.discipline}</li>
+		  	return <li key={o.id} className={selectedClass} onClick={self.onClick}>{o.name}</li>
 		  });
 
 			return(
