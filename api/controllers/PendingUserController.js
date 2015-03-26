@@ -95,13 +95,13 @@ module.exports = {
 			delete found.updatedAt;
 			delete found.id;
 
-			PendingUser.update(id, found, function(err, user) {
+			User.update({email: found.email}, found, function(err, user) {
 				if (err) {
 					sails.log.error(CustomErrors.createOnboardingError('Failed to copy pending user data to new user while saving.'));
 					return res.send(500);
 				}
 				// TODO: Delete user after save.
-				res.ok();
+				res.send(user);
 			});
 
 		});
