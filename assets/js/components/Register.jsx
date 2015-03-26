@@ -3,58 +3,47 @@
  */
 (function() {
 
+	var _ = require('underscore');
+
 	var React = require('react');
+	var ImmutableOptimizations = require('react-cursor').ImmutableOptimizations;
 	var State = require('react-router').State;
 
 	var Register = React.createClass({
 
-		mixins: [State],
+		mixins: [ImmutableOptimizations(['pendingUser', 'newUser'])],
 
 		getInitialState: function () {
 		    return {
-					'name': '',
-					'firstName': '',
-					'lastName': '',
-					'email': '',
-					'title': '',
-					'affiliation': '',
+		        password: ''
 		    };
 		},
 
-		componentDidMount: function () {
-			var self = this,
-					params = this.getParams();
-
-			if (!params || !params.token)
-				return;
-
-			$.get('/pendingusers/' + params.token, function(data) {
-				data.name = data.firstName + ' ' + data.lastName;
-				self.setState(data);
-			});
-		},
-
 		handleChange: function(e) {
-			var newState = {};
-	    newState[e.target.name] = e.target.value;
-	    this.setState(newState);
+			var target = e.target.name,
+					nextValue = e.target.value.trim();
+			if ( e.target.name === 'password') {
+				this.setState({password: nextValue});
+			} else {
+		    this.props.pendingUser.refine(target).set(nextValue);
+		  }
 		},
 
 		handleSubmit: function(e) {
 			var name,
-					user = {};
+					user = _.clone(this.props.pendingUser.value);
 
 			e.preventDefault();
 
-			// Create user to deliver to server.
-			name = this.state.name.split(' ');
+			// Prepare pending user for registration.
+			name = user.name.split(' ');
 			user.firstName = name[0];
 			user.lastName = name[1];
-			user.email = this.state.email.trim();
+			user.email = user.email.trim();
 			user.username = user.email;
 			user.password = this.state.password.trim();
-			user.title = this.state.title.trim();
-			user.affiliation = this.state.affiliation.trim();
+			user.title = user.title.trim();
+			user.affiliation = user.affiliation.trim();
 
 			// Now register the user.
 			this.register(user);
@@ -70,7 +59,7 @@
 				data: user
 			})
 			.done(function(data) {
-				self.props.valueLink.requestChange(data);
+				self.props.newUser.set(data);
 			})
 			.fail(function(jqXhr) {
 				console.log('failed to register');
@@ -78,6 +67,7 @@
 		},
 
 		render: function() {
+			// console.log('Register function is rendering, state is: ', this.props.cursor.refine('pendingUser'));
 			return (
 				<form className="user-signup-form" onSubmit={this.handleSubmit}>
 					<div>
@@ -86,7 +76,7 @@
 				    name="name"
 				    ref="name"
 				    placeholder="Name"
-				    value={this.state.name}
+				    value={this.props.pendingUser.refine('name').value}
 				    onChange={this.handleChange} />
 				  </div>
 				  <div>
@@ -95,7 +85,7 @@
 				    name="email"
 				    ref="email"
 				    placeholder="Email"
-				    value={this.state.email}
+				    value={this.props.pendingUser.refine('email').value}
 				    onChange={this.handleChange} />
 				  </div>
 				  <div>
@@ -104,7 +94,7 @@
 				    name="title"
 				    ref="title"
 				    placeholder="Title/Role"
-				    value={this.state.title}
+				    value={this.props.pendingUser.refine('title').value}
 				    onChange={this.handleChange}/>
 				  </div>
 				  <div>
@@ -113,7 +103,7 @@
 				    name="affiliation"
 				    ref="affiliation"
 				    placeholder="Affiliation"
-				    value={this.state.affiliation}
+				    value={this.props.pendingUser.refine('affiliation').value}
 				    onChange={this.handleChange}/>
 				  </div>
 				  <div>

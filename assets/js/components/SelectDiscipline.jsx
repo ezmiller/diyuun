@@ -14,7 +14,6 @@
 
 		getInitialState: function() {
 			return {
-				"discipline": '',
 				"hideSuggestions": true,
 				"primaryDisciplineIsValid": false,
 				"suggestions": [],
@@ -36,7 +35,7 @@
 					isValid = this.validate(e.target.value);
 
 			if (isValid)
-				publish('discipline', [isValid]);
+				this.props.discipline.set(isValid);
 
 			// Filter the suggestions based on the user input.
 			newSuggestions = this.state.suggestions.filter(function(o) {
@@ -55,9 +54,8 @@
 
 		onClick: function(e) {
 			var isValid = this.validate(e.target.innerHTML);
-			publish('discipline', [isValid]);
+			this.props.discipline.set(isValid);
 			this.setState({
-				'discipline': e.target.innerHTML,
 				'hideSuggestions': true,
 				'primaryDisciplineIsValid': true
 			});

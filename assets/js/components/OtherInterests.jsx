@@ -95,6 +95,7 @@
 				'suggestedTags': removeItem(this.state.suggestedTags, tagToAdd),
 				'selectedTags': this.state.selectedTags
 			});
+			this.props.interests.set(this.state.selectedTags);
 		},
 
 		removeTag: function(tagToRemove) {
@@ -103,6 +104,7 @@
 				'suggestedTags': this.state.suggestedTags,
 				'selectedTags': removeItem(this.state.selectedTags, tagToRemove)
 			});
+			this.props.interests.set(this.state.selectedTags);
 		},
 
 		render: function() {

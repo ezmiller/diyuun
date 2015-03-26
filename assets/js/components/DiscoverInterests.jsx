@@ -7,6 +7,7 @@
 	var React = require('react');
 	var OtherInterests = require('./OtherInterests.jsx');
 	var SelectDiscipline = require('./SelectDiscipline.jsx');
+	var Cursor = require('react-cursor').Cursor;
 
 	var DiscoverInterests = React.createClass({
 
@@ -70,10 +71,12 @@
 				message = <div className="message"><h4>What a great field! What other areas of scholarship do you follow?</h4></div>
 			}
 
+			var cursor = Cursor.build(this);
+
 			return (
 				<form className="interests-form" onSubmit={this.handleSubmit}>
 					{message}
-					<SelectDiscipline />
+					<SelectDiscipline discipline={cursor.refine('discipline')} />
 					<br/>
 					<OtherInterests ref="interests" className={ (!this.state.discipline) ? 'hide' : '' } />
 					<input type="submit" value="Submit" className={ (!this.state.discipline) ? 'hide' : '' } />
