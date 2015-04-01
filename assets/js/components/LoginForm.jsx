@@ -82,6 +82,9 @@
 						<h1>Kanon</h1>
 						<form className="login-form" onSubmit={this.onSubmit} role="form">
 							<h4>Please login...</h4>
+							<span className="error-msg">
+								{this.state.error}
+							</span>
 							<div>
 				      	<Input
 				       	  type="email"

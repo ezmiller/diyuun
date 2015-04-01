@@ -224,6 +224,12 @@ hr {
   @extend .z-depth-1;
 }
 
+/* Notifications
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.error-msg {
+  color: $error-message-color;
+}
+
 /* Not Logged-In
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
