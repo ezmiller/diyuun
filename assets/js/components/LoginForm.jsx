@@ -43,13 +43,11 @@
 
 		handleChange: function(e) {
 			var newState = {};
-		    newState[e.target.name] = e.target.value;
-		    console.log('LoginForm::handleChange() newstate', newState);
-		    this.setState(newState);
+		   newState[e.target.name] = e.target.value;
+		   this.setState(newState);
 		},
 
 		onSubmit: function(e) {
-			console.log('LoginForm::onSubmit() called');
 			e.preventDefault();
 			var user = {};
 			user.identifier = this.state.identifier.trim();
