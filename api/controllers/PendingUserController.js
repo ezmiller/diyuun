@@ -102,6 +102,7 @@ module.exports = {
 				}
 				// TODO: Delete user after save.
 				res.send(user);
+				res.send(_.first(user));
 			});
 
 		});

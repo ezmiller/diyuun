@@ -26,7 +26,8 @@
 				'pendingUser': false,
 				'newUser': false,
 				'discipline': false,
-				'interests': false
+				'interests': false,
+				'userSaved': false
 			}
 		},
 
@@ -69,8 +70,10 @@
 		},
 
 		saveUser: function() {
+			var self = this;
 			$.get('/pendingusers/save/' + this.state.pendingUserToken, function(data) {
 				console.log('DiscoverInterests::saveUser() returned: ', data);
+				self.setState({'newUser': data, 'userSaved': true});
 			});
 		},
 
@@ -86,7 +89,7 @@
 						<Register pendingUser={cursor.refine('pendingUser')} newUser={cursor.refine('newUser')} />
 					</div>
 				);
-			} else {
+			} else if(!this.state.userSaved) {
 				if (!this.state.discipline) {
 					message = <div className="message"><h4>It is a pleasure to meet you {this.state.newUser.firstName}! What is your academic field?</h4></div>;
 				} else {
@@ -100,6 +103,13 @@
 						<OtherInterests interests={cursor.refine('interests')} className={ (!this.state.discipline) ? 'hide' : '' } />
 						<input type="submit" value="Submit" className={ (!this.state.discipline) ? 'hide' : '' } />
 					</form>
+				);
+			} else {
+				content = (
+					<div>
+						<div className="message"><h4>You have successfully registered, Thank you! We hope that you enjoy Kanon.</h4></div>
+						<a href="/login" className="button">Login to Kanon</a>
+					</div>
 				);
 			}
 
