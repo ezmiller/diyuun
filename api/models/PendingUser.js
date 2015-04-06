@@ -20,11 +20,11 @@ module.exports = {
   	},
   	title: {
   		type: 'string',
-  		required: true
+  		// required: true
   	},
   	affiliation: {
   		type: 'string',
-  		required: true
+  		// required: true
   	},
     discipline: {
         type: 'json',

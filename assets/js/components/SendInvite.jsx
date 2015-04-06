@@ -2,106 +2,120 @@
  * SendInvite
  */
 (function() {
-	'use strict';
+  'use strict';
 
-	// React & Components
-	var React = require('react');
+  // React & Components
+  var React = require('react');
 
-	// Mixins.
-	var Classable = require('./mixins/classable.js');
+  // Mixins.
+  var Classable = require('./mixins/classable.js');
 
-	var SendInvite = React.createClass({
+  var SendInvite = React.createClass({
 
-		mixins: [Classable],
+    mixins: [Classable],
 
-		render: function() {
+    getInitialState: function () {
+      return {
+        'name': '',
+        'email': '',
+        'title': '',
+        'affiliation': '',
+        'message-recipient': '',
+        'message': '',
+        'joinLink': null
+      };
+    },
 
-			var gridClasses =this.getClasses('column two-thirds offset-by-two', {});
-			var wrapClasses = this.getClasses('send-invite form-wrap z-depth-1', {});
+    handleChange: function(e) {
+      var newState = {};
+      newState[e.target.name] = e.target.value;
+      console.log('SendInvite::handleChange() newstate', newState);
+      this.setState(newState);
+    },
 
-			return (
-				<section className="above-fold">
-					<div className={gridClasses}>
-						<div className={wrapClasses}>
-							<form className="send-invite-form" role="form">
-								<h3>Send an invite...</h3>
-								<h5>Invite your colleagues to Kanon.</h5>
-								<fieldset>
-									<div className="fieldset-wrap">
-										<legend>To:</legend>
-										<div className="to-fields-wrap">
-											<div>
-											<input
-												type="text"
-							          name="name"
-							          ref="name"
-							          placeholder="Full Name" />
-							        </div>
-							        <div>
-							        <input
-												type="text"
-							          name="email"
-							          ref="email"
-							          placeholder="Email Address" />
-							        </div>
-							        <div>
-							        <input
-												type="text"
-							          name="title"
-							          ref="title"
-							          placeholder="Title" />
-							        </div>
-							        <div>
-						          <input
-												type="text"
-							          name="institution"
-							          ref="institution"
-							          placeholder="Institution" />
-							        </div>
-						        </div>
-						      </div>
-				        </fieldset>
-				        <hr/>
-				        <fieldset>
-				        	<div className="fieldset-wrap">
-				        		<legend>Message:</legend>
-				        		<div className="message-fields-wrap">
-				        			<div>
-				        			<label htmlFor="recipient">Dear</label>
-				        			<input
-												type="text"
-							          name="recipient"
-							          ref="recipient"
-							          placeholder="Name" /><span className="comma">,</span>
-							        </div>
-							        <div>
-							        <textarea 
-							        	name="message"
-							        	ref="message" >
-							        	I would like to invite you to Kanon, a collaborative space for academics to discuss scholarship and ideas.
-							        </textarea>
-							        </div>
-							        <div>
-							        <input
-							        	type="text"
-							        	name="link"
-							        	ref="link"
-							        	placeholder="[Link will appear]"
-							        	disabled />
-							        </div>
-				        		</div>
-				        	</div>
-				        </fieldset>
-				        <input type="submit" name="submit" value="Send" />
-			        </form>
-			      </div>
-			    </div>
-				</section>
-			);
-		}
-	});
+    inviteeFormSubmit: function(e) {
+      e.preventDefault();
+      var user = {};
+      user.name = this.state.name.trim();      
+      user.email = this.state.email.trim();
+      this.getJoinLink(user)
+    },
 
-	module.exports = SendInvite;
+    getJoinLink: function(newPendingUser) {
+      var self = this;
+      $.ajax({
+        method: 'POST',
+        url: '/invite',
+        contentType: 'application/json',
+        data: JSON.stringify(newPendingUser),
+      })
+      .done(function(data) {
+        console.log('SendInvite::getJoinLink() success: ', data);
+        self.setState(data);
+      })
+      .fail(function(jqXhr) {
+        console.log('SendInvite::getJoinLink() err: ', jqXhr);
+      });
+    },
+
+    render: function() {
+
+      var defaultMessageText = "I would like to invite you to Kanon, a collaborative space for academics to discuss scholarship and ideas.",
+          gridClasses = this.getClasses('column two-thirds offset-by-two', {}),
+          wrapClasses = this.getClasses('send-invite form-wrap z-depth-1', {}),
+          form;
+
+      if (!this.state.joinLink) {
+        form = (
+          <div className={wrapClasses}>
+            <h3>Invite a colleague to Kanon...</h3>
+            <h5>Who would you like to invite?</h5>
+            <form className="send-invite-form" role="form" onSubmit={this.inviteeFormSubmit}>
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  ref="name"
+                  placeholder="Full Name" 
+                  onChange={this.handleChange} />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  ref="email"
+                  placeholder="Email" 
+                  onChange={this.handleChange} />
+              </div>
+              <input type="submit" value="Next" />
+            </form>
+          </div>
+        );
+      } else {
+        form = (
+          <div className={wrapClasses}>
+            <h3>Invite a colleague to Kanon...</h3>
+            <h5>Okay, Thank you!</h5>            
+            <span>If you would like to invite {this.state.name} yourself, send along the link below. Otherwise, we can send an email on your behalf and we'll send an email for you.</span>
+            <div className="link-wrap">
+              <code className="link">{this.state.joinLink}</code>
+            </div>
+
+          </div>
+        );
+      }
+
+      return (
+        <section className="above-fold">
+          <div className={gridClasses}>
+            {form}
+          </div>
+        </section>
+      );
+    }
+  });
+
+  module.exports = SendInvite;
 
 
 }());
