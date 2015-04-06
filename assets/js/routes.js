@@ -21,7 +21,6 @@ var routes = (
     <Route name="login" path="/login" hanlder={Login} />
     <Route name="dashboard" handler={Dashboard} />
     <Route name="send-invite" handler={SendInvite} />
-    <Route name="join" path="/join/:token" handler={Signup} />
   </Route>
 );
 

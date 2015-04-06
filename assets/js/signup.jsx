@@ -5,9 +5,11 @@
 
 var React = require('react');
 var Router = require('react-router');
+var Route = Router.Route;
+var Signup = require('./components/Signup.jsx');
 
 var routes = (
-	<Route path="/signup" handler={Signup} />
+	<Route name="join" path="/join/:token" handler={Signup} />
 );
 
 Router.run(routes, Router.HistoryLocation, function(Handler,state) {

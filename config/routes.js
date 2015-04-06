@@ -25,7 +25,7 @@ module.exports.routes = {
   'GET /': 'IndexController.index',
 
   // Join Link
-  'GET /join/:token': 'IndexController.index',
+  'GET /join/:token': { 'view': 'signup' },
 
   // Send Invite
   'GET /send-invite': 'IndexController.index',
