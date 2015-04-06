@@ -102,6 +102,16 @@ module.exports = {
 				}
 				// TODO: Delete user after save.
 				res.send(user);
+
+				// Delete the Pending User
+				PendingUser.destroy({email: found.email}, function(err, deleted) {
+					if (err) {
+						sails.log.error(
+							CustomErrors.createOnboardingError('Failed to delete the pending user while saving new user.')
+						);
+					}
+				});
+
 				res.send(_.first(user));
 			});
 
