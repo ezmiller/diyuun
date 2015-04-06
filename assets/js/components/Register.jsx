@@ -21,7 +21,7 @@
 
 		handleChange: function(e) {
 			var target = e.target.name,
-					nextValue = e.target.value.trim();
+					nextValue = e.target.value;
 			if ( e.target.name === 'password') {
 				this.setState({password: nextValue});
 			} else {
