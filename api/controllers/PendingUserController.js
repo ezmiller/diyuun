@@ -76,17 +76,21 @@ module.exports = {
 		// Get pending user data.
 		PendingUser.findOne(id, function(err, found) {
 
-			console.log('pendinguser after findOne: ', found);
+			console.log('PendingUserController::save() : found: ', found);
 
 			// Respond with 500 if there was an error while finding pending user.
 			if (err) {
-				sails.log.error(CustomErrors.createOnboardingError('Failed to load pending user data while saving.'));
+				sails.log.error(
+					CustomErrors.createOnboardingError('Failed to load pending user data while saving.')
+				);
 				return res.send(500);
 			}
 
 			// Respond with 400 if it was not possible to find the pending user.
 			if (_.isEmpty(found)) {
-				sails.log.error(CustomErrors.createOnboardingError('Unable to find pending user while saving.'));
+				sails.log.error(
+					CustomErrors.createOnboardingError('Unable to find pending user while saving.')
+				);
 				return res.send(400);
 			}
 
@@ -97,11 +101,11 @@ module.exports = {
 
 			User.update({email: found.email}, found, function(err, user) {
 				if (err) {
-					sails.log.error(CustomErrors.createOnboardingError('Failed to copy pending user data to new user while saving.'));
+					sails.log.error(
+						CustomErrors.createOnboardingError('Failed to copy pending user data to new user while saving.')
+					);
 					return res.send(500);
 				}
-				// TODO: Delete user after save.
-				res.send(user);
 
 				// Delete the Pending User
 				PendingUser.destroy({email: found.email}, function(err, deleted) {
