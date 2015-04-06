@@ -1,6 +1,9 @@
 // Compass
+@import "compass/css3/transform";
+@import "compass/css3/transition";
 @import "compass/css3/transition";
 @import "compass/css3/box-shadow";
+@import "compass/css3/flexbox";
 
 @import 'normalize'; // Skeleton's normalize
 
@@ -14,3 +17,4 @@
 @import './components/primarybutton';
 @import './components/controlbar';
 @import './components/send-invite';
+@import './components/onboarding';

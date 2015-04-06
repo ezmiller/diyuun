@@ -25,7 +25,11 @@ var validator = require('validator');
 exports.register = function (req, res, next) {
   var email    = req.param('email')
     , username = req.param('username')
-    , password = req.param('password');
+    , password = req.param('password')
+    , firstName = req.param('firstName')
+    , lastName = req.param('lastName')
+    , title = req.param('title')
+    , affiliation = req.param('affiliation');
 
   console.log('local::register() registering user with email: ', email, ' password: ', password);
 
@@ -45,8 +49,12 @@ exports.register = function (req, res, next) {
   }
 
   User.create({
-    username : username
-  , email    : email
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    title: title,
+    affiliation: affiliation
   }, function (err, user) {
     if (err) {
       console.log('local::register() err: ', err);

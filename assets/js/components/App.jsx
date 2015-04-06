@@ -10,6 +10,7 @@
 	// React & Components.
 	var React = require('react');
 	var Router = require('react-router');
+	var Login = require('./Login.jsx');
 	var Controlbar = require('./Controlbar.jsx');
 	var Link = Router.Link;
 	var Route = Router.Route;
@@ -38,12 +39,20 @@
 		},
 
 		render: function() {
+
 			var classes = this.getClasses('', {
 				'not-logged-in': !this.state.loggedIn,
 				'logged-in': this.state.loggedIn
 			});
-			return (
-				<div id="app" className={classes}>
+
+			console.log('App::render() logged in:', this.state.loggedIn);
+
+			var content = !this.state.loggedIn ? (
+				<div class="main">
+					<Login />
+				</div>
+			) : (
+				<div class="main">
 					<header>
 						<Controlbar />
 					</header>
@@ -52,18 +61,22 @@
 					</div>
 				</div>
 			);
+
+			return (
+				<div id="app" className={classes}>
+					{content}
+				</div>
+			);
 		},
 
 		onLogin: function() {
-			console.log('Controlbar::onLogin()');
+			console.log('App::onLogin()');
 			this.setState({loggedIn: true});
-			this.replaceWith('dashboard');
 		},
 
 		onLogout: function() {
-			console.log('Controlbar::onLogout()');
+			console.log('App::onLogout()');
 			this.setState({loggedIn: false});
-			this.replaceWith('login');
 		}
 
 	});

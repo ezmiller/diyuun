@@ -35,11 +35,17 @@ module.exports = {
         title: {
             type: 'string'
         },
-        institution: {
+        affiliation: {
             type:'string'
         },
         bio: {
             type: 'text'
+        },
+        discipline: {
+            type: 'json',
+        },
+        interests: {
+            type: 'array'
         },
         profilePicture: {
             type: 'string'
