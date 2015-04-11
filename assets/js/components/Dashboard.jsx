@@ -10,9 +10,9 @@
 	var Dashboard = React.createClass({
 		render:function() {
 			return(
-				<Section className="dashboard">
+				<section className="dashboard">
 					<p>This is your dashboard.</p>
-				</Section>
+				</section>
 			);
 		}
 	});
