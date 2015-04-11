@@ -12,9 +12,9 @@
 	var Login = React.createClass({
 		render: function() {
 			return (
-				<Section className="above-fold">
+				<div className="content">
 					<LoginForm />
-				</Section>
+				</div>
 			);
 		}
 	});
