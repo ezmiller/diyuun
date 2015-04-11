@@ -18,7 +18,7 @@
 				"primaryDisciplineIsValid": false,
 				"suggestions": [],
 				"filteredSuggestions": [],
-				"suggestionSelected": 0
+				"suggestionSelected": -1
 			}
 		},
 
@@ -68,7 +68,7 @@
 			if (e.keyCode === 40 && this.listWithinBounds(list, currIndex+1)) {  // Arrow Key down.
 				this.setState({'suggestionSelected': this.state.suggestionSelected+1});
 			}
-			else if (e.keyCode === 38 && this.listWithinBounds(list, currIndex-1)) { // Arrow Key up.
+			else if (e.keyCode === 38 && this.listWithinBounds(list, currIndex-1)) { // Arrow Key up.	
 				this.setState({'suggestionSelected': this.state.suggestionSelected-1});
 			}
 			else if (e.keyCode === 13 || e.keyCode === 9) { // Enter or Tab.
@@ -77,7 +77,7 @@
 					'primaryDisciplineIsValid': true,
 					'hideSuggestions': true
 				});
-				publish('discipline', this.validate(list[currIndex].name) );  // Set state in parent
+				this.props.discipline.set(this.validate(list[currIndex].name));  // Set state in parent
 			}
 		},
 
@@ -89,7 +89,7 @@
 		},
 
 		listWithinBounds: function(filteredSuggestions, currIndex) {
-			return ( currIndex < filteredSuggestions.length && currIndex >= 0 );
+			return ( currIndex <= filteredSuggestions.length && currIndex >= 0 );
 		},
 
 		render: function() {
