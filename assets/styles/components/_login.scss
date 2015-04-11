@@ -1,0 +1,9 @@
+/**
+ * _login.scss
+ */
+
+.login.form-wrap {
+	@extend .column;
+	@extend .column.one-third;
+	@extend .column.offset-by-one-third;
+}
