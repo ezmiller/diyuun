@@ -23,7 +23,7 @@
 
 	@media screen and (min-width: $larger-than-phablet) {
 		height: $controlbar-height;
-		a { font-size: 2.2rem }
+		a { font-size: 1.5rem }
 	}
 
 	// Logo
@@ -37,7 +37,7 @@
     color: #fff;
 
     @media screen and (min-width: $larger-than-phablet) {
-      font-size: 5rem;
+      font-size: 2.5rem;
       line-height: $controlbar-height;
     }
   }
