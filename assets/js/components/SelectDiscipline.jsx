@@ -47,7 +47,7 @@
 				'discipline': e.target.value,
 				'filteredSuggestions': newSuggestions,
 				'primaryDisciplineIsValid': isValid,
-				'hideSuggestions': isValid || e.target.value > 0,
+				'hideSuggestions': isValid || !(e.target.value.length > 0),
 				'suggestionSelected': 0
 			});
 		},
