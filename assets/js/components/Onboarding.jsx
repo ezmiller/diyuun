@@ -85,8 +85,6 @@
 					message = '',
 					cursor = Cursor.build(this);
 
-			this.state.newUser=true;
-
 			if (!this.state.newUser) {
 				content = (
 					<div>
