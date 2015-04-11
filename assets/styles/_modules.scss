@@ -261,8 +261,8 @@ hr {
 
 }
 
-#app.not-logged-in:before,
-#signup-app.not-logged-in:before {
+#app.not-logged-in .content:before,
+#signup-app.not-logged-in .content:before {
   content: '';
   display: block;
   position: fixed;

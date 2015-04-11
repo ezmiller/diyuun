@@ -12,7 +12,11 @@
 		render: function() {
 			return(
 				<div id="signup-app" className="not-logged-in">
-					<Onboarding />
+					<div id="container">
+						<div className="content">
+							<Onboarding />
+						</div>
+					</div>
 				</div>
 			);
 		}

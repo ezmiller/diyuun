@@ -47,12 +47,12 @@
 
 			console.log('App::render() logged in:', this.state.loggedIn);
 
-			var content = !this.state.loggedIn ? (
-				<div class="main">
+			var container = (!this.state.loggedIn) ? (
+				<div id="container">
 					<Login />
 				</div>
 			) : (
-				<div class="main">
+				<div id="container">
 					<header>
 						<Controlbar />
 					</header>
@@ -64,9 +64,10 @@
 
 			return (
 				<div id="app" className={classes}>
-					{content}
+					{container}
 				</div>
 			);
+
 		},
 
 		onLogin: function() {

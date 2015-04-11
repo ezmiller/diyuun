@@ -6,6 +6,24 @@
 	@extend .container; 
 }
 
+.content {
+	@extend .row;
+}
+
+.logged-in .content {
+	margin: $controlbar-mobile-height 0 0 0;
+	@media screen and (min-width: $larger-than-phablet) {
+		margin: $controlbar-height 0 0 0;
+	}
+}
+
+.not-logged-in .content {
+	margin: 3rem 0 0 0;
+	@media screen and (min-width: $larger-than-phablet) {
+		margin: 5rem 0 0 0; 
+	}
+}
+
 header {
 	height: $controlbar-mobile-height;
 	@media screen and (min-width: $larger-than-phablet) {
