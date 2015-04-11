@@ -71,38 +71,33 @@
 
     render: function() {
 
-      var gridClasses =this.getClasses('column one-third offset-by-one-third', {});
-      var wrapClasses = this.getClasses('login form-wrap z-depth-1', {});
-
       return (
-        <div className={gridClasses}>
-          <div className={wrapClasses}>
-            <h1>Kanon</h1>
-            <form className="login-form" onSubmit={this.onSubmit} role="form">
-              <h4>Please login...</h4>
-              <span className="error-msg">
-                {this.state.error}
-              </span>
+        <div className="login form-wrap">
+          <h1>Kanon</h1>
+          <form className="login-form" onSubmit={this.onSubmit} role="form">
+            <h4>Please login...</h4>
+            <span className="error-msg">
+              {this.state.error}
+            </span>
+            <div>
+              <Input
+                type="email"
+                name="identifier"
+                ref="identifier"
+                placeholder="email"
+                onChange={this.handleChange} />
+              </div>
               <div>
                 <Input
-                  type="email"
-                  name="identifier"
-                  ref="identifier"
-                  placeholder="email"
+                  type="password"
+                  name="password"
+                  ref="password"
+                  placeholder="password"
                   onChange={this.handleChange} />
-                </div>
-                <div>
-                  <Input
-                    type="password"
-                    name="password"
-                    ref="password"
-                    placeholder="password"
-                    onChange={this.handleChange} />
-                </div>
-                <br/>
-                <PrimaryButton label="Login" />
-            </form>
-          </div>
+              </div>
+              <br/>
+              <PrimaryButton label="Login" />
+          </form>
         </div>
       );
     },
