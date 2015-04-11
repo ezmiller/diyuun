@@ -39,7 +39,7 @@
 
 			// Filter the suggestions based on the user input.
 			newSuggestions = this.state.suggestions.filter(function(o) {
-				if ( o.name.indexOf(e.target.value) === 0 )
+				if (o.name.indexOf(e.target.value) === 0)
 					return o;
 			});
 
@@ -48,7 +48,7 @@
 				'filteredSuggestions': newSuggestions,
 				'primaryDisciplineIsValid': isValid,
 				'hideSuggestions': isValid || !(e.target.value.length > 0),
-				'suggestionSelected': 0
+				'suggestionSelected': -1
 			});
 		},
 
@@ -88,8 +88,8 @@
 			return (found) ? found : false;
 		},
 
-		listWithinBounds: function(filteredSuggestions, currIndex) {
-			return ( currIndex <= filteredSuggestions.length && currIndex >= 0 );
+		listWithinBounds: function(filteredSuggestions, nextIdx) {
+			return ( nextIdx <= filteredSuggestions.length-1 && nextIdx >= -1 );
 		},
 
 		render: function() {
