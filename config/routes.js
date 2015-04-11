@@ -27,6 +27,9 @@ module.exports.routes = {
   // Join Link
   'GET /join/:token': { 'view': 'signup' },
 
+  // Login page
+  'GET /login': 'IndexController.index',
+
   // Send Invite
   'GET /send-invite': 'IndexController.index',
 
@@ -34,9 +37,7 @@ module.exports.routes = {
   'GET /dashboard': 'IndexController.index',
 
   // Auth
-  'GET /login': 'AuthController.login',
   'GET /logout': 'AuthController.logout',
-  'GET /register': 'AuthController.register',
   'GET /authorized': 'AuthController.authorized',
   'POST /auth/local': 'AuthController.callback',
   'POST /auth/local/:action': 'AuthController.callback',
