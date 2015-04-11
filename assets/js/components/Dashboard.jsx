@@ -5,7 +5,6 @@
 	'use strict';
 
 	var React = require('react');
-	var Section = require('./Section.jsx');
 
 	var Dashboard = React.createClass({
 		render:function() {

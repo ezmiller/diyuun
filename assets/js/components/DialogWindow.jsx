@@ -10,7 +10,7 @@
   var Classable = require('./mixins/classable');
   var PrimaryButton = require('./PrimaryButton.jsx');
   var Overlay = require('./Overlay.jsx');
-  var Paper = require('./Paper.jsx');
+  // var Paper = require('./Paper.jsx');
 
   var DialogWindow = React.createClass({
 

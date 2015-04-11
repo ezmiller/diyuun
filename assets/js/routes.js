@@ -9,10 +9,7 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 
 var App = require('./components/App.jsx');
-var Home = require('./components/Home.jsx');
 var Login = require('./components/Login.jsx');
-var Signup = require('./components/Signup.jsx');
-var Register = require('./components/Register.jsx');
 var Dashboard = require('./components/Dashboard.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
 

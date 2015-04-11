@@ -16,7 +16,6 @@
   // Load React and necessary components.
   var React = require('react');
   var Classable = require('./mixins/classable.js');
-  var Input = require('./Input.jsx');
   var PrimaryButton = require('./PrimaryButton.jsx');
 
   var Dialog = require('./Dialog.jsx');
@@ -80,7 +79,7 @@
               {this.state.error}
             </span>
             <div>
-              <Input
+              <input
                 type="email"
                 name="identifier"
                 ref="identifier"
@@ -88,7 +87,7 @@
                 onChange={this.handleChange} />
               </div>
               <div>
-                <Input
+                <input
                   type="password"
                   name="password"
                   ref="password"
