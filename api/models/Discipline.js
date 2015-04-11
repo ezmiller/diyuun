@@ -10,14 +10,10 @@ module.exports = {
 	connection: 'mongodb',
 
   attributes: {
-  	'type': {
-  		type: 'string',
-  		enum: ['human science', 'natural science'],
-  		required: true
-  	},
   	'name': {
   		type: 'string',
-  		required: true
+  		required: true,
+      lowercase: true
   	}
   }
 
