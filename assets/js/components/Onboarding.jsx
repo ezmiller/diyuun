@@ -1,5 +1,8 @@
 /**
  * Onboarding
+ *
+ * TODO: Handle case where user registers with pw but then doesn't finish.
+ * 
  */
 (function() {
 	'use strict';
@@ -82,6 +85,8 @@
 					message = '',
 					cursor = Cursor.build(this);
 
+			this.state.newUser=true;
+
 			if (!this.state.newUser) {
 				content = (
 					<div>
@@ -89,7 +94,7 @@
 						<Register pendingUser={cursor.refine('pendingUser')} newUser={cursor.refine('newUser')} />
 					</div>
 				);
-			} else if(!this.state.userSaved) {
+			} else if (!this.state.userSaved) {
 				if (!this.state.discipline) {
 					message = <div className="message"><h4>It is a pleasure to meet you {this.state.newUser.firstName}! What is your academic field?</h4></div>;
 				} else {

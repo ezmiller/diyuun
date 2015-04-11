@@ -1,5 +1,8 @@
 /**
  * SendInvite
+ *
+ * TODO: Handle case in which the user is already in system.
+ * 
  */
 (function() {
   'use strict';
