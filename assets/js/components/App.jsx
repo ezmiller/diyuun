@@ -76,11 +76,13 @@
 		onLogin: function() {
 			console.log('App::onLogin()');
 			this.setState({loggedIn: true});
+			this.context.router.transitionTo('/');
 		},
 
 		onLogout: function() {
 			console.log('App::onLogout()');
 			this.setState({loggedIn: false});
+			this.context.router.transitionTo('/login');
 		}
 
 	});
