@@ -10,12 +10,12 @@ var DefaultRoute = Router.DefaultRoute;
 
 var App = require('./components/App.jsx');
 var Login = require('./components/Login.jsx');
-var Dashboard = require('./components/Dashboard.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
+var UserDashboard = require('./components/UserDashboard.jsx');
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-  	<DefaultRoute name="home" handler={Dashboard} />
+  	<DefaultRoute name="home" handler={UserDashboard} />
     <Route name="login" path="/login" handler={Login} />
     <Route name="send-invite" path="/send-invite" handler={SendInvite} />
   </Route>

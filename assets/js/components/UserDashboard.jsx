@@ -4,18 +4,30 @@
 (function() {
 	'use strict';
 
-	var React = require('react');
+	import React from 'react';
 
-	var UserDashboard = React.createClass({
-		render:function() {
-			return(
-				<section className="dashboard">
-					<p>This is your dashboard.</p>
+	class Books extends React.Component {
+		render() {
+			return (
+				<section className="books">
+					<p>Some book stuff will go here</p>
 				</section>
 			);
 		}
-	});
+	}
 
-	module.exports = Dashboard;
+	// var Reveiws = require('./Reveiws.jsx');
+	// var Articles = require('./Articles.jsx');
+
+	class _UserDashboard extends React.Component {
+		render() {
+			return(
+				<div className="user-dashboard">
+					<Books />
+				</div>
+			);
+		}
+	}
+	export const UserDashboard = React.createClass(_UserDashboard.prototype);
 
 }());
