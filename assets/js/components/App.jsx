@@ -16,11 +16,14 @@
 	var Route = Router.Route;
 	var RouteHandler = Router.RouteHandler;
 	var Classable = require('./mixins/classable.js');
-	var Navigation = require('react-router').Navigation;
 
 	var App = React.createClass({
 
-		mixins: [Classable, Navigation],
+		mixins: [Classable],
+
+		contextTypes: {
+	    router: React.PropTypes.func
+	  },
 
 		getInitialState: function () {
 		    return {
