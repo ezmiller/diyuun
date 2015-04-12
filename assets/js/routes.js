@@ -15,8 +15,8 @@ var SendInvite = require('./components/SendInvite.jsx');
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="login" path="/login" hanlder={Login} />
-    <Route name="dashboard" handler={Dashboard} />
+  	<DefaultRoute name="home" handler={Dashboard} />
+    <Route name="login" path="/login" handler={Login} />
     <Route name="send-invite" handler={SendInvite} />
   </Route>
 );
