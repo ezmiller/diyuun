@@ -17,7 +17,7 @@ var routes = (
   <Route name="app" path="/" handler={App}>
   	<DefaultRoute name="home" handler={Dashboard} />
     <Route name="login" path="/login" handler={Login} />
-    <Route name="send-invite" handler={SendInvite} />
+    <Route name="send-invite" path="/send-invite" handler={SendInvite} />
   </Route>
 );
 
