@@ -1,12 +1,12 @@
 /**
- * Dashboard
+ * UserDashboard
  */
 (function() {
 	'use strict';
 
 	var React = require('react');
 
-	var Dashboard = React.createClass({
+	var UserDashboard = React.createClass({
 		render:function() {
 			return(
 				<section className="dashboard">
