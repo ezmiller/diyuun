@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         debug: true,
         extensions: ['.jsx'],
         transform: [
-          [ 'reactify', {'es6': true, 'es6module': true} ]
+          ['babelify', {'stage': 0}]
         ]
       }
     },
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         debug: true,
         extensions: ['.jsx'],
         transform: [
-          [ 'reactify', {'es6': true} ]
+          ['babelify', {'stage': 0}]
         ]
       }
     }
