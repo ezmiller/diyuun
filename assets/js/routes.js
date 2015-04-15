@@ -11,7 +11,12 @@ var DefaultRoute = Router.DefaultRoute;
 var App = require('./components/App.jsx');
 var Login = require('./components/Login.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
-var UserDashboard = require('./components/UserDashboard.jsx');
+// var UserDashboard = require('./components/UserDashboard.jsx');
+import {UserDashboard} from './components/UserDashboard.jsx';
+
+console.log('here');
+
+console.log(UserDashboard);
 
 var routes = (
   <Route name="app" path="/" handler={App}>

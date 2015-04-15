@@ -1,0 +1,19 @@
+.book {
+	padding: 2rem;
+	text-align: center;
+  border-radius: 1rem;
+  @extend .z-depth-1;
+
+
+	.title {
+		@extend h3;
+	}
+	.author {
+		display: block;
+		font-size: 1.5em;
+	}
+	.book-cover {
+		margin: 0 auto;
+	}
+
+}
