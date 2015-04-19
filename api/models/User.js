@@ -9,8 +9,6 @@ var Promise = require('promise');
 
 module.exports = {
 
-    connection: 'mongodb',
-
     schema: true,
 
     attributes: {

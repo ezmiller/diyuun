@@ -8,8 +8,6 @@
 
 module.exports = {
 
-	connection: 'mongodb',
-
 	attributes: {
 
 		user: {

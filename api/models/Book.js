@@ -9,8 +9,6 @@ var validator = require('validator');
 
 module.exports = {
 
-	connection: 'mongodb',
-
 	schema: true,
 
 	types: {

@@ -7,8 +7,6 @@
 'use strict';
 module.exports = {
 
-    connection: 'mongodb',
-
     attributes: {
         text: {
             type: 'string',
