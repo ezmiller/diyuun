@@ -65,6 +65,13 @@ module.exports.connections = {
     database: 'kanon'
   },
 
+  testdb: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    database: 'kanon-test'
+  }
+
   /***************************************************************************
   *                                                                          *
   * PostgreSQL is another officially supported relational database.          *
