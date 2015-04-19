@@ -117,3 +117,6 @@ nbproject
 .idea
 .node_history
 .sass-cache
+
+# Probably don't need coverage reports from  mocha-istanbul in repo
+coverage

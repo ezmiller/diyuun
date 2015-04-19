@@ -1,9 +1,15 @@
 'use strict';
+
+
 var Sails = require('sails'),
-  sails;
-var Promise = require('promise');
+    Promise = require('promise'),
+    sails;
 
 before(function(done) {
+  
+  console.log('Setting the environment to testing and lifting sails...\n\n');
+  process.env.NODE_ENV = 'testing';
+
   Sails.lift({
     log: {
         level: 'error'
@@ -11,15 +17,17 @@ before(function(done) {
   }, function(err, server) {
     sails = server;
     if (err) return done(err);
-    // here you can load fixtures, etc.
     done(err, sails);
   });
+  
 });
 
 after(function(done) {
 
-  // clean up data from tests
-  Promise.all([User.destroy(), Book.destroy(), Review.destroy(), Comment.destroy()])
+  // Clean up data from tests.
+  Promise.all([
+    PendingUser.destroy(), 
+  ])
   .then()
   .catch(function(err) {
     console.log(err);
