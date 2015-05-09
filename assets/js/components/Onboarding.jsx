@@ -59,25 +59,25 @@
 		updateUser: function(data, callback) {
 			$.ajax({
 				method: 'POST',
-				url: '/pendingusers/update/'+ this.state.pendingUserToken,
+				url: '/pendingusers/'+ this.state.pendingUserToken,
 				contentType: 'application/json',
 				data: JSON.stringify(data),
 			})
 			.done(function(data) {
-				console.log('DiscoverInterests::handleSubmit() success: ', data);
+				console.log('Onboarding::handleSubmit() success: ', data);
 				callback();
 			})
 			.fail(function(jqXhr) {
-				console.log('DiscoverInterests::handleSubmit() err: ', jqXhr);
+				console.log('Onboarding::handleSubmit() err: ', jqXhr);
 			});
 		},
 
 		saveUser: function() {
 			var self = this;
-			$.get('/pendingusers/save/' + this.state.pendingUserToken, function(data) {
-				console.log('DiscoverInterests::saveUser() returned: ', data);
-				self.setState({'newUser': data, 'userSaved': true});
-			});
+			$.get('/pendingusers/save/' + this.state.pendingUserToken)
+				.done(function(user) {
+					self.setState({'newUser': user, 'userSaved': true});
+				});
 		},
 
 		render: function() {

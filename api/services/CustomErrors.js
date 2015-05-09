@@ -23,7 +23,7 @@ var errors = [
     'FailedToPersist',
     'Authorization',
     'Onboarding',
-
+    ['PendingUserNotFound', 'Onboarding'],
 ];
 
 var customError = Object.create( new Error(), {

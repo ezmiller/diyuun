@@ -40,6 +40,11 @@ module.exports = {
 	},
 
 	find: function(req, res, next) {
+
+		if (!req.params.token) {
+			return res.badRequest('No pending user token provided.');
+		}
+
 		PendingUser.findOne({id: req.params.token}, function(err,found) {
 			if (err) {
 				res.status(500);
@@ -53,14 +58,30 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-		var id = req.param('id');
+		var id= req.param('token'),
+				updateVals = _.clone(req.allParams());
 
-		PendingUser.update(id, req.allParams(), function(err, updatedUser) {
+		// Remove token so it is not saved to db.
+		delete updateVals.token;
+
+		if (!id) {
+			return res.badRequest('No pending user token provided.');
+		}
+		
+		PendingUser.update(id, updateVals, function(err, updated) {
+			var updatedUser = updated ? _.first(updated) : null;
+
 			if (err) {
 				sails.log.error(CustomErrors.createOnboardingError('Failed to update the pending user.'));
 				return res.serverError({err: err});
 			}
-			res.send(updatedUser); // updatedUser will be an empty array if id was not found.
+
+			if (_.isEmpty(updatedUser)) {
+				sails.log.warn(CustomErrors.createOnboardingError('Non-matching, possibly invalid, token sent.'));
+				return res.badRequest('No user matched token provided, token may be invalid.');
+			}
+
+			res.send(updatedUser);
 		});
 	},
 
@@ -70,54 +91,55 @@ module.exports = {
 		// Respond with 400 if no id provided.
 		if (id === undefined) {
 			sails.log.error(CustomErrors.createMissingIdError('The id of the pending user to save was not provided.'));
-			return res.send(400);
+			return res.badRequest();
 		}
 
-		// Get pending user data.
-		PendingUser.findOne(id, function(err, found) {
-
-			console.log('PendingUserController::save() : found: ', found);
-
-			// Respond with 500 if there was an error while finding pending user.
-			if (err) {
-				sails.log.error(
-					CustomErrors.createOnboardingError('Failed to load pending user data while saving.')
-				);
-				return res.send(500);
-			}
-
-			// Respond with 400 if it was not possible to find the pending user.
+		PendingUser.findOne().where({id: id}).then(function(found) {
 			if (_.isEmpty(found)) {
-				sails.log.error(
-					CustomErrors.createOnboardingError('Unable to find pending user while saving.')
-				);
-				return res.send(400);
+				throw CustomErrors.createOnboardingError('Unable to find pending user, token may be invalid');
 			}
+			return found;
+		}).then(function(pendingUser) {
 
 			// Strip away attributes we don't want to update while saving new user.
-			delete found.createdAt;
-			delete found.updatedAt;
-			delete found.id;
+			delete pendingUser.createdAt;
+			delete pendingUser.updatedAt;
+			delete pendingUser.id;
 
-			User.update({email: found.email}, found, function(err, user) {
-				if (err) {
-					sails.log.error(
-						CustomErrors.createOnboardingError('Failed to copy pending user data to new user while saving.')
-					);
-					return res.send(500);
+			// Copy the pending user data to the user model.
+			return User.update({email: pendingUser.email}, pendingUser).then(function(updated) {
+				
+				if (_.isEmpty(updated)) {
+					throw CustomErrors.createOnboardingError('Failed to locate new user stub when trying to save pending user.');
+					return;
 				}
 
-				// Delete the Pending User
-				PendingUser.destroy({email: found.email}, function(err, deleted) {
-					if (err) {
-						sails.log.error(
-							CustomErrors.createOnboardingError('Failed to delete the pending user while saving new user.')
-						);
-					}
-				});
+				if (updated.length > 1) {
+					throw CustomErrors.createOnboardingError('Server found multiple new user stubs matching a pending user. Save aborted.');
+					return;
+				}
 
-				res.send(_.first(user));
-			});
+				return _.first(updated);
+
+			}).catch(function(err) { throw err; });
+
+		}).then(function(newUser) {
+
+				PendingUser.destroy({email: newUser.email}).exec(function(err) {
+
+					if (err) {
+						throw CustomErrors.createOnboardingError('Failed to delete pending user.');
+						return;
+					}
+
+					res.send(newUser);  // Everything worked, so send new user back to client.
+					
+				});
+				
+		}).catch(function(err) {
+
+			sails.log.error(err);
+			res.serverError();
 
 		});
 
