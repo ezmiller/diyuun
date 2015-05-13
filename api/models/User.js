@@ -30,6 +30,11 @@ module.exports = {
             type: 'string',
             required: false
         },
+        role: {
+            type: 'string',
+            enum: ['user', 'editor', 'admin'],
+            required: true
+        },
         title: {
             type: 'string'
         },

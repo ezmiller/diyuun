@@ -28,6 +28,7 @@ exports.register = function (req, res, next) {
     , password = req.param('password')
     , firstName = req.param('firstName')
     , lastName = req.param('lastName')
+    , role = 'user'
     , title = req.param('title')
     , affiliation = req.param('affiliation');
 
@@ -52,6 +53,7 @@ exports.register = function (req, res, next) {
     username: username,
     firstName: firstName,
     lastName: lastName,
+    role: role,
     email: email,
     title: title,
     affiliation: affiliation
