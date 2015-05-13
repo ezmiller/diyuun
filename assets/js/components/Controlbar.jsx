@@ -16,6 +16,8 @@
 
 	var Controlbar = React.createClass({
 
+		propType: {
+			cursor: React.PropTypes.object.isRequired
 		},
 
 		logout: function(e) {
@@ -38,6 +40,7 @@
 						<ul className="right-controlbar-group">
 							<li><Link to="send-invite">Send Invite</Link></li>
 							<li><a href="logout" onClick={this.logout}>Logout</a></li>
+							<li key="profile-link"><a className="profile-link" href="">{this.props.user.refine('firstName').value}</a></li>
 						</ul>
 					</div>
 				</nav>
