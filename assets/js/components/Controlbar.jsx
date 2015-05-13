@@ -16,20 +16,6 @@
 
 	var Controlbar = React.createClass({
 
-		getInitialState: function() {
-			return {
-				loggedIn: false
-			}
-		},
-
-		componentDidMount: function () {
-		 	AuthStore.addLoginListener(this.onLogin);
-		 	AuthStore.addLogoutListener(this.onLogout);
-		},
-
-		componentWillUnmount: function () {
-			AuthStore.removeLoginListener(this.onLogin);
-			AuthStore.removeLoginListener(this.onLogout);
 		},
 
 		logout: function(e) {
@@ -57,16 +43,6 @@
 				</nav>
 			);
 		},
-
-		onLogin: function() {
-			console.log('Control::onLogin()');
-			this.setState({loggedIn: true});
-		},
-
-		onLogout: function() {
-			console.log('Control::onLogout()');
-			this.setState({loggedIn: false});
-		}
 
 	});
 
