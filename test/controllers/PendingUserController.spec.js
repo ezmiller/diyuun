@@ -151,13 +151,14 @@ describe('PendingUserController', function(done) {
 		});
 	});
 	describe('Try to save a pending user via /pendingusers/save/:token where new user stub is created first ', function(done) {
-		var userStub = {
-			'username': 'bobbie.brown@example.edu',
-			'email': 'bobbie.brown@example.edu',
-			'firstName': 'Bobbie',
-			'lastName': 'Brown',
-			'password': '2952fpij-023'
-		};
+		var user,
+				userStub = {
+					'username': 'bobbie.brown@example.edu',
+					'email': 'bobbie.brown@example.edu',
+					'firstName': 'Bobbie',
+					'lastName': 'Brown',
+					'password': '2952fpij-023'
+				};
 		it('first create a new user stub', function(done) {
 			request(sails.hooks.http.app)
 			.post('/auth/local/register')
@@ -171,12 +172,25 @@ describe('PendingUserController', function(done) {
 				.get('/pendingusers/save/'+token)
 				.expect(200).
 				end(function(err,res) {
-					console.log(res.body);
+					user = res.body;
 					done();
 				});
 		});
+		it('user object is valid', function(done) {
+			user.should.be.an.object;
+			user.should.have.properties([
+					'id',
+					'username',
+					'firstName',
+					'lastName',
+					'email',
+					'role',
+					'title'
+			]);
+			user.role.should.equal('user');
+			done();
+		});
 	});
-	
 });
 
 function generatePendingUser(hasName, hasEmail, hasAffiliation, hasTitle) {
