@@ -246,6 +246,15 @@ hr {
   border-width: 0;
   border-top: 1px solid #E1E1E1; }
 
+.arrow-down {
+  display: block;
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #fff;
+}
+
 .form-wrap {
   padding: 20px;
   border-radius: 10px;

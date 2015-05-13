@@ -38,9 +38,13 @@
 					<div className="controlbar-wrapper">
 						<a href="#" className="brand-logo">Kanon</a>
 						<ul className="right-controlbar-group">
-							<li><Link to="send-invite">Send Invite</Link></li>
-							<li><a href="logout" onClick={this.logout}>Logout</a></li>
+							<li key="dropdown" className="dropdown"><span className="arrow-down"></span></li>
 							<li key="profile-link"><a className="profile-link" href="">{this.props.user.refine('firstName').value}</a></li>
+							<ul className="dropdown-menu">
+								<li key="send-invite"><Link to="send-invite">Send Invite</Link></li>
+								<li key="add-book"><a>Suggest a Book</a></li>
+								<li key="logout"><a href="logout" onClick={this.logout}>Logout</a></li>
+							</ul>
 						</ul>
 					</div>
 				</nav>
