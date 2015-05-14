@@ -33,6 +33,9 @@ module.exports.routes = {
   // Send Invite
   'GET /send-invite': 'IndexController.index',
 
+  // Suggest
+  'GET /suggest': 'IndexController.index',
+
   //Dashboard
   'GET /dashboard': 'IndexController.index',
 

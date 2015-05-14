@@ -17,12 +17,14 @@ import {UserDashboard} from './components/UserDashboard.jsx';
 console.log('here');
 
 console.log(UserDashboard);
+var Suggest = require('./components/Suggest.jsx');
 
 var routes = (
   <Route name="app" path="/" handler={App}>
   	<DefaultRoute name="home" handler={UserDashboard} />
     <Route name="login" path="/login" handler={Login} />
     <Route name="send-invite" path="/send-invite" handler={SendInvite} />
+    <Route name="suggest" path="/suggest" handler={Suggest} />
   </Route>
 );
 
