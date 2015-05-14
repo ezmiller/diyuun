@@ -48,4 +48,7 @@ module.exports.routes = {
   'GET /pendingusers/save/:id': 'PendingUserController.save',
   'POST /invite': 'PendingUserController.create',
 
+  // Sources
+  'GET /sources/search/:srcType': 'SourceContoller.search',
+
 };
