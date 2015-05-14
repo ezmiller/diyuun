@@ -27,7 +27,9 @@ after(function(done) {
   // Clean up data from tests.
   Promise.all([
     PendingUser.destroy(),
-    User.destroy() 
+    User.destroy(),
+    Source.destroy(),
+    Author.destroy()
   ])
   .then()
   .catch(function(err) {
