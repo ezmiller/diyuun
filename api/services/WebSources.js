@@ -1,7 +1,9 @@
 'use strict';
 
 var Promise = require('promise'),
-		request = require('request');
+		request = require('request'),
+		human = require('humanparser');
+
 
 module.exports = (function() {
 
@@ -44,15 +46,17 @@ module.exports = (function() {
 			}
 
 			// Build source object.
+			o.id = v.id;
 			o.type = 'book';
 			o.title = v.volumeInfo.title;
 			o.subtitle = v.volumeInfo.subtitle;
-			o.authors = v.volumeInfo.authors;
+			o.authors = parseGoogleAuthors(v.volumeInfo.authors);
 			o.publisher = v.volumeInfo.publisher;
 			o.language = v.volumeInfo.language;
 			o.categories = v.volumeInfo.categories;
 			o.imageLinks = v.volumeInfo.imageLinks;
 			o.googleSelfLink = v.selfLink;
+			o.websource = 'google_books';
 
 			result.push(o);
 		});
@@ -60,6 +64,18 @@ module.exports = (function() {
 		console.log('WebSources::parseGoogleBooksData()  found', result.length);
 
 		return result;
+	}
+
+	function parseGoogleAuthors(authors) {
+		var parsed = authors.map(function(name) {
+			name = human.parseName(name);
+			return {
+				'firstName': name.firstName,
+				'middleName': name.middleName,
+				'lastName': name.lastName
+			};
+		});
+		return parsed;
 	}
 
 	function authorizeMendeley() {
