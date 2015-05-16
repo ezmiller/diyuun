@@ -4,50 +4,93 @@
 (function() {
 	'use strict';
 
+	var moment = require('moment');
+
 	var React = require('react');
 
-	var Book = React.createClass({
+	var SearchResult = React.createClass({
+
+		handleClick: function(e) {
+			e.preventDefault();
+			this.props.handler(this.props.data);
+		},
 
 		render: function() {
-			return(
-				<article className="book">
-					<h1 className="title">{this.props.data.title}</h1>
-					<img className="cover-image" src={this.props.data.imageLinks.thumbnail} alt="Book Cover" />
-				</article>
+			var authors,
+					source = this.props.data;
+
+			authors = source.authors.map(function(author,key) {
+				return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
+			});
+
+			return (
+				<li key={source.id} className="item">
+					<img className="image" src={source.imageLinks.thumbnail} alt="Book Cover" />
+					<div className="metadata">
+						<h1 className="title">{source.title}</h1>
+						<h2 className="subtitle">{source.subtitle}</h2>
+						<p className="authors">{authors}</p>
+					</div>
+					<button onClick={this.handleClick}>Recommend</button>
+				</li>
 			);
 		}
+
 	});
 
-	var Suggest = React.createClass({
+	var Search = React.createClass({
 
 		getInitialState: function () {
-		    return {
-		        searchValue: '',
-		        searchResults: []
-		    };
+	    return {
+        searchValue: '',
+        searchResults: [],
+        lastUpdate: moment().unix(),
+        updating: false
+	    };
 		},
 
 		handleChange: function(e) {
 			var newValue = e.target.value;
 			this.setState({searchValue: newValue});
-			if (newValue.length % 2 === 0) {
-				this.updateResults();
-			} else if (newValue.length === 0) {
-				this.setState({searchResults:[]});
+			if (newValue.length > 0 && this.isTimeToUpdate()) {
+				this.updateResults(newValue);
+			} else if (newValue.length == 0) {
+				this.setState({searchResults: []});
 			}
 		},
 
-		updateResults: function() {
+		handleKeyDown: function(e) {
+			console.log(e.keyCode);
+			if (e.keyCode === 13) {  // Enter.
+				e.preventDefault();
+				this.updateResults(this.state.searchValue);
+			}
+		},
+
+		isTimeToUpdate: function() {
+			var now = moment(),
+					last = moment.unix(this.state.lastUpdate);
+			return now.isAfter(last.add(3,'seconds'));
+		},
+
+		updateResults: function(searchValue) {
 			var self = this;
-			console.log('updateResults() searchValue', this.state.searchValue);
+			console.log('updateResults() searchValue', searchValue);
+
+			if (this.state.updating) return;
+			this.setState({updating: true});
+
 			$.ajax({
 				type: 'GET',
-				url: '/sources/search/book?query='+this.state.searchValue,
+				url: '/sources/search/book?query='+searchValue,
 				dataType: 'JSON'
 			})
 			.done(function(data) {
-				console.log(data);
-				self.setState({searchResults: data});
+				self.setState({
+					searchResults: data, 
+					lastUpdate: moment().unix(),
+					updating: false
+				});
 			})
 			.fail(function(jqXhr) {
 				console.log('search request failed');
@@ -55,24 +98,77 @@
 		},
 
 		render: function() {
+			var self = this,
+					result;
 
-			var sources = this.state.searchResults.map(function(source, key) {
-				return <li key={key}><Book data={source} /></li>
+			result = this.state.searchResults.map(function(source, key) {
+				return <SearchResult key={source.id} data={source} handler={self.props.handler} />
 			});
 
 			return(
-				<div className="suggest">
-					<h1>Suggest a resource to your colleagues...</h1>
-					<form class="search-form">
-						<input type="text" onChange={this.handleChange} value={this.state.searchValue} />
-						<ul className="search-results">
-							{sources}
-						</ul>
-					</form>
-				</div>
+				<form className="search-form">
+					<input 
+						type="text" 
+						className="search-field"
+						onChange={this.handleChange} 
+						onKeyDown={this.handleKeyDown} 
+						value={this.state.searchValue} 
+						placeholder="Search" />
+					<ul className="search-results">
+						{result}
+					</ul>
+				</form>
 			);
 		}
 
+	});
+
+	var Suggest = React.createClass({
+
+		getInitialState: function () {
+	    return {
+        source: null  
+	    };
+		},
+
+		handleRecommendClick: function(source) {
+			console.log(source);
+			this.setState({source: source});
+		},
+
+		render: function() {
+			var source = this.state.source,
+					authors,
+					content;
+
+			authors = !source ? null : source.authors.map(function(author,key) {
+				return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
+			});
+
+			content = source ? (
+				<form className="recommendation-form">
+					<div class="source">
+						<img className="image" src={source.imageLinks.thumbnail} alt="Book Cover" />
+						<div className="metadata">
+							<h1 className="title">{this.state.source.title}</h1>
+							<h2 className="subtitle">{this.state.source.subtitle}</h2>
+							<p className="authors">{authors}</p>
+						</div>
+					</div>
+					<label htmlFor="rating">How important?</label>
+					<input type="text" id="rating" className="rating" /> 
+					<textarea className="recommend-msg" placeholder="Why is this text important?" />
+					<button>Submit</button>
+				</form>
+			) :  (
+				<Search handler={this.handleRecommendClick} />
+			);
+			return (
+				<div className="suggest">
+					{content}
+				</div>
+			);
+		}
 	});
 
 	module.exports = Suggest;
