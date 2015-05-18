@@ -29,9 +29,10 @@ after(function(done) {
     PendingUser.destroy(),
     User.destroy(),
     Source.destroy(),
-    Author.destroy()
+    Author.destroy(),
+    Recommendation.destroy(),
+    Discipline.destroy()
   ])
-  .then()
   .catch(function(err) {
     console.log(err);
   })
