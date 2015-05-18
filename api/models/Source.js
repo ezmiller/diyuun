@@ -29,6 +29,10 @@ module.exports = {
   		required: true
   	},
 
+    subtitle: {
+      type: 'string'
+    },
+
   	authors: {
   		collection: 'author',
   		via: 'works',
@@ -43,10 +47,26 @@ module.exports = {
 			type: 'string'
 		},
 
-		year: {
-			type: 'integer',
-			required: true
-		}
+    publisher: {
+      type: 'string'
+    },
+
+    year: {
+      type: 'integer',
+      required: true
+    },
+
+    language: {
+      type:'string'
+    },
+
+    abstract: {
+      type:'string'
+    },
+
+    categories: {
+      type: 'array'
+    },
 
   }
 };
