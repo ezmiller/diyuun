@@ -68,6 +68,11 @@ module.exports = {
       type: 'array'
     },
 
+    recommendations: {
+      collection: 'recommendation',
+      via: 'source'
+    }
+
   }
 };
 

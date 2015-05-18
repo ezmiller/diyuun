@@ -8,12 +8,29 @@
 module.exports = {
 
   attributes: {
-  	'name': {
-  		type: 'string',
-  		required: true,
+    'name': {
+      type: 'string',
+      unique: true,
+      required: true,
       lowercase: true
-  	}
+    },
+    'users': {
+      collection: 'user',
+      via: 'discipline'
+    },
+    recommendations: {
+      collection: 'recommendation',
+      via: 'discipline'
+    },
+    relatedTo: {
+      collection: 'discipline',
+      via: 'relatedFrom',
+      dominant: true
+    }, 
+    relatedFrom: {
+      collection: 'discipline',
+      via: 'relatedTo'
+    }
   }
 
 };
-

@@ -45,7 +45,7 @@ module.exports = {
             type: 'text'
         },
         discipline: {
-            type: 'json',
+            model: 'discipline',
         },
         interests: {
             type: 'array'
@@ -71,6 +71,10 @@ module.exports = {
         },
         comments: {
             collection: 'comment',
+            via: 'user'
+        },
+        recommendations: {
+            collection: 'recommendation',
             via: 'user'
         }
     },
