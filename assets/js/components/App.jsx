@@ -22,7 +22,7 @@
 
 	var App = React.createClass({
 
-		mixins: [Classable],
+		mixins: [Classable, Router.State],
 
 		contextTypes: {
 	    router: React.PropTypes.func
@@ -80,8 +80,9 @@
 
 		onLogin: function() {
 			console.log('App::onLogin()');
+			var path = this.getPathname() === '/login' ? '/' : this.getPathname();
 			this.setState({loggedIn: true, user: AuthStore.getCurrentUser()});
-			this.context.router.transitionTo('/');
+			this.context.router.transitionTo(path);
 		},
 
 		onLogout: function() {
