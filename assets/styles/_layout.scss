@@ -11,7 +11,7 @@
 }
 
 .logged-in .content {
-	margin: $controlbar-mobile-height 0 0 0;
+	margin: 2rem 0 0 0;
 	@media screen and (min-width: $larger-than-phablet) {
 		margin: $controlbar-height 0 0 0;
 	}
