@@ -17,7 +17,7 @@
 	var Controlbar = React.createClass({
 
 		propType: {
-			cursor: React.PropTypes.object.isRequired
+			user: React.PropTypes.object.isRequired
 		},
 
 		logout: function(e) {
