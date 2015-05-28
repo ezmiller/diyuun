@@ -42,7 +42,7 @@
 							<li key="profile-link"><a className="profile-link" href="">{this.props.user.refine('firstName').value}</a></li>
 							<ul className="dropdown-menu">
 								<li key="send-invite"><Link to="send-invite">Send Invite</Link></li>
-								<li key="add-book"><a>Suggest a Book</a></li>
+								<li key="suggest-source"><Link to="suggest">Suggest a Book</Link></li>
 								<li key="logout"><a href="logout" onClick={this.logout}>Logout</a></li>
 							</ul>
 						</ul>
