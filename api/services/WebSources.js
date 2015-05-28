@@ -57,7 +57,7 @@ module.exports = (function() {
 			o.language = v.volumeInfo.language;
 			o.categories = v.volumeInfo.categories;
 			o.abstract = v.volumeInfo.description;
-			o.imageLinks = v.volumeInfo.imageLinks;
+			o.imageLinks = v.volumeInfo.imageLinks !== undefined ? v.volumeInfo.imageLinks : null;
 			o.googleSelfLink = v.selfLink;
 			o.websource = 'google_books';
 

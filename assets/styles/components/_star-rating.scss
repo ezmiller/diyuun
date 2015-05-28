@@ -1,0 +1,27 @@
+.rating-wrap {
+	position: relative;
+	height: 5rem;
+	
+	.rating {
+		position: absolute;
+		unicode-bidi: bidi-override;
+		direction: rtl;
+	}
+
+	.rating span {
+		font-size: 1.6em;
+	}
+
+	.rating > span:hover:before,
+	.rating > span:hover ~ span:before {
+		position: absolute;
+		content: "\2605";
+		color: yellow;
+	}
+
+	.marked {
+		content: "\2605";
+		color: yellow;
+	}
+
+}

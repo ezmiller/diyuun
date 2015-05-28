@@ -1,7 +1,22 @@
 .suggest {
 
-	.recommendation-form {
+	.image,
+	.metadata {
+		display: inline-block;
+	}
 
+	.image {
+		margin-right: 1.5rem;
+		@media screen and (min-width: $larger-than-tablet) {
+			width: 17%;
+		}
+	}
+
+	.metadata {
+		vertical-align: top;
+		@media screen and (min-width: $larger-than-tablet) {
+			width: 80%
+		}
 	}
 
 	.recommend-msg {
