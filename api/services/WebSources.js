@@ -50,6 +50,7 @@ module.exports = (function() {
 			o.type = 'book';
 			o.title = v.volumeInfo.title;
 			o.subtitle = v.volumeInfo.subtitle;
+			o.description = v.volumeInfo.description;
 			o.authors = parseGoogleAuthors(v.volumeInfo.authors);
 			o.publisher = v.volumeInfo.publisher;
 			o.year = v.volumeInfo.publishedDate;
