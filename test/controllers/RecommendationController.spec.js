@@ -14,7 +14,7 @@ describe("RecommendationController Tests", function(done) {
     'firstName': 'Bobbie',
     'lastName': 'Brown',
     'password': '2952fpij-023',
-    'role': 'user'
+    'role': 'user',
   };
 
   var testSource = {
@@ -39,21 +39,10 @@ describe("RecommendationController Tests", function(done) {
   });
 
   after(function() {
-    return Promise.all([User.destroy(), Source.destroy(), Discipline.destroy(), Recommendation.destroy()]);
+    // return Promise.all([User.destroy(), Source.destroy(), Discipline.destroy(), Recommendation.destroy()]);
   });
 
   describe('Try to create a new recommendation', function() {
-    it('create test user', function(done) {
-      request(sails.hooks.http.app)
-      .post('/auth/local/register')
-      .send(testUser)
-      .expect(200)
-      .end(function(err,res) {
-        if (err) return done(err);
-        testUser = res.body;
-        done();
-      });
-    });
     it('create a test discipline', function(done) {
       request(sails.hooks.http.app)
       .post('/disciplines')
@@ -62,6 +51,18 @@ describe("RecommendationController Tests", function(done) {
       .end(function(err, res) {
         if (err || res.error === 'E_VALIDATION') return done(err);
         testDiscipline = res.body;
+        done();
+      });
+    });
+    it('create test user', function(done) {
+      testUser.discipline = { id: testDiscipline.id };
+      request(sails.hooks.http.app)
+      .post('/auth/local/register')
+      .send(testUser)
+      .expect(200)
+      .end(function(err,res) {
+        if (err) return done(err);
+        testUser = res.body;
         done();
       });
     });
@@ -86,6 +87,29 @@ describe("RecommendationController Tests", function(done) {
       ]);
       testRecommendation.should.be.integer;
       done();
+    });
+  });
+
+  describe('try to fetch recommendations for the test user', function() {
+    var result;
+    it('should return 200', function(done) {
+      request(sails.hooks.http.app)
+      .get('/recommendations?user='+testUser.id)
+      .expect(200)
+      .end(function(err,res) {
+        if (err) return done(err);
+        result = res.body;
+        console.log(result);
+        done();
+      });
+    });
+  });
+
+  describe('try to fetch recommendations for a user that does not exist', function() {
+    it('should return 400', function(done) {
+      request(sails.hooks.http.app)
+      .get('/recommendations?user=482ASDF803KLKJSFD2')
+      .expect(400,done);
     });
   });
 

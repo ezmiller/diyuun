@@ -10,6 +10,25 @@
 
 module.exports = {
 
+  find: function(req, res, next) {
+    var user;
+
+    userId = req.param('user');
+
+    Recommendations.get(userId)
+      .then(function(recommendations) {
+        res.send(recommendations);
+      })
+      .catch(function(err) {
+        sails.log.error(err);
+        if (err.name === 'RecordNotFoundError') {
+          res.badRequest(err.message); 
+        } else {
+          res.serverError(err.message);
+        }
+      });
+  },
+
   create: function(req, res, next) {
     var user = req.param('user'),
         source = req.param('source'),

@@ -20,10 +20,12 @@
 var errors = [
     'InvalidArgument',
     ['MissingId', 'InvalidArgument'],
+    'RecordNotFound',
     'FailedToPersist',
     'Authorization',
     'Onboarding',
     ['PendingUserNotFound', 'Onboarding'],
+    'Recommender'
 ];
 
 var customError = Object.create( new Error(), {
