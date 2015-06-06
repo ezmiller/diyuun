@@ -2,7 +2,8 @@
 
 var Promise = require('promise'),
 		request = require('request'),
-		human = require('humanparser');
+		human = require('humanparser'),
+		_ = require('underscore');
 
 
 module.exports = (function() {
@@ -16,20 +17,70 @@ module.exports = (function() {
 
 		console.log('WebSources::getResults() searchTerms: ', searchTerms);
 
+		var localSearchTerms = { where: { or : []} };
+		if (searchTerms.query) {
+			localSearchTerms.where.or.push({title: {contains: searchTerms.query}});
+		};
+
 		var googSearchTerms = { q: '' };
 		if (searchTerms.title) googSearchTerms.q += searchTerms.title;
 		if (searchTerms.author) googSearchTerms.q += searchTerms.author;
 		if (searchTerms.query) googSearchTerms.q += searchTerms.query;
 
 
-		Promise.resolve(getGoogleBookResults(googSearchTerms))
-		.then(function(result) {
-			callback(null, parseGoogleBooksData(JSON.parse(result)));
-		}).catch(function(err) {
-			callback(err, null);
-		});
+		Promise.resolve(getLocalResults(localSearchTerms))
+			.then(function(localResults) {
+				
+				Promise.resolve(getGoogleBookResults(googSearchTerms))
+					.then(function(googResults) {
+						var i, len, finalResults;
+						
+						finalResults = localResults;
+						googResults = parseGoogleBooksData(JSON.parse(googResults));
+
+						for (i = 0, len = googResults.length; i < len; i++) {
+							if ( !isDuplicate(googResults[i], finalResults) ) {
+						  	finalResults.push(googResults[i]);
+						  }
+						}
+						return finalResults;
+						
+					})
+					.then(function(results) {
+						callback(null, results);
+					})
+					.catch(function(err) {
+						throw err;
+					});
+
+			})
+			.catch(function(err) {
+				callback(err, null);
+			});
 
 	}
+
+	function isDuplicate(newItem, results) {
+		if (results.length === 0) return false;
+		var found = _.find(results, function(item) {
+			return newItem.title.toLowerCase() === item.title.toLowerCase();
+		});
+		return found;
+	}
+
+	function getLocalResults(searchTerms) {
+		return Source.find()
+			.where(searchTerms)
+			.populate('authors')
+			.then(function(found) {
+				return found;
+			})
+			.catch(function(err) {
+				throw err;
+			});
+	};
+
+
 
 	function parseGoogleBooksData(raw) {
 		var result = [];
@@ -48,6 +99,7 @@ module.exports = (function() {
 			// Build source object.
 			o.id = v.id;
 			o.type = 'book';
+			o.identifiers = v.volumeInfo.industryIdentifiers;
 			o.title = v.volumeInfo.title;
 			o.subtitle = v.volumeInfo.subtitle;
 			o.description = v.volumeInfo.description;
@@ -67,6 +119,20 @@ module.exports = (function() {
 		console.log('WebSources::parseGoogleBooksData()  found', result.length);
 
 		return result;
+	}
+
+	function getGoogleBookResults(searchTerms) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				url: googleBooksUrl,
+				method: 'GET',
+				qs: searchTerms
+			};
+			request(options, function(err, resp, body) {
+				if (err) reject(err.message);
+				resolve(body);
+			});
+		});
 	}
 
 	function parseGoogleAuthors(authors) {
@@ -107,20 +173,6 @@ module.exports = (function() {
 		});
 	}
 
-	function getGoogleBookResults(searchTerms) {
-		return new Promise(function(resolve, reject) {
-			var options = {
-				url: googleBooksUrl,
-				method: 'GET',
-				qs: searchTerms
-			};
-			request(options, function(err, resp, body) {
-				if (err) reject(err.message);
-				resolve(body);
-			});
-		});
-	}
-
 	function getMendeleyResults(searchTerms) {
 		return new Promise(function(resolve, reject) {
 			var options = {
@@ -142,6 +194,7 @@ module.exports = (function() {
 	function mendeleyIsAuthorized() {
 		return mendeleyAccessToken && !mendeleyAccessToken.expired();
 	}
+
 
 	return {
 
