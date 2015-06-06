@@ -99,8 +99,10 @@
 	  		.then(function(user) {
 	  			return Recommendation.find()
 	  				.where({discipline: user.discipline.id})
-	  				.sort('rating DESC')
-			  		.populate('source')
+	  				.groupBy('source')
+	  				.sum('rating')
+	  				.sort('rating ASC')
+			  		// .populate('source')
 			  		.then(function(result) {
 			  			return result;	
 			  		})
