@@ -48,7 +48,7 @@ module.exports = {
       'text': text
     };
 
-    if ( source.websource !== 'kanon_db' ) {
+    if ( source.websource ) {
       
       Source.create(source).then(function(newSource) {
         newRec.source = newSource.id;
