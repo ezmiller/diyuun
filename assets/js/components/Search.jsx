@@ -1,5 +1,5 @@
 /**
- * StarRatings
+ * Search
  */
 (function() {
 	'use strict';
