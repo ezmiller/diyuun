@@ -24,6 +24,11 @@ module.exports = {
   		required: true
   	},
 
+    identifiers: {
+      type: 'array',
+      required: true
+    },
+
   	title: {
   		type: 'string',
   		required: true
@@ -66,6 +71,10 @@ module.exports = {
 
     categories: {
       type: 'array'
+    },
+
+    imageLinks: {
+      type: 'object'
     },
 
     recommendations: {

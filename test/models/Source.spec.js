@@ -8,7 +8,7 @@ var should = require('should');
 describe('Source Model', function() {
 
 	describe('Try to create a new book source with one author', function() {
-		var testBook = generateBook(true, true, true);
+		var testBook = generateBook(true, true, true, true);
 		it('should create a valid source', function(done) {
 			Source.create(testBook, function(err, book) {
 				if (err) {
@@ -36,9 +36,10 @@ describe('Source Model', function() {
 
 });
 
-function generateBook(hasTitle, hasAuthors, hasYear) {
+function generateBook(hasIdentifiers, hasTitle, hasAuthors, hasYear) {
 	var book = {'type': 'book'};
 
+	if (hasIdentifiers) book.identifiers = typeof hasIdentifiers === 'array' ? hasIdentifiers : [ {type: 'ISBN_13', identifier: '9780571310302'} ];
 	if (hasTitle) book.title = typeof hasTitle === 'string' ? hasTitle : 'Geek Sublime: Writing Code, Writing Fiction';
 	if (hasAuthors) book.authors = typeof hasAuthors === 'object' ? hasAuthors : [{ firstName: 'Nancy', lastName: 'Fraser' }];
 	if (hasYear) book.year = typeof hasYear === 'int' ? hasYear : 2010;
