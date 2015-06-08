@@ -6,6 +6,14 @@
  *
  */
 
+var externals = [
+  'react',
+  'jquery',
+  'backbone',
+  'react-cursor',
+  'react-router'
+];
+
 module.exports = function(grunt) {
 
   grunt.config.set('browserify', {
@@ -14,10 +22,9 @@ module.exports = function(grunt) {
       dest: '.tmp/public/js/main.js',
       options: {
         debug: true,
+        insertGlobals: true,
         extensions: ['.jsx'],
-        alias: {
-          'jquery': './assets/bower_components/jquery/dist/jquery.min.js'
-        },
+        external: externals,
         transform: [
           ['babelify', {'stage': 0}]
         ]
@@ -28,13 +35,42 @@ module.exports = function(grunt) {
       dest: '.tmp/public/js/signup.js',
       options: {
         debug: true,
+        insertGlobals: true,
         extensions: ['.jsx'],
-        alias: {
-          'jquery': './assets/bower_components/jquery/dist/jquery.min.js'
-        },
+        externals: externals,
         transform: [
           ['babelify', {'stage': 0}]
         ]
+      }
+    },
+    vendor: {
+      src: [
+        'node_modules/react/dist/react-with-addons',
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/backbone.js',
+        'node_modules/src/react-cursor.js',
+      ],
+      dest: '.tmp/public/js/dependencies/vendor.js',
+      options: {
+        debug: false,
+        detectGlobals: false,
+        noParse: [
+          'jquery'
+        ],
+        alias: [
+          'react:',
+          'jquery:',
+          'backbone:',
+          'react-cursor:',
+          'react-router:'
+        ],
+        shim: {
+          react_router: {
+            path: 'node_modules/react-router/lib/index.js',
+            exports: 'react-router'
+          }
+        },
+        external: null
       }
     }
   });
