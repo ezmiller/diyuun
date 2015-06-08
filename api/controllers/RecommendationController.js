@@ -17,6 +17,10 @@ module.exports = {
 
     Recommendations.get(userId)
       .then(function(recommendations) {
+        for (var i=0; i < recommendations.length; i++) {
+          recommendations[i].id = recommendations[i].source.toString();
+          delete recommendations[i].source;
+        }
         res.send(recommendations);
       })
       .catch(function(err) {
