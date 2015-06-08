@@ -2,10 +2,7 @@
  * UserDashboard
  */
 
-<<<<<<< HEAD
 var $ = require('jquery');
-=======
->>>>>>> Change UserDashboard to retrieve recommendations form RecommendationsStore
 
 // Flux
 var Actions = require('../actions/Actions.js');
