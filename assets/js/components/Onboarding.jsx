@@ -6,6 +6,8 @@
  */
 (function() {
 	'use strict';
+	
+	var $ = require('jquery');
 
 	// React & Components.
 	var React = require('react');

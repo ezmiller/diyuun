@@ -4,6 +4,8 @@
 (function() {
 	'use strict';
 
+	var $ = require('jquery');
+
 	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var AuthActions = require('../actions/AuthActions.js');

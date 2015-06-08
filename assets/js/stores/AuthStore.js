@@ -9,9 +9,7 @@
 	var AuthConstants = require('../constants/AuthConstants.js');
 	var Backbone = require('backbone');
 	var _ = require('underscore');
-
-	// Tell backgone to use jQuery
-	Backbone.$ = $;
+	var $ = require('jquery');
 
 	var LOGIN = 'login';
 	var LOGOUT = 'logout';
@@ -31,12 +29,14 @@
 			email: '',
 		},
 
+		dispatcherToken: null,
+
 		initialize: function() {
 			var that = this;
 			console.log('AuthStore::initialize()');
 
 			// Register store with dispatcher.
-			OurDispatcher.register(actionCallback);
+			this.dispatcherToken = OurDispatcher.register(actionCallback);
 
 			// Check if a user is logged in. If so, set.
 			$.ajax({url: '/authorized'})

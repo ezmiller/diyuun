@@ -15,6 +15,9 @@ module.exports = function(grunt) {
       options: {
         debug: true,
         extensions: ['.jsx'],
+        alias: {
+          'jquery': './assets/bower_components/jquery/dist/jquery.min.js'
+        },
         transform: [
           ['babelify', {'stage': 0}]
         ]
@@ -26,6 +29,9 @@ module.exports = function(grunt) {
       options: {
         debug: true,
         extensions: ['.jsx'],
+        alias: {
+          'jquery': './assets/bower_components/jquery/dist/jquery.min.js'
+        },
         transform: [
           ['babelify', {'stage': 0}]
         ]

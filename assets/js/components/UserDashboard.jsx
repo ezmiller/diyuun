@@ -2,6 +2,12 @@
  * UserDashboard
  */
 
+var $ = require('jquery');
+
+// Flux
+var Actions = require('../actions/Actions.js');
+var RecommendationStore = require('../stores/RecommendationStore.js');
+
 import React from 'react';
 
 class Book extends React.Component {

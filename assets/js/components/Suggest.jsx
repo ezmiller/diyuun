@@ -8,6 +8,8 @@
 (function() {
 	'use strict';
 
+	var $ = require('jquery');
+
 	var AuthStore = require('../stores/AuthStore.js');
 
 	var React = require('react');
