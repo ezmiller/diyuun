@@ -92,7 +92,7 @@
 				content = (
 					<form className="recommendation-form" onSubmit={this.handleSubmit} >
 						<div className="source">
-							<img className="image" src={source.imageLinks.thumbnail} alt="Book Cover" />
+							<img className="image" src={source.imageLinks ? source.imageLinks.thumbnail : 'images/book-icon.svg'}  alt="Book Cover" />
 							<div className="metadata">
 								<h1 className="title">{this.state.source.title}</h1>
 								<h2 className="subtitle">{this.state.source.subtitle}</h2>

@@ -2,7 +2,10 @@
  * UserDashboard
  */
 
+<<<<<<< HEAD
 var $ = require('jquery');
+=======
+>>>>>>> Change UserDashboard to retrieve recommendations form RecommendationsStore
 
 // Flux
 var Actions = require('../actions/Actions.js');
@@ -15,18 +18,35 @@ class Book extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: this.props.book.volumeInfo.title,
-			author: this.props.book.volumeInfo.authors[0],
-			image: this.props.book.volumeInfo.imageLinks.thumbnail
+			book: null
 		}
 	}
 
+	componentWillMount() {
+		var self = this;
+		$.ajax({
+			method: 'GET',
+			url: '/sources/'+this.props.sourceId
+		})
+		.done(function(data) {
+			self.setState({book: data});
+		});
+	}
+
 	render() {
+		var book, authors;
+
+		book = this.state.book;
+
+		authors = !book ? null : book.authors.map(function(author,key) {
+			return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
+		});
+
 		return(
 			<article className="book">
-				<h1 className="title">{this.state.title}</h1>
-				<img className="cover-image" src={this.state.image} alt="Book Cover" />
-				<span className="author">{this.state.author}</span>
+				<h1 className="title">{!book ? '' : book.title}</h1>
+				<img className="cover-image" src={!book ? '' : book.imageLinks.thumbnail} alt="Book Cover" />
+				<span className="author">{authors}</span>
 			</article>
 		);
 	}
@@ -37,28 +57,14 @@ class UserFeed extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			books: []
-		};
-	}
-	
-	componentWillMount() {
-		var self = this;
-		$.ajax({
-        type: 'GET',
-        url: 'https://www.googleapis.com/books/v1/volumes?q=german+idealism',
-      })
-      .done(function(data) {
-      	var books = $.map(data.items, function(v,k) { return v; });
-      	self.setState({'books': books});
-      });
 	}
 
 	render() {
 		var books;
 
-		books = this.state.books.map(function(book, i) {
-			return <Book key={i} book={book} />;
+		books = this.props.recommendations.map(function(item, i) {
+			console.log(item);
+			return <Book key={i} sourceId={item.id} />;
 		});
 
 		return (
@@ -71,10 +77,31 @@ class UserFeed extends React.Component {
 }
 
 export class UserDashboard extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			recommendations: []
+		};
+	}
+
+	componentDidMount() {
+		RecommendationStore.addUpdateListener(this.update.bind(this));
+		Actions.getRecommendations(this.props.user.refine('id').value);
+	}
+
+	componentWillUmount() {
+		RecommendationStore.removeUpdateListener(this.update.bind(this));
+	}
+
+	update(data) {
+		this.setState({recommendations: data});
+	}
+
 	render() {
 		return(
 			<div className="user-dashboard">
-				<UserFeed />
+				<UserFeed recommendations={this.state.recommendations} />
 			</div>
 		);
 	}

@@ -65,7 +65,7 @@
 						<Controlbar user={cursor.refine('user')} />
 					</header>
 					<div className="content">
-						<RouteHandler />
+						<RouteHandler user={cursor.refine('user')} />
 					</div>
 				</div>
 			);
