@@ -9,7 +9,6 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 
 var App = require('./components/App.jsx');
-var Login = require('./components/Login.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
 import {UserDashboard} from './components/UserDashboard.jsx';
 
@@ -18,7 +17,6 @@ var Suggest = require('./components/Suggest.jsx');
 var routes = (
   <Route name="app" path="/" handler={App}>
   	<DefaultRoute name="home" handler={UserDashboard} />
-    <Route name="login" path="/login" handler={Login} />
     <Route name="send-invite" path="/send-invite" handler={SendInvite} />
     <Route name="suggest" path="/suggest" handler={Suggest} />
   </Route>

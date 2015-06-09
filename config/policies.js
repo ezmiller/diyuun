@@ -29,6 +29,10 @@ module.exports.policies = {
 
   '*': [ 'passport'],
 
+  IndexController: {
+    index: AUTHENTICATED
+  },
+
   BookController: {
     new: AUTHENTICATED,
   }

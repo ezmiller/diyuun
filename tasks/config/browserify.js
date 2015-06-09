@@ -8,6 +8,7 @@
 
 var externals = [
   'react',
+  'react/addons',
   'jquery',
   'backbone',
   'react-cursor',
@@ -37,7 +38,20 @@ module.exports = function(grunt) {
         debug: true,
         insertGlobals: true,
         extensions: ['.jsx'],
-        externals: externals,
+        external: externals,
+        transform: [
+          ['babelify', {'stage': 0}]
+        ]
+      }
+    },
+    login: {
+      src: 'assets/js/login.jsx',
+      dest: '.tmp/public/js/login.js',
+      options: {
+        debug: true,
+        insertGlobals: true,
+        extensions: ['.jsx'],
+        external: externals,
         transform: [
           ['babelify', {'stage': 0}]
         ]
@@ -45,7 +59,8 @@ module.exports = function(grunt) {
     },
     vendor: {
       src: [
-        'node_modules/react/dist/react-with-addons',
+        'node_modules/react/dist/react',
+        'node_modules/react/dist/react-with-addons.js',
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/backbone.js',
         'node_modules/src/react-cursor.js',
@@ -59,6 +74,7 @@ module.exports = function(grunt) {
         ],
         alias: [
           'react:',
+          'react/addons:',
           'jquery:',
           'backbone:',
           'react-cursor:',

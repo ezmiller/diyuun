@@ -7,20 +7,10 @@
 
   var $ = require('jquery');
 
-  // Flux.
-  var AuthStore = require('../stores/AuthStore.js');
-  var AuthActions = require('../actions/AuthActions.js');
-
-  // Router
-  var Router = require('react-router');
-  var Link = Router.Link;
-
   // Load React and necessary components.
   var React = require('react');
   var Classable = require('./mixins/classable.js');
   var PrimaryButton = require('./PrimaryButton.jsx');
-
-  var Dialog = require('./Dialog.jsx');
 
   var LoginForm = React.createClass({
 
@@ -32,14 +22,6 @@
             identfier: '',
             password: ''
         };
-    },
-
-    componentDidMount: function () {
-      console.log('LoginForm::componentDidMount() called');
-    },
-
-    componentWillUnmount: function () {
-      console.log('LoginForm::componentWillMount() called');
     },
 
     handleChange: function(e) {
@@ -105,12 +87,11 @@
 
     onLoginSuccess: function(user, textStatus) {
       console.log('LoginForm::onLoginSuccess() user: ', user);
-      AuthActions.login(user);
+      window.location.replace('/');
     },
 
     onFailedLogin: function(jqXhr, textStatus, errorThrown) {
       console.log('LoginForm::onFailedLogin: jqXhr: ', jqXhr);
-      this.setState({error: jqXhr.responseJSON.error});
     },
 
   });

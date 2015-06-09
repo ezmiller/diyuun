@@ -48,31 +48,21 @@
 		render: function() {
 			var cursor = Cursor.build(this);
 
-			var classes = this.getClasses('', {
-				'not-logged-in': !this.state.loggedIn,
-				'logged-in': this.state.loggedIn
-			});
-
 			console.log('App::render() logged in:', this.state.loggedIn);
 
-			var container = (!this.state.loggedIn) ? (
-				<div id="container">
-					<Login />
+			return !this.state.loggedIn ? (
+				<div id="app" className="loading">
 				</div>
 			) : (
-				<div id="container">
-					<header>
-						<Controlbar user={cursor.refine('user')} />
-					</header>
-					<div className="content">
-						<RouteHandler user={cursor.refine('user')} />
+				<div id="app" className="logged-in">
+					<div id="container">
+						<header>
+							<Controlbar user={cursor.refine('user')} />
+						</header>
+						<div className="content">
+							<RouteHandler user={cursor.refine('user')} />
+						</div>
 					</div>
-				</div>
-			);
-
-			return (
-				<div id="app" className={classes}>
-					{container}
 				</div>
 			);
 
@@ -88,7 +78,7 @@
 		onLogout: function() {
 			console.log('App::onLogout()');
 			this.setState({loggedIn: false, user: null});
-			this.context.router.transitionTo('/login');
+			window.location.replace('/login');
 		}
 
 	});

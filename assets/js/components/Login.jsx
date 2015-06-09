@@ -11,8 +11,12 @@
 	var Login = React.createClass({
 		render: function() {
 			return (
-				<div className="content">
-					<LoginForm />
+				<div id="signup-app" className="not-logged-in">
+					<div id="container">
+						<div className="content">
+							<LoginForm />
+						</div>
+					</div>
 				</div>
 			);
 		}

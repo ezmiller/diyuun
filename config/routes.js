@@ -24,11 +24,11 @@ module.exports.routes = {
 
   'GET /': 'IndexController.index',
 
+  // Login page
+  'GET /login': { 'view': 'login' },
+
   // Join Link
   'GET /join/:token': { 'view': 'signup' },
-
-  // Login page
-  'GET /login': 'IndexController.index',
 
   // Send Invite
   'GET /send-invite': 'IndexController.index',
