@@ -11,7 +11,6 @@ var externals = [
   'react/addons',
   'jquery',
   'backbone',
-  'react-cursor',
   'react-router'
 ];
 
@@ -23,7 +22,6 @@ module.exports = function(grunt) {
       dest: '.tmp/public/js/main.js',
       options: {
         debug: true,
-        insertGlobals: true,
         extensions: ['.jsx'],
         external: externals,
         transform: [
@@ -36,7 +34,6 @@ module.exports = function(grunt) {
       dest: '.tmp/public/js/signup.js',
       options: {
         debug: true,
-        insertGlobals: true,
         extensions: ['.jsx'],
         external: externals,
         transform: [
@@ -59,30 +56,23 @@ module.exports = function(grunt) {
     },
     vendor: {
       src: [
-        'node_modules/react/dist/react',
-        'node_modules/react/dist/react-with-addons.js',
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/backbone.js',
-        'node_modules/src/react-cursor.js',
+        './node_modules/react/dist/react-with-addons.js',
+        './node_modules/jquery/dist/jquery.js',
+        './node_modules/backbone/backbone.js',
       ],
       dest: '.tmp/public/js/dependencies/vendor.js',
       options: {
         debug: false,
-        detectGlobals: false,
-        noParse: [
-          'jquery'
-        ],
-        alias: [
-          'react:',
-          'react/addons:',
-          'jquery:',
-          'backbone:',
-          'react-cursor:',
-          'react-router:'
-        ],
+        alias: {
+          'react': './node_modules/react/dist/react-with-addons.js',
+          'react/addons': './node_modules/react/dist/react-with-addons.js',
+          'jquery': './node_modules/jquery/dist/jquery.js',
+          'backbone': './node_modules/backbone/backbone.js',
+          'react-router': './node_modules/react-router/lib/index.js'
+        },
         shim: {
           react_router: {
-            path: 'node_modules/react-router/lib/index.js',
+            path: './node_modules/react-router/lib/index.js',
             exports: 'react-router'
           }
         },
