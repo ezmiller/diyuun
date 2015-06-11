@@ -47,7 +47,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "debug": "node debug app.js"
+    "debug": "node debug app.js",
+    "bundle-vendor": "browserify -r react -r react/addons -r jquery -r react-router -r backbone > assets/js/dependencies/vendor.js"
   },
   "main": "app.js",
   "repository": {

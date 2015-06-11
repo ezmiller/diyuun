@@ -54,31 +54,19 @@ module.exports = function(grunt) {
         ]
       }
     },
-    vendor: {
-      src: [
-        './node_modules/react/dist/react-with-addons.js',
-        './node_modules/jquery/dist/jquery.js',
-        './node_modules/backbone/backbone.js',
-      ],
-      dest: '.tmp/public/js/dependencies/vendor.js',
-      options: {
-        debug: false,
-        alias: {
-          'react': './node_modules/react/dist/react-with-addons.js',
-          'react/addons': './node_modules/react/dist/react-with-addons.js',
-          'jquery': './node_modules/jquery/dist/jquery.js',
-          'backbone': './node_modules/backbone/backbone.js',
-          'react-router': './node_modules/react-router/lib/index.js'
-        },
-        shim: {
-          react_router: {
-            path: './node_modules/react-router/lib/index.js',
-            exports: 'react-router'
-          }
-        },
-        external: null
-      }
-    }
+    // vendor: {
+    //   dest: '.tmp/public/js/dependencies/vendor.js',
+    //   options: {
+    //     // debug: false,
+    //     require: [
+    //       'react',
+    //       'react/addons',
+    //       'react-router',
+    //       'jquery',
+    //       'backbone'
+    //     ]
+    //   }
+    // }  
   });
 
   grunt.loadNpmTasks('grunt-browserify');
