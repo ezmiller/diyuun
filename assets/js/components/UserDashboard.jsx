@@ -1,106 +1,111 @@
 /**
  * UserDashboard
  */
+(function() {
+	'use strict';
 
-var $ = require('jquery');
+	var $ = require('jquery');
 
-// Flux
-var Actions = require('../actions/Actions.js');
-var RecommendationStore = require('../stores/RecommendationStore.js');
+	// Flux
+	var Actions = require('../actions/Actions.js');
+	var RecommendationStore = require('../stores/RecommendationStore.js');
 
-import React from 'react';
+	// Router
+	var Navigation = require('react-router').Navigation;
 
-class Book extends React.Component {
+	var React = require('react');
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			book: null
+	var Book = React.createClass({
+
+		getInitialState: function () {
+	    return {
+	      book: null    
+	    };
+		},
+
+		componentWillMount: function() {
+			var self = this;
+			$.ajax({
+				method: 'GET',
+				url: '/sources/'+this.props.sourceId
+			})
+			.done(function(data) {
+				self.setState({book: data});
+			});
+		},
+
+		render: function() {
+			var book, authors;
+
+			book = this.state.book;
+
+			authors = !book ? null : book.authors.map(function(author,key) {
+				return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
+			});
+
+			return(
+				<article className="book">
+					<h1 className="title">{!book ? '' : book.title}</h1>
+					<img className="cover-image" src={!book ? '' : book.imageLinks.thumbnail} alt="Book Cover" />
+					<span className="author">{authors}</span>
+				</article>
+			);
 		}
-	}
 
-	componentWillMount() {
-		var self = this;
-		$.ajax({
-			method: 'GET',
-			url: '/sources/'+this.props.sourceId
-		})
-		.done(function(data) {
-			self.setState({book: data});
-		});
-	}
+	});
 
-	render() {
-		var book, authors;
+	var UserFeed = React.createClass({
 
-		book = this.state.book;
+		render: function() {
+			var books;
 
-		authors = !book ? null : book.authors.map(function(author,key) {
-			return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
-		});
+			books = this.props.recommendations.map(function(item, i) {
+				console.log(item);
+				return <Book key={i} sourceId={item.id} />;
+			});
 
-		return(
-			<article className="book">
-				<h1 className="title">{!book ? '' : book.title}</h1>
-				<img className="cover-image" src={!book ? '' : book.imageLinks.thumbnail} alt="Book Cover" />
-				<span className="author">{authors}</span>
-			</article>
-		);
-	}
+			return (
+				<div className="user-feed">
+					{books}
+				</div>
+			);
+		}
 
-}
+	});
 
-class UserFeed extends React.Component {
+	var UserDashboard = React.createClass({
 
-	constructor(props) {
-		super(props);
-	}
+		getInitialState: function () {
+	    return {
+	      recommendations: []
+	    };
+		},
 
-	render() {
-		var books;
+		componentDidMount: function() {
+			RecommendationStore.addUpdateListener(this.update.bind(this));
+			Actions.getRecommendations(this.props.user.refine('id').value);
+		},
 
-		books = this.props.recommendations.map(function(item, i) {
-			console.log(item);
-			return <Book key={i} sourceId={item.id} />;
-		});
+		componentWillUmount: function() {
+			RecommendationStore.removeUpdateListener(this.update.bind(this));
+		},
 
-		return (
-			<div className="user-feed">
-				{books}
-			</div>
-		);
-	}
+		update: function(data) {
+			this.setState({recommendations: data});
+		},
 
-}
+		render: function() {
+			return(
+				<div className="user-dashboard">
+					<UserFeed recommendations={this.state.recommendations} />
+				</div>
+			);
+		}
+	});
 
-export class UserDashboard extends React.Component {
+	module.exports = UserDashboard;
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			recommendations: []
-		};
-	}
+}());
 
-	componentDidMount() {
-		RecommendationStore.addUpdateListener(this.update.bind(this));
-		Actions.getRecommendations(this.props.user.refine('id').value);
-	}
 
-	componentWillUmount() {
-		RecommendationStore.removeUpdateListener(this.update.bind(this));
-	}
-
-	update(data) {
-		this.setState({recommendations: data});
-	}
-
-	render() {
-		return(
-			<div className="user-dashboard">
-				<UserFeed recommendations={this.state.recommendations} />
-			</div>
-		);
-	}
-}
 

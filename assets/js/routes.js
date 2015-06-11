@@ -10,7 +10,7 @@ var DefaultRoute = Router.DefaultRoute;
 
 var App = require('./components/App.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
-import {UserDashboard} from './components/UserDashboard.jsx';
+var UserDashboard = require('./components/UserDashboard.jsx');
 
 var Suggest = require('./components/Suggest.jsx');
 
