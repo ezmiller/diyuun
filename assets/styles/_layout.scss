@@ -30,3 +30,31 @@ header {
 		height: $controlbar-height;
 	}
 }
+
+#controlbar {
+	position: fixed;
+  top: 0; left: 0;
+	width: 100%;
+	height: $controlbar-mobile-height;
+
+	@media screen and (min-width: $larger-than-phablet) {
+		height: $controlbar-height;
+	}
+
+	.controlbar-wrapper {
+		position: relative;
+		height: 100%;
+		max-width: $max-width;
+		margin: 0 auto;
+
+		@media screen and (min-width: $larger-than-mobile) {
+			width: 85%;
+		}
+
+		@media screen and (min-width: $larger-than-phablet) {
+			width: 80%;
+		}
+	}
+
+
+}

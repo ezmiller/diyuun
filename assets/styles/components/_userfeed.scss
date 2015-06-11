@@ -1,5 +1,28 @@
 .user-feed {
+	
 	.book {
+		height: 35rem;
 		margin-bottom: 2rem;
+		overflow: hidden;
 	}
+
+	@media screen and (min-width: $larger-than-tablet) {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		.book {
+			flex: 0 0 auto;
+			display: inline-block;
+			width: 27%;
+			margin-right: 2rem;
+
+			&:nth-of-type(3n) {
+				margin-right: 0;
+			}
+
+		}
+
+	}
+
 }

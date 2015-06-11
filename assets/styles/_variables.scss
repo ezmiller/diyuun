@@ -1,3 +1,6 @@
+/** Layout **/
+$max-width: 120rem;
+
 /** Colors */
 $error-message-color: #CEA14C;
 
@@ -6,8 +9,8 @@ $light-text: #fff;
 $dark-text: #333;
 
 /** Navbar */
-$controlbar-height: 60px;
-$controlbar-mobile-height: 50px;
+$controlbar-height: 6rem;
+$controlbar-mobile-height: 5rem;
 
 /** Media Breakpoints */
 $larger-than-mobile: 400px;
