@@ -24,6 +24,7 @@ module.exports = function(grunt) {
 					'**/*.!(coffee|less|scss|sass)',
 					'!js/main.jsx',
 					'!js/signup.jsx',
+					'!js/login.jsx',
 					'!**/actions/**',
 					'!**/components/**',
 					'!**/constants/**',

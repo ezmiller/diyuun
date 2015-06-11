@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 					// then exclude certain js files
 					'!js/main.jsx',
 					'!js/signup.jsx',
+					'!js/login.jsx',
 					'!**/actions/**',
 					'!**/components/**',
 					'!**/constants/**',
