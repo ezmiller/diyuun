@@ -39,6 +39,9 @@ module.exports.routes = {
   //Dashboard
   'GET /dashboard': 'IndexController.index',
 
+  // Source Dashboard
+  'GET /source/:sourceId': 'IndexController.index',
+
   // Auth
   'GET /logout': 'AuthController.logout',
   'GET /authorized': 'AuthController.authorized',
