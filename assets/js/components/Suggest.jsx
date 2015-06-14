@@ -113,8 +113,8 @@
 				);
 			} else {
 				content = (
-					<div class="thankyou">
-						<p class="message standard">Thank you for making a recommendation!</p>
+					<div className="thankyou">
+						<p className="message standard">Thank you for making a recommendation!</p>
 						<Link to="home">Return to Feed</Link>
 					</div>
 				);

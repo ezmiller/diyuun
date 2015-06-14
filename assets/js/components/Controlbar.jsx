@@ -36,7 +36,7 @@
 
 		render: function() {
 			return (
-				<nav id="controlbar" class="">
+				<nav id="controlbar">
 					<div className="controlbar-wrapper">
 						<a href="#" className="brand-logo">Kanon</a>
 						<ul className="right-controlbar-group">

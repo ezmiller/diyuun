@@ -59,7 +59,7 @@
 
 		render: function() {
 			return(
-				<div class="suggested-tags">
+				<div className="suggested-tags">
 					{this.props.children}
 				</div>
 			);
