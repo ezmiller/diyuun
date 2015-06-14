@@ -9,7 +9,6 @@
 	// Flux
 	var Actions = require('../actions/Actions.js');
 	var SourceStore = require('../stores/SourceStore.js');
-	// var RecommendationStore = require('../stores/RecommendationStore.js');
 
 	// Router
 	var Navigation = require('react-router').Navigation;
