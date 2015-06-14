@@ -7,7 +7,8 @@
 	var keyMirror = require('keymirror');
 
 	var SourceConstants = keyMirror({
-		getSource: null
+		getSource: null,
+		getRecommendations: null
 	});
 
 	module.exports = SourceConstants;

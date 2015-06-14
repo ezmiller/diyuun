@@ -43,6 +43,7 @@
 		 	AuthStore.addLoginListener(this.onLogin);
 		 	AuthStore.addLogoutListener(this.onLogout);
 		 	SourceStore.addUpdateListener(this.onSourcesUpdate);
+		 	SourceStore.addResetListener(this.onSourcesUpdate);
 
 		 	// Catch navigation actions using minpubsub.
 		 	subscribe('/app/transitionTo', this.navigate);
@@ -57,6 +58,7 @@
 			AuthStore.removeLoginListener(this.onLogin);
 			AuthStore.removeLoginListener(this.onLogout);
 			SourceStore.removeUpdateListener(this.onSourcesUpdate);
+			SourceStore.removeResetListener(this.onSourcesUpdate);
 		},
 
 		navigate: function(path, params, query) {
