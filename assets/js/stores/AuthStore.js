@@ -86,11 +86,11 @@
 	function actionCallback(action) {
 		console.log('AuthStore::actionCallback() called with:', action);
 		switch(action.actionType) {
-			case AuthConstants.USER_LOGIN:
+			case AuthConstants.loginUser:
 				AuthStore.set(action.user);
 				AuthStore.trigger(LOGIN);
 				break;
-			case AuthConstants.USER_LOGOUT:
+			case AuthConstants.logoutUser:
 				AuthStore.clear();
 				AuthStore.trigger(LOGOUT);
 		}

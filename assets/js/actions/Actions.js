@@ -8,15 +8,18 @@
       _ = require("underscore"),
       actions = {};
 
-  var SourceConstants = require('../constants/SourceConstants.js');
+  var SourceConstants = require('../constants/SourceConstants.js'),
+      AuthConstants = require('../constants/AuthConstants.js');
 
   _.each([
 
+      // Authorization
+      AuthConstants.loginUser,
+      AuthConstants.logoutUser,
+
       // Sources
       SourceConstants.getSource,
-    
-      // Recommendations
-      "getRecommendations"
+      SourceConstants.getRecommendations,
       
       ],
       function(name){

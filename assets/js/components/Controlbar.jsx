@@ -8,7 +8,7 @@
 
 	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
-	var AuthActions = require('../actions/AuthActions.js');
+	var Actions = require('../actions/Actions.js');
 
 	// React & Components.
 	var React = require('react');
