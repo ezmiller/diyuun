@@ -5,17 +5,18 @@
 	'use strict';
 
 	var $ = require('jquery');
-
-	// Flux
+	var React = require('react');
 	var Actions = require('../actions/Actions.js');
 	var SourceStore = require('../stores/SourceStore.js');
-
-	// Router
-	var Navigation = require('react-router').Navigation;
-
-	var React = require('react');
+	var BackboneModel = require('backbone').Model;
 
 	var Book = React.createClass({
+
+		getDefaultProps: function () {
+	    return {
+      	source: null  
+	    };
+		},
 
 		handleClick: function(e) {
 			e.preventDefault();
@@ -34,12 +35,12 @@
 			return(
 				<article className="source book eight columns" onClick={this.handleClick}>
 					<div className="cover">
-						<img className="image" src={!source ? '' : source.get('imageLinks').thumbnail} alt="Book Cover" />
+						<img className="image" src={source.get('imageLinks').thumbnail} alt="Book Cover" />
 					</div>
 					<div className="info">
 						<div className="meta">
-							<h3 className="title">{!source ? '' : source.get('title')}</h3>
-							<h5 className="subtitle">{!source ? '' : source.get('subtitle')}</h5>
+							<h3 className="title">{source.get('title')}</h3>
+							<h5 className="subtitle">{source.get('subtitle')}</h5>
 							<span className="authors">by {authors}</span>
 						</div>
 					</div>
@@ -51,10 +52,16 @@
 
 	var UserFeed = React.createClass({
 
+		getDefaultProps: function () {
+	    return {
+	    	sources: null  
+	    };
+		},
+
 		render: function() {
 			var books;
 
-			books = this.props.recommendations ? this.props.recommendations.map(function(item, i) {
+			books = this.props.sources ? this.props.sources.map(function(item, i) {
 				return <Book key={i} source={item} />;
 			}) : null;
 
@@ -68,6 +75,16 @@
 	});
 
 	var UserDashboard = React.createClass({
+
+		PropTypes: {
+			sources: React.PropTypes.string.isRequired
+		},
+
+		getDefaultProps: function () {
+	    return {
+	    	sources: null
+	    };
+		},
 
 		componentDidMount: function() {
 			SourceStore.addUpdateListener(this.onUpdate);
@@ -83,7 +100,7 @@
 		render: function() {
 			return(
 				<div className="user-dashboard">
-					<UserFeed recommendations={this.props.sources.value ? this.props.sources.value.models : null} />
+					<UserFeed sources={this.props.sources.value ? this.props.sources.value.models : null} />
 				</div>
 			);
 		}
