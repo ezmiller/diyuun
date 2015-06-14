@@ -3,7 +3,7 @@
 }
 
 #controlbar {
-	background-color: #333;
+	background-color: $controlbar-color;
 	@extend .z-depth-1;
 	// overflow: hidden;
 
