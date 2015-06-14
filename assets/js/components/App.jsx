@@ -105,10 +105,6 @@
 		onSourcesUpdate: function(update) {
 			console.log('App::onSourcesUpdate(): ', update);
 			this.setState({sources: update});
-		},
-
-		onTransitionComplete: function() {
-			console.log('done');
 		}
 
 	});
