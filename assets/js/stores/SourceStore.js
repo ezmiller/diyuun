@@ -1,5 +1,9 @@
 /**
  * SourceStore
+ *
+ * Handles logic related to fetching and syncing inforation about sources and
+ * recommendations.
+ * 
  */
 (function() {
 	'use strict';
@@ -11,10 +15,8 @@
 	var $ = require('jquery');
 	var _ = require('underscore');
 
-	/**
-	 * Contains event name indicating view updates.
-	 * @type {String}
-	 */
+
+	/** Event constants for Backbone Events */
 	var UPDATE = 'update';
 	var RESET = 'reset';
 
@@ -24,10 +26,6 @@
 			id: '',
 			rating: 0
 		},
-
-		initialize: function(props) {
-			console.log('Recommendation::initailize()');
-		}
 
 	});
 
