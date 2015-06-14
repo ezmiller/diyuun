@@ -8,7 +8,12 @@
       _ = require("underscore"),
       actions = {};
 
+  var SourceConstants = require('../constants/SourceConstants.js');
+
   _.each([
+
+      // Sources
+      SourceConstants.getSource,
     
       // Recommendations
       "getRecommendations"

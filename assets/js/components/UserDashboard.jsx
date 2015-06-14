@@ -34,6 +34,11 @@
 			});
 		},
 
+		handleClick: function(e) {
+			e.preventDefault();
+			publish('/app/transitionTo', ['/source/'+this.props.sourceId]);
+		},
+
 		render: function() {
 			var book, authors;
 
