@@ -1,8 +1,0 @@
-<!-- one. ejs -->
-<h1>Book Discussion</h1>
-
-<script> 
-console.log('listening for changes to comments...');
-io.socket.get("/comments", function(resData, jwres) {console.log(resData);})
-io.socket.on("comment", function(event){console.log(event);})
-</script>

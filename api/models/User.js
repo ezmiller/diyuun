@@ -57,22 +57,6 @@ module.exports = {
             collection: 'Passport',
             via: 'user'
         },
-        likedBooks: {
-            collection: 'book',
-            via: 'like'
-        },
-        likedReviews: {
-            collection: 'review',
-            via: 'like'
-        },
-        reviews: {
-            collection: 'review',
-            via: 'reviewer'
-        },
-        comments: {
-            collection: 'comment',
-            via: 'user'
-        },
         recommendations: {
             collection: 'recommendation',
             via: 'user'
