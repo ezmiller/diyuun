@@ -35,40 +35,40 @@ describe("RecommendationController Tests", function(done) {
   };
 
   before(function() {
-    return Promise.all([User.destroy(), Source.destroy(), Discipline.destroy()]);
+    return Promise
+      .all([User.destroy(), Source.destroy(), Discipline.destroy()])
+      .then(function () {
+
+        return Discipline.create(testDiscipline)
+          .then(function(result) {
+            return result;
+          })
+          .catch(function(err) { throw err });
+
+      })
+      .then(function(discipline) {
+
+        testUser.discipline = discipline.id;
+
+        return User.create(testUser)
+          .then(function(result) {
+            return testUser = result;
+          })
+          .catch(function(err) { throw err });
+
+      }).catch(function(err) {
+        console.log('Error creating fake data for recommendation tests: ', err.message)
+      });
   });
 
   after(function() {
-    // return Promise.all([User.destroy(), Source.destroy(), Discipline.destroy(), Recommendation.destroy()]);
+    return Promise.all([User.destroy(), Source.destroy(), Discipline.destroy(), Recommendation.destroy()]);
   });
 
   describe('Try to create a new recommendation', function() {
-    it('create a test discipline', function(done) {
-      request(sails.hooks.http.app)
-      .post('/disciplines')
-      .send(testDiscipline)
-      .expect(200)
-      .end(function(err, res) {
-        if (err || res.error === 'E_VALIDATION') return done(err);
-        testDiscipline = res.body;
-        done();
-      });
-    });
-    it('create test user', function(done) {
-      testUser.discipline = { id: testDiscipline.id };
-      request(sails.hooks.http.app)
-      .post('/auth/local/register')
-      .send(testUser)
-      .expect(200)
-      .end(function(err,res) {
-        if (err) return done(err);
-        testUser = res.body;
-        done();
-      });
-    });
     it('should return 200', function(done) {
       testRecommendation.source = testSource;
-      testRecommendation.user = testUser;
+      testRecommendation.user = testUser.id;
       request(sails.hooks.http.app)
       .post('/recommendations')
       .send(testRecommendation)
@@ -90,16 +90,26 @@ describe("RecommendationController Tests", function(done) {
     });
   });
 
-  describe('try to fetch recommendations for the test user', function() {
+  describe('try to fetch the recommendations for the test user', function() {
     var result;
+    it('get the test user id', function(done) {
+      request(sails.hooks.http.app)
+      .get('/users?username='+testUser.username)
+      .expect(200)
+      .end(function(err,res) {
+        if (err) return done(err);
+        testUser.id = res.body[0].id;
+        done();
+      });
+    });
     it('should return 200', function(done) {
+      console.log('testUser before get: ', testUser);
       request(sails.hooks.http.app)
       .get('/recommendations?user='+testUser.id)
       .expect(200)
       .end(function(err,res) {
         if (err) return done(err);
         result = res.body;
-        console.log(result);
         done();
       });
     });
