@@ -19,6 +19,7 @@ $fa-font-path: "../bower_components/fontawesome/fonts";
 // @import "fontawesome/scss/rotated-flipped";
 // @import "fontawesome/scss/stacked";
 @import "fontawesome/scss/icons";
+
 @import 'normalize'; // Skeleton's normalize
 
 @import 'variables';
@@ -38,3 +39,4 @@ $fa-font-path: "../bower_components/fontawesome/fonts";
 @import './components/search-form';
 @import './components/suggest';
 @import './components/star-rating';
+@import './components/discussion';

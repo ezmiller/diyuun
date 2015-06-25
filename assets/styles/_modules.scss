@@ -217,19 +217,9 @@ hr {
 }
 
 .form-wrap {
-  // padding: 2em;
-
-  input[type="email"],
-  input[type="number"],
-  input[type="search"],
-  input[type="text"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="password"],
-  textarea {
-    width: 80%;
-  }
-
+  padding: 20px;
+  background: #fff;
+  @extend .z-depth-1;
 }
 
 /* Notifications

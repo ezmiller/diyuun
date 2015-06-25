@@ -1,0 +1,119 @@
+.discussion {
+
+	.discussion-header {
+		@include display-flex;
+		@extend .z-depth-1;
+		padding: 1.5rem;
+		border-bottom: solid 1px $divider-color;
+		background-color: #fff;
+
+		.title {
+			@include flex(2);
+			margin: 0;
+			line-height: 1.05;
+		}
+
+		.meta {
+			@include flex(1);
+			text-align: right;
+			padding: 0.5rem 1rem;
+		}
+
+		.privacy-icon {
+			margin-right: 0.5rem;
+		}
+
+		.privacy-label {
+			text-transform: uppercase;
+		}
+
+	}
+
+	.comment {
+		@extend .z-depth-1;
+		background-color: #fff;
+
+		header {
+			padding: 1.5rem;
+
+			.avatar,
+			.meta {
+				display: inline-block;
+			}
+
+			.avatar {
+				display: inline-block;
+				margin: 1rem 1rem 0 0;
+				padding: 0.2rem 0.8rem;
+				border: solid 1px black;
+	  		border-radius: 2.3rem;
+	  		vertical-align: top;
+
+	  		i {
+	  			font-size: 1.8rem;
+	  		}
+
+			}
+
+			.user {
+				font-size: 1.2em;
+			}
+
+			.date {
+				color: $lighter-dark-text;
+			}
+
+		}
+
+		.comment-body {
+			padding: 1.5rem;
+		}
+
+	}
+
+	.comment-form {
+		@extend .z-depth-1;
+		margin-bottom: 20rem;
+		background-color: #fff;
+		overflow: hidden;
+
+		.avatar-wrap {
+			float: left;
+			width: 7rem;
+			height: 7rem;
+			padding: 0.5rem;
+			border-right: solid 1px $divider-color;
+			// vertical-align: top;
+		}
+
+		.text {
+			@extend textarea;
+			position: relative;
+			min-height: 7rem;
+			height: auto;
+			margin-bottom: 0;
+			border: 0;
+			overflow: hidden;
+		}
+
+		// .text {
+		// 	position: absolute;
+		// 	width: 100%;
+		// 	min-height: 7rem;
+		// 	height: 100%;
+		// 	margin-bottom: 0;
+		// 	border: 0;
+		// }
+
+		// .sizer {
+		// 	@extend textarea;
+		// 	margin-bottom: 0;
+		// 	overflow: hidden;
+		// 	visibility: hidden;
+		// 	border: 0;
+		// }
+
+		
+	}
+
+}

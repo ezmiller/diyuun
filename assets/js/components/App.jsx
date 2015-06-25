@@ -7,6 +7,7 @@
 	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var SourceStore = require('../stores/SourceStore.js');
+	var DiscussionStore = require('../stores/DiscussionStore.js');
 	var Actions = require('../actions/Actions.js');
 
 	// React Cursor
@@ -33,9 +34,10 @@
 
 		getInitialState: function () {
 	    return {
-	       loggedIn: false,
-	       user: null,
-	       sources: null
+				loggedIn: false,
+				user: null,
+				sources: null,
+				discussions: null
 	    };
 		},
 
@@ -44,12 +46,17 @@
 		 	AuthStore.addLogoutListener(this.onLogout);
 		 	SourceStore.addUpdateListener(this.onSourcesUpdate);
 		 	SourceStore.addResetListener(this.onSourcesUpdate);
+		 	DiscussionStore.addEventListener('reset', this.onDiscussionsUpdate);
+			DiscussionStore.addEventListener('error', this.onError);
 
 		 	// Catch navigation actions using minpubsub.
 		 	subscribe('/app/transitionTo', this.navigate);
 
 		 	if (this.getParams().sourceId) {
 		 		Actions.getSource(this.getParams().sourceId);
+		 	} 
+		 	else if (this.getParams().discussionId) {
+		 		Actions.getDiscussions(this.getParams().discussionId);
 		 	}
 
 		},
@@ -59,6 +66,8 @@
 			AuthStore.removeLoginListener(this.onLogout);
 			SourceStore.removeUpdateListener(this.onSourcesUpdate);
 			SourceStore.removeResetListener(this.onSourcesUpdate);
+			DiscussionStore.removeEventListener('reset', this.onDiscussionsUpdate);
+			DiscussionStore.removeEventListener('error', this.onError);
 		},
 
 		navigate: function(path, params, query) {
@@ -81,7 +90,10 @@
 							<Controlbar user={cursor.refine('user')} />
 						</header>
 						<div className="content">
-							<RouteHandler user={cursor.refine('user')} sources={cursor.refine('sources')} />
+							<RouteHandler 
+								user={cursor.refine('user')} 
+								sources={cursor.refine('sources')} 
+								discussions={cursor.refine('discussions')} />
 						</div>
 					</div>
 				</div>
@@ -105,6 +117,18 @@
 		onSourcesUpdate: function(update) {
 			console.log('App::onSourcesUpdate(): ', update);
 			this.setState({sources: update});
+		}, 
+
+		onDiscussionsUpdate: function(update) {
+			console.log('App::onDiscussionsUpdate(): ', update);
+			this.setState({discussions: update.models})
+		},
+
+		onError: function(error) {
+			console.log('App::onError() error: ', error);
+			if (error.status === 404) {
+				window.location.replace('/404')
+			}
 		}
 
 	});

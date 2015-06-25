@@ -36,6 +36,12 @@ module.exports.routes = {
   // Suggest
   'GET /suggest': 'IndexController.index',
 
+  // Discussion
+  'GET /discussion/:discussionId': 'IndexController.index',
+
+  // Start Discussion
+  'GET /start-discussion': 'IndexController.index',
+
   //Dashboard
   'GET /dashboard': 'IndexController.index',
 

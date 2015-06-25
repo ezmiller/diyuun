@@ -10,8 +10,10 @@ var DefaultRoute = Router.DefaultRoute;
 
 var App = require('./components/App.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
+var Discussion = require('./components/Discussion.jsx');
 var UserDashboard = require('./components/UserDashboard.jsx');
 var SourceDashboard = require('./components/SourceDashboard.jsx');
+var StartDiscussion = require('./components/StartDiscussion.jsx');
 
 var Suggest = require('./components/Suggest.jsx');
 
@@ -21,6 +23,8 @@ var routes = (
   	<Route name="source" path="/source/:sourceId" handler={SourceDashboard} />
     <Route name="send-invite" path="/send-invite" handler={SendInvite} />
     <Route name="suggest" path="/suggest" handler={Suggest} />
+    <Route name="discussion" path="/discussion/:discussionId" handler={Discussion} />
+    <Route name="start-discussion" path="/start-discussion" handler={StartDiscussion} />
   </Route>
 );
 

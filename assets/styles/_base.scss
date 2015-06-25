@@ -17,6 +17,10 @@ body {
   font-family: "Roboto", sans-serif;
   color: #222; }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
