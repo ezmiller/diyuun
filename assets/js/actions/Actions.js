@@ -1,6 +1,7 @@
 /**
  * Actions
  */
+/*jslint node:true*/
 (function() {
   'use strict';
 
@@ -8,7 +9,8 @@
       _ = require("underscore"),
       actions = {};
 
-  var SourceConstants = require('../constants/SourceConstants.js'),
+  var DiscussionConstants = require('../constants/DiscussionConstants.js'),
+      SourceConstants = require('../constants/SourceConstants.js'),
       AuthConstants = require('../constants/AuthConstants.js');
 
   _.each([
@@ -20,6 +22,10 @@
       // Sources
       SourceConstants.getSource,
       SourceConstants.getRecommendations,
+
+      // Discussions
+      DiscussionConstants.createDiscussion,
+      DiscussionConstants.getDiscussions
       
       ],
       function(name){
@@ -28,7 +34,7 @@
             actionType: name,
             payload: payload
           });
-        }
+        };
       });
 
   module.exports = actions;
