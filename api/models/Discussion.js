@@ -8,7 +8,34 @@
 module.exports = {
 
   attributes: {
-
+  	owner: {
+  		model: 'user',
+      required: true
+  	},
+    members: {
+      collection: 'user',
+      via: 'discussions'
+    },
+  	comments: {
+  		collection: 'comment',
+  		via: 'discussions'
+  	},
+    private: {
+      type: 'boolean',
+      required: true
+    },
+    visible: {
+      type: 'boolean',
+      required: true
+    },
+    title: {
+      type: 'string',
+      required: true
+    },
+    prompt: {
+      type: 'string',
+      required: true
+    }
   }
 };
 

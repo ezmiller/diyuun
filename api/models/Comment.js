@@ -9,8 +9,21 @@ module.exports = {
 
   attributes: {
 
+  	user: {
+  		model: 'user',
+  		required: true
+  	},
+  	text: {
+  		type: 'string',
+  		required: true
+  	},
   	discussions: {
   		collection: 'discussion',
+  		via: 'comments',
+  		required: true
+  	},
+  	sources: {
+  		collection: 'source',
   		via: 'comments'
   	}
 

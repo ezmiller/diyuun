@@ -80,6 +80,11 @@ module.exports = {
     recommendations: {
       collection: 'recommendation',
       via: 'source'
+    },
+
+    comments: {
+      collection: 'comment',
+      via: 'sources'
     }
 
   }

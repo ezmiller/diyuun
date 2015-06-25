@@ -60,6 +60,10 @@ module.exports = {
         recommendations: {
             collection: 'recommendation',
             via: 'user'
+        },
+        discussions: {
+            collection: 'discussion',
+            via: 'members'
         }
     },
 
