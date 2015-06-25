@@ -5,6 +5,20 @@
 @import "compass/css3/box-shadow";
 @import "compass/css3/flexbox";
 
+// Font Awesome
+@import "fontawesome/scss/variables";
+$fa-font-path: "../bower_components/fontawesome/fonts";
+@import "fontawesome/scss/mixins";
+@import "fontawesome/scss/path";
+@import "fontawesome/scss/core";
+// @import "fontawesome/scss/larger";
+// @import "fontawesome/scss/fixed-width";
+// @import "fontawesome/scss/list";
+// @import "fontawesome/scss/bordered-pulled";
+// @import "fontawesome/scss/animated";
+// @import "fontawesome/scss/rotated-flipped";
+// @import "fontawesome/scss/stacked";
+@import "fontawesome/scss/icons";
 @import 'normalize'; // Skeleton's normalize
 
 @import 'variables';

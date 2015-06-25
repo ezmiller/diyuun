@@ -5,6 +5,7 @@ module.exports = function(grunt) {
       options: {
         sassDir: 'assets/styles/',
         cssDir: '.tmp/public/styles',
+        importPath: './assets/bower_components',
         environment: 'development'
       }
     }
