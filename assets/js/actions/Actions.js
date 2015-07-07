@@ -25,7 +25,8 @@
 
       // Discussions
       DiscussionConstants.createDiscussion,
-      DiscussionConstants.getDiscussions
+      DiscussionConstants.getDiscussions,
+      DiscussionConstants.addComment,
       
       ],
       function(name){

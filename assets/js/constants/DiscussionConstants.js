@@ -9,7 +9,8 @@
 
 	var DiscussionConstants = keyMirror({
 		createDiscussion: null,
-		getDiscussions: null
+		getDiscussions: null,
+		addComment: null,
 	});
 
 	module.exports = DiscussionConstants;

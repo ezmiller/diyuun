@@ -4,7 +4,13 @@
 (function() {
   'use strict';
 
+  // React
   var React = require('react');
+
+  // Flux
+  var Actions = require('../actions/Actions.js');
+
+  // React Cursor
   var Cursor = require('react-cursor').Cursor;
 
   var Comment = React.createClass({
@@ -105,13 +111,35 @@
       this.setState({comment: e.target.value});
     },
 
+    handleSubmit: function(e) {
+      var comment;
+
+      e.preventDefault();
+
+      comment = {
+        user: this.props.user.value.id,
+        text: this.state.comment,
+        discussions: [ this.props.discussionId ]
+      };
+
+      console.log('CommentForm::handleSubmit: ', comment);
+
+      Actions.addComment(comment);
+
+    },
+
     render: function() {
       return (
-        <form className="comment-form">
+        <form className="comment-form" onSubmit={this.handleSubmit}>
           <div className="avatar-wrap">
             <span className="avatar"><i className="fa fa-user"></i></span>
           </div>
-          <ContentEditable className="text" html={this.state.comment} onChange={this.handleChange} />
+          <div className="comment-fields-wrap">
+            <ContentEditable className="text" html={this.state.comment} onChange={this.handleChange} />
+            <div className="comment-controls-wrap">
+              <button type="submit">Submit</button>
+            </div>
+          </div>
         </form>
       );
     }
@@ -121,7 +149,8 @@
   var Discussion = React.createClass({
 
   	propTypes: {
-  		discussions: React.PropTypes.instanceOf(Cursor).isRequired
+  		discussions: React.PropTypes.instanceOf(Cursor).isRequired,
+      user: React.PropTypes.instanceOf(Cursor).isRequired
   	},
 
   	getDefaultProps: function () {
@@ -131,9 +160,10 @@
   	},
 
   	render: function() {
-  		var discussion, title, privacy, comments;
+  		var discussion, id, title, privacy, comments;
 
   		discussion = this.props.discussions.value ? this.props.discussions.value[0] : null;
+      id = discussion ? discussion.get('id') : null;
   		title = discussion ? discussion.get('title') : null;
   		privacy = discussion ? discussion.get('private') : null;
 
@@ -152,7 +182,7 @@
   					</div>
   				</header>
           {comments}
-          <CommentForm user={{}} />
+          <CommentForm user={this.props.user} discussionId={id} />
 	  		</div>
 	  	);
   	}

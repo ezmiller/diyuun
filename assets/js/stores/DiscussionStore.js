@@ -15,6 +15,18 @@
 	var ERROR = 'error';
 	var RESET = 'reset';
 
+	var Comment = Backbone.Model.extend({
+
+		url: '/comments',
+
+		defaults: {
+			user: '',
+			text: '',
+			discussions: [],
+			sources: []
+		}
+
+	});
 
 	var Discussion = Backbone.Model.extend({
 
@@ -68,6 +80,22 @@
 				}.bind(this)
 			});
 			this.reset(discussion);
+		},
+
+		addComment: function(attrs) {
+			var comment, currDiscussion;
+
+			console.log('DiscussionStore::addComment():', comment);
+
+			comment = new Comment;
+			comment.save(attrs, {
+				error: function(model, err) {
+					this.trigger(ERROR, err);
+				}.bind(this)
+			});
+
+			return;
+
 		},
 
 		getDiscussions: function(discussionIds) {
@@ -124,6 +152,9 @@
 				break;
 			case DiscussionConstants.getDiscussions:
 				DiscussionStore.getDiscussions(action.payload);
+				break;
+			case DiscussionConstants.addComment:
+				DiscussionStore.addComment(action.payload);
 				break;
 		}
 
