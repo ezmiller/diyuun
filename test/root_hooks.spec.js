@@ -12,14 +12,14 @@ before(function(done) {
 
   Sails.lift({
     log: {
-        level: 'error'
+        level: 'silent'
     }
   }, function(err, server) {
     sails = server;
     if (err) return done(err);
     done(err, sails);
   });
-  
+
 });
 
 after(function(done) {
