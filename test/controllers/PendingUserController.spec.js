@@ -10,6 +10,14 @@ var token;
 
 describe('PendingUserController', function(done) {
 
+	before(function() {
+    return Promise.all([User.destroy(), PendingUser.destroy()]);
+  });
+
+  after(function() {
+    return Promise.all([User.destroy(), PendingUser.destroy()]);
+  });
+
 	describe('Try to create a pending user via /invite with no values', function(){
 		it('should return 400', function (done) {
 		  request(sails.hooks.http.app)
