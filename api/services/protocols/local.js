@@ -30,7 +30,8 @@ exports.register = function (req, res, next) {
     , lastName = req.param('lastName')
     , role = 'user'
     , title = req.param('title')
-    , affiliation = req.param('affiliation');
+    , affiliation = req.param('affiliation')
+    , discipline = req.param('discipline');
 
   console.log('local::register() registering user with email: ', email, ' password: ', password);
 
@@ -56,7 +57,8 @@ exports.register = function (req, res, next) {
     role: role,
     email: email,
     title: title,
-    affiliation: affiliation
+    affiliation: affiliation,
+    discipline: discipline
   }, function (err, user) {
     if (err) {
       console.log('local::register() err: ', err);
