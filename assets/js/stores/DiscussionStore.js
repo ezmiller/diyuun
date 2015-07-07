@@ -85,7 +85,7 @@
 		addComment: function(attrs) {
 			var comment, currDiscussion;
 
-			console.log('DiscussionStore::addComment():', comment);
+			console.log('DiscussionStore::addComment():', attrs);
 
 			comment = new Comment;
 			comment.save(attrs, {
@@ -118,7 +118,6 @@
 						discussion.fetch({
 							url: '/discussions/'+id,
 							success: function(data) {
-								console.log({discussion:discussion});
 								resolve(discussion);
 							},
 							error: function(model, error) {
