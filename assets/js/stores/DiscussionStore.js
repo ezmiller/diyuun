@@ -89,6 +89,9 @@
 
 			comment = new Comment;
 			comment.save(attrs, {
+				success: function(model) {
+					this.getDiscussions(model.get('discussions'));
+				}.bind(this),
 				error: function(model, err) {
 					this.trigger(ERROR, err);
 				}.bind(this)
