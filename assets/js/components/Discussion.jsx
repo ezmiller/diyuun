@@ -13,6 +13,23 @@
   // React Cursor
   var Cursor = require('react-cursor').Cursor;
 
+  // Helpers toolkit
+  var Helpers = require('../helpers/helpers.js');
+
+  // Marked (markdown)
+  var marked = require('marked');
+
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false
+  });
+
   var Comment = React.createClass({
 
   	propTypes: {
@@ -26,12 +43,13 @@
   	},
 
   	render: function() {
-      var comment, user, date, name;
+      var comment, user, date, name, text;
 
       comment = this.props.comment;
-      user = this.props.comment.user;
+      user = comment.user;
       name = user.firstName + ' ' + user.lastName;
       date = new Date(Date.parse(comment.createdAt));
+      text = marked(Helpers.decodeHTMLEntities(comment.text));
 
   		return (
   			<article className="comment">
@@ -42,9 +60,9 @@
               <span className="date">{date.toLocaleDateString()}</span>
             </div>
           </header>
-  				<p className="comment-body">
-            {comment.text}
-  				</p>
+  				<div 
+            className="comment-body"
+            dangerouslySetInnerHTML={{__html: text}}></div>
   				<footer>
   				</footer>
   			</article>
@@ -81,6 +99,8 @@
       return <div 
               className={this.props.className}
               id="contenteditable"
+              onKeyDown={this.handleKeyDown}
+              onChange={this.handleChange}
               onInput={this.emitChange}
               onBlur={this.emitChange}
               contentEditable
@@ -111,14 +131,28 @@
       this.setState({comment: e.target.value});
     },
 
+    handleKeyDown: function(e) {
+      console.log(e.keyCode);
+      if (e.keyCode === 13) { // Enter
+        React.findDOMNode(e.target).appendChild(document.createElement('br'));
+        e.preventDefault();
+      }
+    },
+
     handleSubmit: function(e) {
-      var comment;
+      var comment, text;
 
       e.preventDefault();
 
+      text = this.state.comment;
+      text = text.replace(/<div>/gmi, '');
+      text = text.replace(/<\/div>/gmi, "<br>");
+
+      console.log('text:', Helpers.escapeHtml(text));
+
       comment = {
         user: this.props.user.value.id,
-        text: this.state.comment,
+        text: Helpers.escapeHtml(text),
         discussions: [ this.props.discussionId ]
       };
 
@@ -135,7 +169,9 @@
             <span className="avatar"><i className="fa fa-user"></i></span>
           </div>
           <div className="comment-fields-wrap">
-            <ContentEditable className="text" html={this.state.comment} onChange={this.handleChange} />
+            <textarea 
+              className="text" 
+              onChange={this.handleChange}>{this.state.comment}</textarea>
             <div className="comment-controls-wrap">
               <button type="submit">Submit</button>
             </div>
