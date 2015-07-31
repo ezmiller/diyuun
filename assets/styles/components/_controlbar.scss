@@ -4,8 +4,8 @@
 
 #controlbar {
 	background-color: $controlbar-color;
-	@extend .z-depth-1;
-	// overflow: hidden;
+  border-bottom: solid 1px $border-color;
+  z-index: $on-top-of-it-all;
 
 	a {
 		font-size: 1.5rem;
@@ -20,10 +20,12 @@
   .brand-logo {
   	display: inline-block;
     position: absolute;
-    font-family: 'Lato', sans-serif;
+    margin-left: 4%;
+    font-family: 'futura-pt', sans-serif;
     font-size: 2rem;
     line-height: $controlbar-mobile-height;
-    color: #fff;
+    text-transform: uppercase;
+    color: $dark-text;
 
     @media screen and (min-width: $larger-than-phablet) {
       font-size: 2.5rem;

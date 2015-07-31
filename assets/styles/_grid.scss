@@ -16,14 +16,14 @@
 /* For devices larger than 400px */
 @media (min-width: $larger-than-mobile) {
   .container {
-    width: 85%;
+    width: $larger-than-mobile-width;
     padding: 0; }
 }
 
 /* For devices larger than 550px */
 @media (min-width: $larger-than-phablet) {
   .container {
-    width: 80%; }
+    width: $larger-than-phablet-width; }
   .column,
   .columns {
     margin-left: 4%; }

@@ -17,7 +17,7 @@
 .logged-in .content {
 	margin: 2rem 0 0 0;
 	@media screen and (min-width: $larger-than-phablet) {
-		margin: $controlbar-height 0 0 0;
+		margin: 4rem 0 0 0;
 	}
 }
 
@@ -52,11 +52,11 @@ header {
 		margin: 0 auto;
 
 		@media screen and (min-width: $larger-than-mobile) {
-			width: 85%;
+			width: $larger-than-mobile-width;
 		}
 
 		@media screen and (min-width: $larger-than-phablet) {
-			width: 80%;
+			width: $larger-than-phablet-width;
 		}
 	}
 

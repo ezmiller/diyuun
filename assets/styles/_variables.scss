@@ -1,12 +1,31 @@
 /** Layout **/
 $max-width: 120rem;
+$larger-than-mobile-width: 90%;
+$larger-than-phablet-width: 95%;
 
 /** Colors */
-$app-background-color: #FFEAC0;
-$controlbar-color: #A57D6D;
+$bunting: #182261;
+$persian-plum: #681a19;
+$yellow-orange: #ffbf42;
+$cream-brulee: #ffde9f;
+$sushi: #8ac54e;
+$caper: #d6f2b8;
+$havelock-blue: #4a90e2;
+$sail: #b0def5;
+$white: #fff;
+$mine-shaft: #4a4a4a;
+$silver-chalice: #9b9b9b;
+$alto: #d8d8d8;
+$wild-sand: #f5f5f5;
+
+$app-background-color: $white;
+$border-color: $alto;
+$controlbar-color: $app-background-color;
 $error-message-color: #CEA14C;
 $light-text: #fff;
-$dark-text: #333;
+$dark-text: #000;
+$lighter-dark-text: lighten($dark-text, 20%);
+$divider-color: lightgrey;
 
 /** Navbar */
 $controlbar-height: 6rem;
@@ -18,3 +37,6 @@ $larger-than-phablet: 550px;
 $larger-than-tablet: 750px;
 $larger-than-desktop: 1000px;
 $larger-than-HDdesktop: 1200px;
+
+/** Layering */
+$on-top-of-it-all: 1000;
