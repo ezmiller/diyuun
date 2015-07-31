@@ -31,7 +31,8 @@ after(function(done) {
     Source.destroy(),
     Author.destroy(),
     Recommendation.destroy(),
-    Discipline.destroy()
+    Discipline.destroy(),
+    Discussion.destroy()
   ])
   .catch(function(err) {
     console.log(err);
