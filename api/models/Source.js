@@ -82,6 +82,11 @@ module.exports = {
       via: 'source'
     },
 
+    discussions: {
+      collection: 'discussion',
+      via: 'sources'
+    },
+
     comments: {
       collection: 'comment',
       via: 'sources'

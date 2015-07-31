@@ -20,6 +20,10 @@ module.exports = {
   		collection: 'comment',
   		via: 'discussions'
   	},
+    sources: {
+      collection: 'source',
+      via: 'discussions'
+    },
     private: {
       type: 'boolean',
       required: true
