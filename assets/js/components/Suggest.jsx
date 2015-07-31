@@ -87,7 +87,10 @@
 			});
 
 			if (!source) {
-				content = <Search handler={this.handleRecommendClick} />;
+				content = <Search
+					placeholder="Search"
+					resultsBtnLabel="Recommend"
+					handler={this.handleRecommendClick} />;
 			} else if (!done) {
 				content = (
 					<form className="recommendation-form" onSubmit={this.handleSubmit} >
