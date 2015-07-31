@@ -1,4 +1,5 @@
 // Compass
+@import "compass/css3/opacity";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 @import "compass/css3/transition";
@@ -40,3 +41,4 @@ $fa-font-path: "../bower_components/fontawesome/fonts";
 @import './components/suggest';
 @import './components/star-rating';
 @import './components/discussion';
+@import './components/start-discussion';

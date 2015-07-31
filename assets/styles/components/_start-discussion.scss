@@ -1,0 +1,127 @@
+.start-discussion {
+
+	textarea[name="prompt"] {
+		height: 17rem;
+	}
+
+	.private-field-wrap,
+	.visible-field-wrap {
+		float: left;
+		width: 45%;
+
+		label {
+			display: inline-block;
+			margin-left: 0.5em;
+		}
+
+	}
+
+	.buttons-wrap {
+		width: 80%;
+		text-align: right;
+	}
+
+}
+
+.source-selector {
+	@include display-flex;
+	@include flex-wrap(wrap);
+
+	width: 80%;
+	padding: 2rem;
+	border: solid 1px $border-color;
+
+	.search-results {
+		@include display-flex;
+		@include flex-wrap(wrap);
+	}
+
+	.item {
+		position: relative;
+		width: 12em;
+		height: 19.44em;
+		border: 1px solid $border-color;
+		margin: 0 2rem 2rem 0;
+		overflow: hidden;
+
+		// &:before {
+		// 	content: '';
+		// 	position:absolute;
+		// 	top: 0; right: 0; bottom: 0; left: 0;
+		// 	background-color: inherit;
+		// }
+
+		.cover {
+			width: 100%;
+			height: 11.9em;
+			overflow: hidden;
+		}
+
+		.image {
+			min-width: 100%;
+		}
+
+		.metadata {
+			text-align: center;
+			padding: 1rem;
+		}
+
+		.title {
+			font-size: 1.2em;
+			margin-bottom: 0;
+		}
+
+		.subtitle {
+			font-size: 0.9em;
+		}
+
+		
+
+	}
+
+		.item.search-result {
+			border: 2px dashed $persian-plum;
+			background: rgba(255, 255, 255, 0.15);
+	
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0; right: 0; bottom: 0; left: 0;
+				background-color: inherit;
+			}
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.8);
+			}
+
+			button {
+				@extend .button.outline;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				margin: 0 0 0 -4.5rem;
+			}
+
+		}
+
+		.item.search-result.selected {
+			border: 2px solid $persian-plum;
+
+			button {
+				margin-left: -(12.816rem/2);
+				visibility: hidden;
+			}
+
+			&:hover {
+				button { visibility: visible; }
+			}
+
+		}
+
+	.search-form {
+		width: 100%;
+		margin-bottom: 0;
+		input { width: inherit; }
+	}
+
+}

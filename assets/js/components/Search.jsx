@@ -5,41 +5,28 @@
 	'use strict';
 
 	var $ = require('jquery');
-
-	var React = require('react');
 	var moment = require('moment');
 
-	var SearchResult = React.createClass({
-
-		handleClick: function(e) {
-			e.preventDefault();
-			this.props.handler(this.props.data);
-		},
-
-		render: function() {
-			var authors,
-					source = this.props.data;
-
-			authors = source.authors.map(function(author,key) {
-				return <span key={key} className="author">{author.firstName} {author.lastName}</span>;
-			});
-
-			return (
-				<li key={source.id} className="item">
-					<img className="image" src={source.imageLinks ? source.imageLinks.thumbnail : 'images/book-icon.svg'} alt="Book Cover" />
-					<div className="metadata">
-						<h1 className="title">{source.title}</h1>
-						<h2 className="subtitle">{source.subtitle}</h2>
-						<p className="authors">{authors}</p>
-					</div>
-					<button onClick={this.handleClick}>Recommend</button>
-				</li>
-			);
-		}
-
-	});
+	var React = require('react');
+	var SearchResult = require('./SearchResult.jsx');
 
 	var Search = React.createClass({
+
+		propTypes: {
+	    resultsBtnLabel: React.PropTypes.string.isRequired,
+	    handler: React.PropTypes.func.isRequired,
+	    showSelected: React.PropTypes.array,
+	    placeholder: React.PropTypes.string.isRequired,
+	    resultsFilterFunc: React.PropTypes.func
+		},
+
+		getDefaultProps: function () {
+	    return {
+        resultsBtnLabel: 'Label Not Defined',
+        handler: null,
+        showAtTop: []
+	    };
+		},
 
 		getInitialState: function () {
 	    return {
@@ -98,26 +85,34 @@
 		},
 
 		render: function() {
-			var self = this,
-					result;
+			var result, filterFn;
 
-			result = this.state.searchResults.map(function(source, key) {
-				return <SearchResult key={source.id} data={source} handler={self.props.handler} />
-			});
+			filterFn = this.props.resultsFilterFunc;
+			result = this.state.searchResults;
+			result = filterFn === undefined ? result : result.filter(filterFn);
+
+			result = result.map(function(source, key) {
+				return <SearchResult 
+									key={source.id} 
+									data={source}
+									resultsBtnLabel={this.props.resultsBtnLabel} 
+									handler={this.props.handler} />
+			}.bind(this));
 
 			return(
-				<form className="search-form">
+				<div className="search-form">
 					<input 
 						type="text" 
 						className="search-field"
 						onChange={this.handleChange} 
 						onKeyDown={this.handleKeyDown} 
 						value={this.state.searchValue} 
-						placeholder="Search" />
+						placeholder={this.props.placeholder} />
 					<ul className="search-results">
+						{this.props.showAtTop}
 						{result}
 					</ul>
-				</form>
+				</div>
 			);
 		}
 
