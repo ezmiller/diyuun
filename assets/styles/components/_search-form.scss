@@ -1,68 +1,7 @@
 .search-form {
 
-	.search-field {
-		width: 100%;
-		padding: 35px 15px;
-		border: 0;
-		font-size: 1.8em;
-		@extend .z-depth-1;
-		background: alicewhite;
-
-		&:focus {
-			border: 0;
-		}
-	}
-
 	.search-results {
 		list-style: none;
-		margin: 1.5rem 0;
-
-		.item {
-			@extend .z-depth-1;
-			padding: 3rem;
-			margin: 0 0 1rem 0;
-
-			.image,
-			.metadata {
-				display: inline-block;
-			}
-
-			.image {
-				max-width: 30%;
-				border: solid 1px #333;
-				padding: .5rem;
-			}
-
-			.metadata {
-				width: 50%;
-				padding: 0 1.5rem;
-				vertical-align: top;
-			}
-
-			.title {
-				margin: 0;
-				@extend h6;
-				font-weight: bold;
-			}
-
-			.subtitle {
-				font-size: 0.9em;
-			}
-
-			.authors:before {
-				content: 'By ';
-			}
-
-			.author:not(:first-child):before {
-				content: ', ';
-			}
-
-			button {
-				margin-top: 1.5em;
-				width: 100%;
-			}
-		}
-
 	}
 
 }
