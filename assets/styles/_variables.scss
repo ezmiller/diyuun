@@ -27,6 +27,11 @@ $dark-text: #000;
 $lighter-dark-text: lighten($dark-text, 20%);
 $divider-color: lightgrey;
 
+/** Font stacks */
+$futura: 'futura-pt', sans-serif;
+$avenir: 'Avenir Next Regular', sans-serif;
+$bembo: 'Bembo Regular', serif;
+
 /** Navbar */
 $controlbar-height: 6rem;
 $controlbar-mobile-height: 5rem;
