@@ -29,7 +29,7 @@
 			});
 
 			return(
-				<article className="source book eight columns" onClick={this.handleClick}>
+				<article className="source" onClick={this.handleClick}>
 					<div className="cover">
 						<img className="image" src={source.get('imageLinks').thumbnail} alt="Book Cover" />
 					</div>

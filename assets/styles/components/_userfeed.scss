@@ -1,25 +1,26 @@
 .user-feed {
 
 	.source {
-		display: flex;
-		height: 25rem;
+		height: 20rem;
 		margin-bottom: 2rem;
-		background-color: #fff;
+		background-color: $wild-sand;
+		border-left: 3px solid $sushi;
 		overflow: hidden;
-		@extend .z-depth-1;
 		cursor: pointer;
 
-		.cover {
-			flex: 0.75;
-		}
-
-		.image {
-			width: 100%;
-		}
-
+		.cover,
 		.info {
-			flex: 2;
-			vertical-align: top;
+			float: left;
+		}
+
+		.cover {
+			height: 100%;
+			overflow: hidden;
+
+			.image { 
+				min-height: 100%; 
+			}
+
 		}
 
 		.meta,

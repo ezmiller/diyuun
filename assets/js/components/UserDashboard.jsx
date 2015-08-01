@@ -27,7 +27,7 @@
 			}) : null;
 
 			return (
-				<div className="user-feed">
+				<div className="user-feed eight columns">
 					{sources}
 				</div>
 			);
