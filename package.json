@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "avatars.io": "^0.1.6",
     "backbone": "^1.2.1",
     "bcryptjs": "^2.1.0",
     "classnames": "^2.1.3",
