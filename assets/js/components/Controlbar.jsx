@@ -66,6 +66,7 @@
 									<i className="fa fa-chevron-down"></i>
 								</a>
 								<ul className={classNames('dropdown-menu', {'visible': isVisible})}>
+									<li className="menu-item" key="account"><Link onClick={this.handleMenuClick} to="user-account">Account</Link></li>
 									<li className="menu-item" key="send-invite"><Link onClick={this.handleMenuClick} to="send-invite">Send Invite</Link></li>
 									<li className="menu-item" key="suggest-source"><Link onClick={this.handleMenuClick} to="suggest">Suggest a Book</Link></li>
 									<li className="menu-item" key="logout"><a href="logout" onClick={this.logout}>Logout</a></li>
