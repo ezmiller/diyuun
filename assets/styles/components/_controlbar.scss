@@ -8,8 +8,9 @@
   z-index: $on-top-of-it-all;
 
 	a {
+    font-family: $avenir;
 		font-size: 1.5rem;
-		color: #fff;
+    color: $dark-text;
 	}
 
 	@media screen and (min-width: $larger-than-phablet) {
@@ -37,6 +38,7 @@
 	ul {
 		height: inherit;
     margin: 0;
+    list-style: none;
 
     li {
       @include transition(background-color .3s);
@@ -54,12 +56,11 @@
     	margin-top: -25px; // Necessary for some reason to get element flush with top.
     	padding: 0px 25px;
     	line-height: $controlbar-mobile-height;
-      color: #fff;
+      font-size: 1.1em;
     }
 
     &.right-controlbar-group {
     	float: right;
-      // margin-right: 3rem;
     }
 
     .dropdown {
@@ -67,18 +68,25 @@
       margin-top: 3px;
     }
 
-    .dropdown:hover ~ .dropdown-menu {
+    .dropdown-toggle {
+
+      .fa-chevron-down { margin-left: 0.5rem; }
+
+    }
+
+    .dropdown-toggle:hover ~ .dropdown-menu {
       display: block;
     }
 
     .dropdown-menu {
+      @extend .z-depth-1;
       display:none;
       position: absolute;
       top: 6rem;
-      right: 2rem;
+      right: 0.2rem;
       width: 20rem;
       height: 21rem;
-      background: #333;
+      background: $white;
       list-style: none;
 
       &:hover {
