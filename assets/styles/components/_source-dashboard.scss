@@ -1,0 +1,54 @@
+.source-dashboard {
+
+	.source-type,
+	.authors,
+	.description-label {
+		font-family: $avenir;
+	}
+
+	.source-type {
+		text-transform: uppercase;
+		font-weight: 400;
+		color: $silver-chalice;
+	}
+
+	.title {
+		font-weight: 400;
+		margin-bottom: 0;
+	}
+
+	.subtitle {
+		margin-bottom: 0;
+	}
+
+	.authors {
+		font-size: 1.3em;
+		color: $havelock-blue;
+	}
+
+	.image,
+	.description { 
+		float: left;
+	}
+
+	.description {
+		width: 70%;
+	}
+
+	.image {
+		margin: 0 4rem 4rem 0;
+	}
+
+	.description-label {
+		display: block;
+		width: 5.55em;
+		font-size: 1.2em;
+		text-transform: uppercase;
+		letter-spacing: 0.2rem;
+		line-height: 4rem;
+		border-bottom: solid 4px $sushi;
+		margin-bottom: 1em;
+		color: $sushi;
+	}
+
+}

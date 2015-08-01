@@ -39,4 +39,15 @@
 
 	module.exports = Helpers;
 
+	// Modifications to javscript Objects
+	
+	String.prototype.trunc =
+   function(n,useWordBoundary) {
+     var tooLong, _s;
+     tooLong = this.length > n;
+     _s = tooLong ? this.substr(0, n-1) : this;
+     _s = useWordBoundary && tooLong ? _s.substr(0,_s.lastIndexOf(' ')) : _s;
+     return  tooLong ? _s + " ..." : _s;
+  }; 
+
 }());

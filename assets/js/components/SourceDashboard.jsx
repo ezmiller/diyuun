@@ -8,13 +8,11 @@
 
 	var React = require('react');
 	var Cursor = require('react-cursor').Cursor;
-	var Router = require('react-router');
 	var Actions = require('../actions/Actions.js');
 	var SourceStore = require('../stores/SourceStore.js');
+	var Helpers = require('../helpers/helpers.js');
 
 	var SourceDashboard = React.createClass({
-
-		mixins: [Router.State],
 
 		propTypes: {
       sources: React.PropTypes.instanceOf(Cursor).isRequired
@@ -37,21 +35,21 @@
 			}) : null;
 
 			return(
-				<div className="source-dashboard">
-					<div className="source">
-						<img className="image" src={imageUrl}  alt="Book Cover" />
-						<div className="metadata">
-							<h1 className="title">{source ? source.get('title') : null}</h1>
-							<h2 className="subtitle">{source ? source.get('subtitle') : null}</h2>
+				<div className="source-dashboard eight columns">
+					<header className="source">
+						<div className="title-info">
+							<span className="source-type">{source ? source.get('type') : null}</span>
+							<h1 className="title">
+								{source ? source.get('title') : null}{source && source.get('subtitle') !== '' ? ':' : null} {source ? source.get('subtitle') : null} ({source ? source.get('year') : null})
+							</h1>
 							<p className="authors">{authors || null}</p>
-							<p className="description">{source ? source.get('abstract') : null}</p>
 						</div>
-					</div>
+						<img className="image" src={imageUrl} />
+						<p className="description"><span className="description-label">Summary</span>{source ? source.get('abstract').trunc(275, true) : null}</p>
+					</header>
 				</div>
 			);
 		},
-
-	
 
 	});
 
