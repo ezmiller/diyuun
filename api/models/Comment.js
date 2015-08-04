@@ -27,6 +27,23 @@ module.exports = {
   		via: 'comments'
   	}
 
+  },
+
+  afterUpdate: function(comment, next) {
+
+    // When there is a comment update, the related discussions updatedAt timestamp should be changed.
+    comment.discussions.map(function(discussion) {
+
+      Discussion
+      .update(discussion.id, {updatedAt: new Date()})
+      .catch(function(err) {
+        sails.log.error(new CustomErrors.PersistenceError('Failed to update discussion updatedAt property after updating comment.'));
+      })
+
+    });
+
+    next();
   }
+
 };
 

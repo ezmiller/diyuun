@@ -39,6 +39,10 @@ module.exports = {
     prompt: {
       type: 'string',
       required: true
+    },
+    updatedAt: {
+      type: 'datetime',
+      defaultsTo: function() { return new Date(); }
     }
   }
 };
