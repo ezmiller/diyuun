@@ -37,7 +37,7 @@
 				loggedIn: false,
 				user: null,
 				sources: null,
-				discussions: null
+				discussions: []
 	    };
 		},
 
