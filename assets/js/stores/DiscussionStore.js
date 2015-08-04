@@ -144,6 +144,30 @@
 			}.bind(this));
 		},
 
+		getDiscussionsBySource: function(sourceId) {
+
+			Promise.resolve(
+				new Promise(function(resolve, reject) {
+					$.ajax({
+						type: 'GET',
+						url: '/sources/'+sourceId+'/discussions'
+					})
+					.done(function(result,status) {
+						resolve(_.pluck(result, 'id'));
+					})
+				})
+			).then(function(discussionIds) {
+				
+				this.getDiscussions(discussionIds);
+
+			}.bind(this)).catch(function(err) {
+
+				this.trigger(ERROR, err);
+
+			}.bind(this));
+
+		},
+
 	}));
 
 	function actionCallback(action) {
@@ -154,6 +178,9 @@
 				break;
 			case DiscussionConstants.getDiscussions:
 				DiscussionStore.getDiscussions(action.payload);
+				break;
+			case DiscussionConstants.getDiscussionsForSource:
+				DiscussionStore.getDiscussionsBySource(action.payload);
 				break;
 			case DiscussionConstants.addComment:
 				DiscussionStore.addComment(action.payload);

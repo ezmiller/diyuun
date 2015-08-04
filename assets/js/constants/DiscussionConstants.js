@@ -10,6 +10,7 @@
 	var DiscussionConstants = keyMirror({
 		createDiscussion: null,
 		getDiscussions: null,
+		getDiscussionsForSource: null,
 		addComment: null,
 	});
 

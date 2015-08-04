@@ -26,6 +26,7 @@
       // Discussions
       DiscussionConstants.createDiscussion,
       DiscussionConstants.getDiscussions,
+      DiscussionConstants.getDiscussionsForSource,
       DiscussionConstants.addComment,
       
       ],

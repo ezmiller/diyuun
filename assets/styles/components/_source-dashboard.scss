@@ -6,49 +6,78 @@
 		font-family: $avenir;
 	}
 
+	.image,
+	.description { 
+		display: inline-block;
+	}
+
 	.source-type {
 		text-transform: uppercase;
 		font-weight: 400;
 		color: $silver-chalice;
 	}
 
-	.title {
-		font-weight: 400;
-		margin-bottom: 0;
+	.source {
+
+		.title {
+			font-weight: 400;
+			margin-bottom: 0;
+		}
+
+		.subtitle {
+			margin-bottom: 0;
+		}
+
+		.authors {
+			font-size: 1.3em;
+			color: $havelock-blue;
+		}
+
+		.description {
+			width: 70%;
+			vertical-align: top;
+		}
+
+		.image {
+			margin: 0 4rem 4rem 0;
+		}
+
+		.description-label {
+			display: block;
+			width: 5.55em;
+			font-size: 1.2em;
+			text-transform: uppercase;
+			letter-spacing: 0.2rem;
+			line-height: 4rem;
+			border-bottom: solid 4px $sushi;
+			margin-bottom: 1em;
+			color: $sushi;
+		}
+
 	}
 
-	.subtitle {
-		margin-bottom: 0;
-	}
+	.discussion-list {
 
-	.authors {
-		font-size: 1.3em;
-		color: $havelock-blue;
-	}
+		.discussion {
+			height: 25rem;
+    	background: $wild-sand;
+    	border-left: solid 4px $havelock-blue;
+    	padding: 1.5rem;
+    	margin: 0 0 3rem 0;
+		}
 
-	.image,
-	.description { 
-		float: left;
-	}
-
-	.description {
-		width: 70%;
-	}
-
-	.image {
-		margin: 0 4rem 4rem 0;
-	}
-
-	.description-label {
-		display: block;
-		width: 5.55em;
-		font-size: 1.2em;
-		text-transform: uppercase;
-		letter-spacing: 0.2rem;
-		line-height: 4rem;
-		border-bottom: solid 4px $sushi;
-		margin-bottom: 1em;
-		color: $sushi;
+		.title {
+			font-weight: 900;
+			margin-bottom: 0;
+		}
+		
+		.last-updated {
+			font-family: $avenir;
+			font-size: 1.2rem;
+			font-weight: 200;
+			text-transform: uppercase;
+			color: $silver-chalice;
+		}
 	}
 
 }
