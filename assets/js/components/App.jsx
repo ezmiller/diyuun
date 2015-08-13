@@ -4,6 +4,8 @@
 (function() {
 	'use strict';
 
+	var _ = require('underscore');
+
 	// Flux.
 	var AuthStore = require('../stores/AuthStore.js');
 	var SourceStore = require('../stores/SourceStore.js');
@@ -37,7 +39,8 @@
 				loggedIn: false,
 				user: null,
 				sources: null,
-				discussions: []
+				discussions: [],
+				error: null
 	    };
 		},
 
@@ -45,6 +48,7 @@
 		 	AuthStore.addLoginListener(this.onLogin);
 		 	AuthStore.addLogoutListener(this.onLogout);
 		 	AuthStore.addErrorListener(this.onError);
+		 	AuthStore.addUpdateListener(this.onCurrentUserUpdate);
 		 	SourceStore.addUpdateListener(this.onSourcesUpdate);
 		 	SourceStore.addResetListener(this.onSourcesUpdate);
 		 	DiscussionStore.addEventListener('reset', this.onDiscussionsUpdate);
@@ -65,6 +69,7 @@
 		componentWillUnmount: function () {
 			AuthStore.removeLoginListener(this.onLogin);
 			AuthStore.removeLoginListener(this.onLogout);
+			AuthStore.removeUpdateListener(this.onCurrentUserUpdate);
 			AuthStore.removeErrorListener(this.onError);
 			SourceStore.removeUpdateListener(this.onSourcesUpdate);
 			SourceStore.removeResetListener(this.onSourcesUpdate);
@@ -95,7 +100,8 @@
 							<RouteHandler 
 								user={cursor.refine('user')} 
 								sources={cursor.refine('sources')} 
-								discussions={cursor.refine('discussions')} />
+								discussions={cursor.refine('discussions')}
+								error={cursor.refine('error')} />
 						</div>
 					</div>
 				</div>
@@ -115,6 +121,11 @@
 			this.setState({loggedIn: false, user: null});
 			window.location.replace('/login');
 		},
+
+		onCurrentUserUpdate: function(user) {
+			console.log('App::onCurrentUserUpdate() user:', user);
+			this.setState({user:user});
+		},
 	
 		onSourcesUpdate: function(update) {
 			console.log('App::onSourcesUpdate(): ', update);
@@ -128,6 +139,9 @@
 
 		onError: function(error) {
 			console.log('App::onError() error: ', error);
+			if (error.status === 500) {
+				this.setState({error: _.pick(error, 'status', 'responseJSON')});
+			}
 			if (error.status === 404) {
 				window.location.replace('/404')
 			}

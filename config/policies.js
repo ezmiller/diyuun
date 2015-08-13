@@ -35,7 +35,9 @@ module.exports.policies = {
 
   BookController: {
     new: AUTHENTICATED,
-  }
+  },
+
+  AuthController: ['passport'],
 
   /***************************************************************************
   *                                                                          *

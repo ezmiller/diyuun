@@ -16,6 +16,8 @@
   _.each([
 
       // Authorization
+      AuthConstants.updateCurrentUser,
+      AuthConstants.updateCurrentUserAvatar,
 
       // Sources
       SourceConstants.getSource,

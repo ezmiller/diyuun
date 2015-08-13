@@ -1,0 +1,38 @@
+.user-account {
+
+	.avatar {
+		position: relative;
+		width: 15rem;
+		height: 15rem;
+		border: solid 1px $border-color;
+		overflow: hidden;
+	}
+
+	.avatar img {
+		width: 100%;
+		min-height: 100%;
+
+		&:hover ~ .change-picture {
+    	display: block;
+    }
+    
+	}
+
+	.avatar .change-picture {
+		display: none;
+		position: absolute;
+    left: 0; bottom: 0;
+    background-color: rgba(#182261, 0.8);
+    width: 100%;
+    padding: 0.9rem;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+    	display: block;
+    }
+
+	}
+
+}

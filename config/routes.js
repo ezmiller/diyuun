@@ -63,4 +63,11 @@ module.exports.routes = {
   // Sources
   'GET /sources/search/:srcType': 'SourceContoller.search',
 
+  // Account
+  'GET /account': 'IndexController.index',
+
+  // Avatars
+  'POST /user/avatar': 'UserController.updateAvatar',
+  'GET  /user/:id/avatar': 'UserController.avatar',
+
 };

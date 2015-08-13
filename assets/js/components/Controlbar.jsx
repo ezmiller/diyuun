@@ -59,9 +59,11 @@
 					<div className="controlbar-wrapper">
 						<a href="#" className="brand-logo">Kanon</a>
 						<ul className="right-controlbar-group">
-							<li class="dropdown">
+							<li className="dropdown">
 								<a className="dropdown-toggle" onClick={this.handleDropMenuToggle} >
-									<div className="avatar-wrap">	<img className="avatar" src="" /></div>
+									<div className="avatar-wrap">
+										<img className="avatar" src={this.props.user.refine('avatar').value + '?timestamp=' + Date.now()} />
+									</div>
 									<span className="user">{this.props.user.refine('firstName').value}</span>
 									<i className="fa fa-chevron-down"></i>
 								</a>

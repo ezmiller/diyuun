@@ -12,6 +12,7 @@ var App = require('./components/App.jsx');
 var SendInvite = require('./components/SendInvite.jsx');
 var Discussion = require('./components/Discussion.jsx');
 var UserDashboard = require('./components/UserDashboard.jsx');
+var UserAccount = require('./components/UserAccount.jsx');
 var SourceDashboard = require('./components/SourceDashboard.jsx');
 var StartDiscussion = require('./components/StartDiscussion.jsx');
 
@@ -25,6 +26,7 @@ var routes = (
     <Route name="suggest" path="/suggest" handler={Suggest} />
     <Route name="discussion" path="/discussion/:discussionId" handler={Discussion} />
     <Route name="start-discussion" path="/start-discussion" handler={StartDiscussion} />
+    <Route name="user-account" path="/account" handler={UserAccount} />
   </Route>
 );
 

@@ -90,6 +90,37 @@
 			return (this.isAuthorized === true) ? this.toJSON() : false;
 		},
 
+		updateCurrentUser: function(attr) {
+			this.set(attr);
+			this.sync('update', this).done(function(data) {
+				this.trigger(UPDATE, this.toJSON());
+			}.bind(this));
+		},
+
+		updateAvatar: function(file) {
+			var currUser;
+
+			// Create FormData object in order to pass data via ajax.
+			var data = new FormData();
+			data.append('avatar', file);
+
+			$.ajax({
+				type: 'POST',
+				url: '/user/avatar',
+				data: data,
+				contentType: false,
+				processData: false,
+				cache: false
+			}).done(function() {
+				this.refeshCurrentUser().done(function() {
+					this.trigger(UPDATE, this.toJSON());	
+				}.bind(this));
+			}.bind(this)).fail(function(jqXhr) {
+				this.trigger(ERROR, jqXhr);
+			}.bind(this));
+
+		},
+
 		isLoggedIn: function() {
 			console.log(this.getCurrentUserId());
 			return ( this.getCurrentUserId() ) ? true: false;
@@ -113,6 +144,14 @@
 			this.off(LOGOUT, callback);
 		},
 
+		addUpdateListener: function(callback) {
+			this.on(UPDATE, callback);
+		},
+
+		removeUpdateListener: function(callback) {
+			this.off(UPDATE, callback);
+		},
+
 		addErrorListener: function(callback) {
 			this.on(ERROR, callback);
 		},
@@ -126,6 +165,11 @@
 	function actionCallback(action) {
 		console.log('AuthStore::actionCallback() called with:', action);
 		switch(action.actionType) {
+			case AuthConstants.updateCurrentUser:
+				AuthStore.updateCurrentUser(action.payload);
+				break;
+			case AuthConstants.updateCurrentUserAvatar:
+				AuthStore.updateAvatar(action.payload);
 				break;
 		}
 	}

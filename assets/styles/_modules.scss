@@ -28,7 +28,7 @@ input[type="reset"],
 input[type="button"] {
   display: inline-block;
   background: #182261;
-  margin: 1em;
+  // margin: 1em;
   min-width: 9rem;
   border: none;
   border-radius: 3px;
@@ -120,8 +120,13 @@ legend {
   text-transform: uppercase;
   font-weight: normal; }
 fieldset {
-  padding: 0;
-  border-width: 0; }
+  width: 80%;
+  padding: 1rem 2rem;
+  border: solid 1px $border-color;
+}
+fieldset input {
+  width: 100% !important;
+}
 input[type="checkbox"],
 input[type="radio"] {
   display: inline; }
@@ -208,19 +213,22 @@ hr {
   border-top: 1px solid #E1E1E1; }
 
 .form-wrap {
-  // padding: 2em;
 
-  input[type="email"],
-  input[type="number"],
-  input[type="search"],
-  input[type="text"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="password"],
-  textarea {
-    width: 80%;
-  }
+}
 
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  width: 80%;
+}
+
+.field-wrap {
+  margin-bottom: 2rem;
 }
 
 /* Notifications
