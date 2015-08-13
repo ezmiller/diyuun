@@ -16,8 +16,6 @@
   _.each([
 
       // Authorization
-      AuthConstants.loginUser,
-      AuthConstants.logoutUser,
 
       // Sources
       SourceConstants.getSource,

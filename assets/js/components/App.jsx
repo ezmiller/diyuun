@@ -44,6 +44,7 @@
 		componentDidMount: function () {
 		 	AuthStore.addLoginListener(this.onLogin);
 		 	AuthStore.addLogoutListener(this.onLogout);
+		 	AuthStore.addErrorListener(this.onError);
 		 	SourceStore.addUpdateListener(this.onSourcesUpdate);
 		 	SourceStore.addResetListener(this.onSourcesUpdate);
 		 	DiscussionStore.addEventListener('reset', this.onDiscussionsUpdate);
@@ -64,6 +65,7 @@
 		componentWillUnmount: function () {
 			AuthStore.removeLoginListener(this.onLogin);
 			AuthStore.removeLoginListener(this.onLogout);
+			AuthStore.removeErrorListener(this.onError);
 			SourceStore.removeUpdateListener(this.onSourcesUpdate);
 			SourceStore.removeResetListener(this.onSourcesUpdate);
 			DiscussionStore.removeEventListener('reset', this.onDiscussionsUpdate);
@@ -101,10 +103,10 @@
 
 		},
 
-		onLogin: function() {
+		onLogin: function(currentUser) {
 			console.log('App::onLogin()');
 			var path = this.getPathname() === '/login' ? '/' : this.getPathname();
-			this.setState({loggedIn: true, user: AuthStore.getCurrentUser()});
+			this.setState({loggedIn: true, user: currentUser});
 			this.context.router.transitionTo(path);
 		},
 
