@@ -50,7 +50,10 @@ module.exports = {
         interests: {
             type: 'array'
         },
-        profilePicture: {
+        avatar: {
+            type: 'string'
+        },
+        avatarFd: {
             type: 'string'
         },
         passports: {
@@ -66,5 +69,10 @@ module.exports = {
             via: 'members'
         }
     },
+
+    beforeCreate: function(user, next) {
+        user.avatar = utils.getAvatar('gravatar', utils.MD5(user.email.toLowerCase()), 80);
+        next();
+    }
 
 };

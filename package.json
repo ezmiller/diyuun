@@ -44,6 +44,8 @@
     "sails-generate-auth": "^0.2.0",
     "sails-mongo": "^0.10.5",
     "simple-oauth2": "^0.2.1",
+    "skipper": "^0.5.5",
+    "skipper-disk": "^0.5.4",
     "underscore": "^1.7.0",
     "validator": "^3.27.0",
     "winston": "^0.8.3",
