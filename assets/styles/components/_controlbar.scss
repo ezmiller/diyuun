@@ -27,14 +27,6 @@
     &.visible { display: block; }
   }
 
-  // To match the margin on the container grid.
-  .brand-logo {
-    margin-left: 4%; 
-  }
-  .right-controlbar-group {
-    margin-right: 4%;
-  }
-
 	// Logo
   .brand-logo {
   	display: inline-block;
@@ -53,7 +45,6 @@
 
 	// Controlbar links
 	ul {
-		height: inherit;
     margin: 0;
     list-style: none;
 
@@ -110,10 +101,6 @@
       vertical-align: top;
       font-weight: 900;
     }
-
-    // .dropdown-toggle:hover ~ .dropdown-menu {
-    //   display: block;
-    // }
 
     .dropdown-menu {
       @extend .z-depth-1;
