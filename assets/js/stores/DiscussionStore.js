@@ -134,8 +134,6 @@
 				// Triggers reset action that passes data to all listening.
 				this.reset(result);
 
-				console.log(this);
-
 			}.bind(this))
 			.catch(function(err) {
 

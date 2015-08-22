@@ -138,7 +138,6 @@
     },
 
     handleKeyDown: function(e) {
-      console.log(e.keyCode);
       if (e.keyCode === 13) { // Enter
         React.findDOMNode(e.target).appendChild(document.createElement('br'));
         e.preventDefault();
@@ -154,15 +153,11 @@
       text = text.replace(/<div>/gmi, '');
       text = text.replace(/<\/div>/gmi, "<br>");
 
-      console.log('text:', Helpers.escapeHtml(text));
-
       comment = {
         user: this.props.user.value.id,
         text: Helpers.escapeHtml(text),
         discussions: [ this.props.discussionId ]
       };
-
-      console.log('CommentForm::handleSubmit: ', comment);
 
       Actions.addComment(comment);
       this.setState({comment:''});
