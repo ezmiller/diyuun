@@ -42,7 +42,7 @@ module.exports = {
 		maxBytes = 10 * 1024; // 20 Kb
 
 		if (typeof file === 'undefined') {
-			res.badRequest('No avatar file sent when attempting to update user avatar.');
+			return res.badRequest('No avatar file sent when attempting to update user avatar.');
 		}
 
 		utils.uploadFile(file, maxBytes).then(function(uploaded) {
@@ -90,8 +90,8 @@ module.exports = {
 			  return res.serverError(err);
 			})
 			.pipe(res);
-			});
-		}
+		});
+	}
 	
 };
 
