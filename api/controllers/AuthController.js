@@ -70,8 +70,18 @@ var AuthController = {
       var action = req.param('action')
           , flashError = req.flash('error')[0];
 
-      // COMMENT: Here I could resopnd to different actions differently.
-      res.send(401, {error: flashError});
+      // If there's a passport flash error send respond 401 response with that.
+      if (flashError) {
+        res.send(401, {error: flashError});  
+      } 
+      // If there's an AuthorizatoinError, send that.
+      else if (err.name === 'AuthorizationError') {
+        res.send(500, {error: err});
+      } 
+      else {
+        res.negotiate(err);
+      }
+      
     }
 
     passport.callback(req, res, function (err, user) {
