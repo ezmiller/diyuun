@@ -33,6 +33,10 @@ module.exports = {
 	updateAvatar: function(req, res, next) {
 		var file, avatarUrl, maxBytes;
 
+		if (typeof req.user === 'undefined') {
+			return res.serverError('Attempting to update user avatar when user is not logged in.');
+		}
+
 		file = req.file('avatar');
 		avatarUrl = require('util').format('%s/user/%s/avatar', sails.getBaseUrl(), req.user.id);
 		maxBytes = 10 * 1024; // 20 Kb
