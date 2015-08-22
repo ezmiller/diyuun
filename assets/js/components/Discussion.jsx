@@ -129,12 +129,16 @@
 
     getInitialState: function () {
       return {
-        comment: ''
+        comment: '',
+        textAreaHeight: undefined
       };
     },
 
     handleChange: function(e) {
-      this.setState({comment: e.target.value});
+      this.setState({
+        comment: e.target.value,
+        textAreaHeight: this.calculateTextAreaHeight()
+      });
     },
 
     handleKeyDown: function(e) {
@@ -160,18 +164,32 @@
       };
 
       Actions.addComment(comment);
-      this.setState({comment:''});
+      this.setState({comment:'', textAreaHeight: undefined});
+    },
+
+    calculateTextAreaHeight: function() {
+      var textarea = React.findDOMNode(this.refs.text);
+      return textarea.scrollHeight + 'px';
     },
 
     render: function() {
+      
+      var txtStyles = {
+        'height': this.state.textAreaHeight
+      };
+
+      console.log({txtStyles:txtStyles});
+
       return (
         <form className="comment-form" onSubmit={this.handleSubmit}>
           <div className="form-header">
             <span className="form-prompt">Say Something</span>
           </div>
           <div className="fields-wrap">
-            <textarea 
+            <textarea
+              ref="text"
               className="text" 
+              style={txtStyles}
               placeholder="Write your response"
               onChange={this.handleChange}
               value={this.state.comment}></textarea>
