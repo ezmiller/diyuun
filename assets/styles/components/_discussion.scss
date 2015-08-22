@@ -10,6 +10,16 @@
 			font-size: 1.3em;
 		}
 
+		p {
+			word-wrap: break-word; 
+				// TODO: Should eventually use hyphenation attribute here. 
+				// See https://kenneth.io/blog/2012/03/04/word-wrapping-hypernation-using-css/.
+		}
+
+		img {
+			max-width: 95%;
+		}
+
 	}
 
 	.discussion-header {
@@ -89,6 +99,7 @@
 
 		.comment-body {
 			padding: 0 1.5rem;
+			overflow: hidden;
 		}
 
 	}
@@ -123,6 +134,7 @@
 			position: relative;
 			min-height: 7rem;
 			height: auto;
+			width: 95%;
 			margin-left: 1.5rem;
 			margin-right: 1.5rem;
 			margin-bottom: 0;
