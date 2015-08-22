@@ -43,7 +43,11 @@
   	},
 
   	render: function() {
-      var comment, user, date, name, text;
+      var comment, user, date, dateStr, name, text;
+
+      var months = ["January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+      ];
 
       comment = this.props.comment;
       user = comment.user;
@@ -51,14 +55,16 @@
       date = new Date(Date.parse(comment.createdAt));
       text = marked(Helpers.decodeHTMLEntities(comment.text));
 
+
   		return (
   			<article className="comment">
   				<header>
-            <span className="avatar"><i className="fa fa-user"></i></span>
+            <span className="avatar-wrap"><img className="avatar" src={user.avatar} alt="User Avatar" /></span>
             <div className="meta">
               <span className="user">{name}</span><br/>
-              <span className="date">{date.toLocaleDateString()}</span>
+              <span className="user-meta">{user.title}, {user.affiliation}</span>
             </div>
+            <span className="date">{months[date.getMonth()] + ' ' + date.getDay() + ', ' + date.getFullYear()} at {date.getHours() + ':' +date.getSeconds()}</span>
           </header>
   				<div 
             className="comment-body"
@@ -165,15 +171,16 @@
     render: function() {
       return (
         <form className="comment-form" onSubmit={this.handleSubmit}>
-          <div className="avatar-wrap">
-            <span className="avatar"><i className="fa fa-user"></i></span>
+          <div className="form-header">
+            <span className="form-prompt">Say Something</span>
           </div>
-          <div className="comment-fields-wrap">
+          <div className="fields-wrap">
             <textarea 
               className="text" 
+              placeholder="Write your response"
               onChange={this.handleChange}>{this.state.comment}</textarea>
-            <div className="comment-controls-wrap">
-              <button type="submit">Submit</button>
+            <div className="controls-wrap">
+              <button type="submit" className="button outline submit">Post</button>
             </div>
           </div>
         </form>
@@ -209,7 +216,7 @@
       }) : null;
 
   		return (
-	  		<div className="discussion eight columns offset-by-two">
+	  		<div className="discussion">
   				<header className="discussion-header">
   					<h4 className="title">{title}</h4>
   					<div className="meta">

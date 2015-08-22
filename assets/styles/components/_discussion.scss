@@ -1,14 +1,27 @@
 .discussion {
+	@extend .eight;
+	@extend .columns;
+
+	// Text formatting styles that apply to both
+	// the comment body.
+	.comment-body {
+		
+		p, span {
+			font-size: 1.3em;
+		}
+
+	}
 
 	.discussion-header {
 		@include display-flex;
-		@extend .z-depth-1;
-		padding: 1.5rem;
-		border-bottom: solid 1px $divider-color;
+		padding: 1.5rem 0;
+		margin-bottom: 2rem;
 		background-color: #fff;
 
 		.title {
 			@include flex(2);
+			font-size: 2em;
+			font-weight: 900;
 			margin: 0;
 			line-height: 1.05;
 		}
@@ -30,64 +43,77 @@
 	}
 
 	.comment {
-		@extend .z-depth-1;
 		margin-bottom: 1.5em;
-		background-color: #fff;
+		border: solid 1px $light-border-color;
+		border-left: solid 4px $alto;
+		@include border-radius(3px 0 0 3px);
+		background-color: $white;
 
 		header {
-			padding: 1.5rem;
+			margin: 1.5rem;
+			padding-bottom: 1rem;
+			border-bottom: solid 1px $alto;
 
-			.avatar,
+			span, p {
+				font-family: $avenir;
+			}
+
+			.avatar-wrap,
 			.meta {
 				display: inline-block;
 			}
 
-			.avatar {
-				display: inline-block;
-				margin: 1rem 1rem 0 0;
-				padding: 0.2rem 0.8rem;
-				border: solid 1px black;
-	  		border-radius: 2.3rem;
-	  		vertical-align: top;
+			.meta { 
+				vertical-align: top;
+				padding: 0.8rem 1rem;
 
-	  		i {
-	  			font-size: 1.8rem;
-	  		}
+				span.user {
+					font-size: 2rem;
+				}
 
-			}
-
-			.user {
-				font-size: 1.2em;
+				.user-meta span { 
+					font-family: $bembo;
+					font-size: 1.8rem;
+				}
 			}
 
 			.date {
-				color: $lighter-dark-text;
+				display: block;
+				text-transform: uppercase;
+				font-size: 1.1rem;
+				letter-spacing: 0.1rem;
+				color: $silver-chalice;
 			}
 
 		}
 
 		.comment-body {
-			padding: 1.5rem;
+			padding: 0 1.5rem;
 		}
 
 	}
 
 	.comment-form {
-		@extend .z-depth-1;
+		border: solid 1px $light-border-color;
 		margin-bottom: 20rem;
-		background-color: #fff;
+		background-color: $white;
+		border-left: solid 4px $bunting;
+		@include border-radius(2px 0 0 2px);
 		overflow: hidden;
 
-		.avatar-wrap {
-			float: left;
-			width: 7rem;
-			height: 7rem;
-			padding: 0.5rem;
-			border-right: solid 1px $divider-color;
-			// vertical-align: top;
+		.form-header {
+			margin: 0 1.5rem;
+			padding: 2rem 0;
+			border-bottom: solid 1px $alto;
 		}
 
-		.comment-fields-wrap {
+		.form-prompt {
+			font-family: $avenir;
+			font-weight: 700;
+			font-size: 2.2rem;
+		}
+
+		.fields-wrap {
 			min-height: 7rem;
 			overflow: hidden;
 		}
@@ -97,13 +123,28 @@
 			position: relative;
 			min-height: 7rem;
 			height: auto;
+			margin-left: 1.5rem;
+			margin-right: 1.5rem;
 			margin-bottom: 0;
+			padding: 1rem 0;
 			border: 0;
+			font-size: 1.3em;
 			overflow: hidden;
+
+			resize: none;
+
+			&:focus {
+				border: 0;
+			}
 		}
 
-		.comment-controls-wrap {
+		.controls-wrap {
+			margin: 0 1.5rem;
+			float: right;
 
+			button.submit {
+				font-size: 1.5rem;
+			}
 		}
 
 		// .text {
