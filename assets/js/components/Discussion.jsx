@@ -165,7 +165,7 @@
       console.log('CommentForm::handleSubmit: ', comment);
 
       Actions.addComment(comment);
-
+      this.setState({comment:''});
     },
 
     render: function() {
@@ -178,7 +178,8 @@
             <textarea 
               className="text" 
               placeholder="Write your response"
-              onChange={this.handleChange}>{this.state.comment}</textarea>
+              onChange={this.handleChange}
+              value={this.state.comment}></textarea>
             <div className="controls-wrap">
               <button type="submit" className="button outline submit">Post</button>
             </div>
