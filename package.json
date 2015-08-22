@@ -81,6 +81,7 @@
     "reactify": "^1.1.0",
     "should": "^4.6.0",
     "sinon": "^1.12.2",
-    "supertest": "^0.15.0"
+    "supertest": "^0.15.0",
+    "temporary": "0.0.8"
   }
 }
