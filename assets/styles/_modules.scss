@@ -13,9 +13,19 @@ a {
 
   // Gets rid of tap active state
   -webkit-tap-highlight-color: transparent;
+
+  // Fontawesome icons
+  i.fa {
+    color: $silver-chalice;
+  }
+
 }
 a:hover {
-  color: #0FA0CE; 
+  color: #0FA0CE;
+
+  i.fa {
+    color: $mine-shaft;
+  }
 }
 
 /* Buttons
@@ -61,7 +71,13 @@ input[type="button"] {
 
     &:hover {
       color: darken($mine-shaft, 40%);
+      border:none;
     }
+
+    &:active {
+      border: none;
+    }
+    
   }
 
 

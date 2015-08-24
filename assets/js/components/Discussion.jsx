@@ -30,15 +30,79 @@
     smartypants: false
   });
 
-  var Comment = React.createClass({
+  var EditableComment = React.createClass({
+
+    propTypes: {
+      comment: React.PropTypes.object.isRequired,
+      clickHandler: React.PropTypes.func.isRequired
+    },
+
+    getInitialState: function () {
+      return {
+        commentText: this.props.comment.text,
+        textAreaHeight: undefined     
+      };
+    },
+
+    calculateTextAreaHeight: function() {
+      var textarea = React.findDOMNode(this.refs.text);
+      return textarea.scrollHeight + 'px';
+    },
+
+    handleChange: function(e) {
+      this.setState({
+        commentText: e.target.value,
+        textAreaHeight: this.calculateTextAreaHeight()
+      });
+    },
+
+    handleSubmit: function(e) {
+      var updatePayload = {};
+      updatePayload.id = this.props.comment.id;
+      updatePayload.text = this.state.commentText.trim();
+      this.props.clickHandler(e, updatePayload);
+    },
+
+    render: function() {
+
+      var txtStyles = {
+        'height': this.state.textAreaHeight
+      };
+
+      return (
+        <form className="editable-comment">
+          <div className="form-header">
+            <span className="form-prompt">Edit</span>
+          </div>
+          <div className="fields-wrap">
+            <textarea
+              ref="text"
+              className="text" 
+              style={txtStyles}
+              onChange={this.handleChange}
+              value={this.state.commentText}></textarea>
+            <div className="controls-wrap">
+              <button name="cancel" className="button flat cancel" onClick={this.props.clickHandler}>Cancel</button>
+              <button name="submit" className="button outline submit" onClick={this.handleSubmit}>Submit</button>
+            </div>
+          </div>
+        </form>
+      );
+    }
+
+  });
+
+  var DefaultComment = React.createClass({
 
   	propTypes: {
-  		comment: React.PropTypes.object.isRequired
+  		comment: React.PropTypes.object.isRequired,
+      clickHandler: React.PropTypes.func.isRequired
   	},
 
   	getDefaultProps: function () {
 	    return {
-	      comment: null  
+	      comment: null,
+        clickHandler: undefined
 	    };
   	},
 
@@ -54,7 +118,6 @@
       name = user.firstName + ' ' + user.lastName;
       date = new Date(Date.parse(comment.createdAt));
       text = marked(Helpers.decodeHTMLEntities(comment.text));
-
 
   		return (
   			<article className="comment">
@@ -74,6 +137,54 @@
   			</article>
   		);
   	}
+
+  });
+
+  var Comment = React.createClass({
+
+    propTypes: {
+      comment: React.PropTypes.object.isRequired
+    },
+
+    getDefaultProps: function () {
+      return {
+        comment: null  
+      };
+    },
+
+    getInitialState: function () {
+      return {
+        mode: 'default'      
+      };
+    },
+
+    handleClick: function(e, updatePayload) {
+      var target = e.currentTarget.name;
+      console.log('Comment::handleClick():', arguments)
+      e.preventDefault();
+      switch (target) {
+        case 'edit':
+          this.setState({mode: 'edit'});
+          break;
+        case 'submit':
+          Actions.updateComment(updatePayload);
+          this.setState({mode: 'default'});
+          break;
+        case 'cancel':
+          this.setState({mode: 'default'});
+          break;
+      }
+    },
+
+    render: function() {
+
+     return this.state.mode === 'default' ? (
+        <DefaultComment comment={this.props.comment} clickHandler={this.handleClick} />
+      ) : (
+        <EditableComment comment={this.props.comment} clickHandler={this.handleClick} />
+      );
+
+    }
 
   });
 

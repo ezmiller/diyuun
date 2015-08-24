@@ -28,6 +28,7 @@
       DiscussionConstants.getDiscussions,
       DiscussionConstants.getDiscussionsForSource,
       DiscussionConstants.addComment,
+      DiscussionConstants.updateComment,
       
       ],
       function(name){

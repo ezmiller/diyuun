@@ -17,13 +17,13 @@
 
 	var Comment = Backbone.Model.extend({
 
-		url: '/comments',
+		url: function() {
+			return '/comments/' + this.id;
+		},
 
 		defaults: {
-			user: '',
+			id:'',
 			text: '',
-			discussions: [],
-			sources: []
 		}
 
 	});
@@ -98,6 +98,26 @@
 			});
 
 			return;
+
+		},
+
+		updateComment: function(update) {
+			var comment;
+
+			console.log('DiscussionStore::updateComment():', arguments);
+
+			comment = new Comment;
+			comment.set(update)
+
+			comment.sync('update', comment, {
+				success: function(comment) {
+					this.getDiscussions(comment.discussions[0].id);
+				}.bind(this),
+				error: function(x,y) {
+					// TODO: Setup error handling for update comment.
+				}.bind(this)
+			});
+			
 
 		},
 
@@ -182,6 +202,9 @@
 				break;
 			case DiscussionConstants.addComment:
 				DiscussionStore.addComment(action.payload);
+				break;
+			case DiscussionConstants.updateComment:
+				DiscussionStore.updateComment(action.payload);
 				break;
 		}
 

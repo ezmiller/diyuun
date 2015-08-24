@@ -1,6 +1,7 @@
 .discussion {
 	@extend .eight;
 	@extend .columns;
+	padding-bottom: 20rem;
 
 	// Text formatting styles that apply to both
 	// the comment body.
@@ -60,6 +61,7 @@
 		background-color: $white;
 
 		header {
+			position:relative;
 			margin: 1.5rem;
 			padding-bottom: 1rem;
 			border-bottom: solid 1px $alto;
@@ -95,6 +97,17 @@
 				color: $silver-chalice;
 			}
 
+			.controls {
+				position: absolute;
+				top: 0;
+				right: 0;
+
+				a {
+					margin-left: 1rem;
+				}
+
+			}
+
 		}
 
 		.comment-body {
@@ -104,9 +117,9 @@
 
 	}
 
-	.comment-form {
+	.comment-form,
+	.editable-comment {
 		border: solid 1px $light-border-color;
-		margin-bottom: 20rem;
 		background-color: $white;
 		border-left: solid 4px $bunting;
 		@include border-radius(2px 0 0 2px);
@@ -154,9 +167,10 @@
 			margin: 0 1.5rem;
 			float: right;
 
-			button.submit {
+			button {
 				font-size: 1.5rem;
 			}
+			
 		}
 
 		// .text {
