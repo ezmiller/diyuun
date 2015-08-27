@@ -80,8 +80,7 @@ describe("UserController Tests", function(done) {
 					result = res.body;
 					return done();
 				});
-			}
-		}
+			});
 		// TODO: Write additional test to check that it is returning a binary data stream.
 	});
 
