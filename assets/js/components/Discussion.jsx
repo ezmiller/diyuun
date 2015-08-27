@@ -44,6 +44,10 @@
       };
     },
 
+    componentDidMount: function () {
+      this.setState({textAreaHeight: this.calculateTextAreaHeight()});
+    },
+
     calculateTextAreaHeight: function() {
       var textarea = React.findDOMNode(this.refs.text);
       return textarea.scrollHeight + 'px';
