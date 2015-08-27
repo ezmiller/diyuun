@@ -258,6 +258,7 @@
 
     getInitialState: function () {
       return {
+        mode: 'edit',
         comment: '',
         textAreaHeight: undefined
       };
@@ -301,11 +302,45 @@
       return textarea.scrollHeight + 'px';
     },
 
+    getNextMode: function() {
+      return this.state.mode === 'edit' ? 'preview' : 'edit';
+    },
+
+    toggleMode: function(e) {
+      e.preventDefault();
+      this.setState({mode: this.state.mode === 'edit' ? 'preview' : 'edit'});
+    },
+
     render: function() {
       
       var txtStyles = {
         'height': this.state.textAreaHeight
       };
+
+      var txtInputArea = this.state.mode === 'edit' ? (
+        <textarea
+              ref="text"
+              className="text" 
+              style={txtStyles}
+              placeholder="Write your response"
+              onChange={this.handleChange}
+              value={this.state.comment}></textarea>
+      ) : (
+        <div 
+          className="text" 
+          dangerouslySetInnerHTML={{__html: marked(this.state.comment)}}></div>
+      );
+
+      var controls = this.state.mode === 'edit' ? (
+        <div className="controls-wrap">
+          <button className="button flat preview" onClick={this.toggleMode}>{this.getNextMode()}</button>
+          <button type="submit" className="button outline submit">Post</button>
+        </div>
+      ) : (
+        <div className="controls-wrap">
+          <button className="button flat preview" onClick={this.toggleMode}>{this.getNextMode()}</button>
+        </div>
+      );
 
       return (
         <form className="comment-form" onSubmit={this.handleSubmit}>
@@ -313,16 +348,8 @@
             <span className="form-prompt">Say Something</span>
           </div>
           <div className="fields-wrap">
-            <textarea
-              ref="text"
-              className="text" 
-              style={txtStyles}
-              placeholder="Write your response"
-              onChange={this.handleChange}
-              value={this.state.comment}></textarea>
-            <div className="controls-wrap">
-              <button type="submit" className="button outline submit">Post</button>
-            </div>
+            {txtInputArea}
+            {controls}
           </div>
         </form>
       );
