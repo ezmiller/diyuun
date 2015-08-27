@@ -18,12 +18,12 @@
 	var Comment = Backbone.Model.extend({
 
 		url: function() {
-			return '/comments/' + this.id;
+			return this.id !== undefined ? '/comments/' + this.id : '/comments';
 		},
 
 		defaults: {
-			id:'',
-			text: '',
+			id: undefined,
+			text: undefined,
 		}
 
 	});
