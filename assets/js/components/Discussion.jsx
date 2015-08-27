@@ -176,7 +176,6 @@
 
     handleClick: function(e, payload) {
       var target = e.currentTarget.name;
-      console.log('Comment::handleClick():', arguments)
       e.preventDefault();
       switch (target) {
         case 'delete':
@@ -307,8 +306,6 @@
       var txtStyles = {
         'height': this.state.textAreaHeight
       };
-
-      console.log({txtStyles:txtStyles});
 
       return (
         <form className="comment-form" onSubmit={this.handleSubmit}>
