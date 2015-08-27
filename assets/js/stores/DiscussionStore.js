@@ -121,6 +121,24 @@
 
 		},
 
+		deleteComment: function(commentId) {
+			var comment;
+
+			console.log('DiscussionStore::deleteComment():', arguments);
+
+			comment = new Comment;
+			comment.set('id', commentId);
+			comment.destroy({
+				success: function(model, res) {
+					this.getDiscussions(res.discussions[0].id);
+				}.bind(this),
+				error: function(model, err) {
+					console.log(err);
+				}
+			});
+
+		},
+
 		getDiscussions: function(discussionIds) {
 			var self;
 
@@ -205,6 +223,9 @@
 				break;
 			case DiscussionConstants.updateComment:
 				DiscussionStore.updateComment(action.payload);
+				break;
+			case DiscussionConstants.deleteComment:
+				DiscussionStore.deleteComment(action.payload);
 				break;
 		}
 

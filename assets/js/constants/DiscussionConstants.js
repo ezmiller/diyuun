@@ -13,6 +13,7 @@
 		getDiscussionsForSource: null,
 		addComment: null,
 		updateComment: null,
+		deleteComment: null,
 	});
 
 	module.exports = DiscussionConstants;

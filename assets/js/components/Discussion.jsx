@@ -106,6 +106,10 @@
 	    };
   	},
 
+    handleDeleteClick: function(e) {
+      this.props.clickHandler(e, this.props.comment.id)
+    },
+
   	render: function() {
       var comment, user, date, dateStr, name, text;
 
@@ -128,6 +132,14 @@
               <span className="user-meta">{user.title}, {user.affiliation}</span>
             </div>
             <span className="date">{months[date.getMonth()] + ' ' + date.getDay() + ', ' + date.getFullYear()} at {date.getHours() + ':' +date.getSeconds()}</span>
+            <div className="controls">
+              <a href="#" name="edit" className="comment-edit-button" onClick={this.props.clickHandler}>
+                <i name="edit" className="fa fa-pencil"></i>
+              </a>
+              <a href="#" name="delete" className="comment-delete-button" onClick={this.handleDeleteClick}>
+                <i className="fa fa-times"></i>
+              </a>
+            </div>
           </header>
   				<div 
             className="comment-body"
@@ -158,16 +170,19 @@
       };
     },
 
-    handleClick: function(e, updatePayload) {
+    handleClick: function(e, payload) {
       var target = e.currentTarget.name;
       console.log('Comment::handleClick():', arguments)
       e.preventDefault();
       switch (target) {
+        case 'delete':
+          Actions.deleteComment(payload);
+          break;
         case 'edit':
           this.setState({mode: 'edit'});
           break;
         case 'submit':
-          Actions.updateComment(updatePayload);
+          Actions.updateComment(payload);
           this.setState({mode: 'default'});
           break;
         case 'cancel':
