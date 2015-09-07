@@ -112,26 +112,45 @@
     	});
     });
 
+    describe('try to create a comment with nonexistent user', function(done) {
+      it('should return 400', function(done) {
+        request(sails.hooks.http.app)
+          .post('/comments')
+          .send(generateTestComment('00000099999', true, [testDiscussion.id]))
+          .expect(400, done);
+      });
+    });
+
     describe('try to create a valid comment', function() {
+      it('test user exists', function(done) {
+        request(sails.hooks.http.app)
+          .get('/users/'+testUser.id)
+          .expect(200,done);
+      });
+
     	it('should return 200', function(done) {
-    		console.log({testDiscussion:testDiscussion});
     		request(sails.hooks.http.app)
           .post('/comments')
-          .send(generateTestComment(true, true, [testDiscussion.id]))
+          .send(generateTestComment(testUser.id, true, [testDiscussion.id]))
           .expect(200)
           .end(function(err,res) {
-          	console.log(res.body);
-          	done(err);
+            if (res.body.error === 'E_VALIDATION') {
+              return done(new Error(res.body.summary));
+            }
+            else if (err) {
+              return done(err);
+            }
+          	return done(err);
           });
     	});
     });
 
   });
 
-	function generateTestComment(hasUser, hasText, hasDiscussions) {
+	function generateTestComment(hasUser, hasText, hasDiscussions, hasAtReference) {
 		var comment = {};
 
-		comment.user = hasUser ? hasUser : '';
+		comment.user = typeof hasUser === 'string' ? hasUser: null; 
 		comment.discussions = hasDiscussions ? hasDiscussions : '';
 		if (hasText) comment.text = (typeof hasText === 'string') ? hasText : chance.paragraph();
 
