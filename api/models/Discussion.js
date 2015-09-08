@@ -16,6 +16,10 @@ module.exports = {
       collection: 'user',
       via: 'discussions'
     },
+    followers: {
+      collection: 'user',
+      via: 'followedDiscussions'
+    },
   	comments: {
   		collection: 'comment',
   		via: 'discussions'

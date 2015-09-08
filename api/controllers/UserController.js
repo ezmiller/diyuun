@@ -17,6 +17,7 @@ module.exports = {
 		.findOne(req.param('id'))
 		.populate('discussions')
 		.populate('recommendations')
+		.populate('followedDiscussions')
 		.then(function(found) {
 			res.send(found);
 		})
@@ -91,6 +92,99 @@ module.exports = {
 			})
 			.pipe(res);
 		});
+	},
+
+	/**
+	 * Sets a follow discussion on the specified user.
+	 *
+	 * (GET /user/:userId/follow/discussion/:discussionId)
+	 */
+	followDiscussion: function(req, res) {
+		var userId, discussionId;
+
+		userId = req.param('userId');
+		discussionId = req.param('discussionId');
+
+		Promise.all([
+			utils.userExists(userId),
+			utils.discussionExists(discussionId)
+		]).then(function(results) {
+			
+			if (_.some(results, function(v) { return v == false })) {
+				return res.badRequest('Invalid request: either the user or discussion does not exist.');
+			}
+
+			return User.findOne(userId)
+				.populate('followedDiscussions')
+				.then(function(found) {
+					return found;
+				}).catch(function(err) { throw err; });
+
+		}).then(function(user) {
+
+			user.followedDiscussions.push(discussionId);
+
+			User.update(userId, {'followedDiscussions': user.followedDiscussions})
+				.then(function(success) {
+					
+					if (_.isEmpty(success)) {
+						throw new Error('Something went wrong while trying to set a follow discussion on user.');
+					}
+
+					return res.ok();
+
+				}).catch(function(err) { throw err; });
+
+		}).catch(res.negotiate);
+
+	},
+
+	/**
+	 * Removes a follow discussion on the specified user.
+	 *
+	 * (GET /user/:userId/unfollow/discussion/:discussionId)
+	 */
+	unfollowDiscussion: function(req, res) {
+		var userId, discussionId;
+
+		userId = req.param('userId');
+		discussionId = req.param('discussionId');
+
+		Promise.all([
+			utils.userExists(userId),
+			utils.discussionExists(discussionId)
+		]).then(function(results) {
+
+			if (_.some(results, function(v) { return v == false })) {
+				return res.badRequest('Invalid request: either the user or discussion does not exist.');
+			}
+
+		}).then(function() {
+
+			return User.findOne(userId)
+				.populate('followedDiscussions')
+				.then(function(found) {
+					return found.followedDiscussions;
+				}).catch(function(err) { throw err; });
+
+		}).then(function(followedDiscussions) {
+
+			var newFollowed = followedDiscussions.filter(function(v) {
+				return v.id != discussionId;
+			});
+
+			User.update(userId, {'followedDiscussions': newFollowed})
+				.then(function(success) {
+					
+					if (_.isEmpty(success)) {
+						throw new Error('Something went wrong while trying to set a follow discussion on user.');
+					}
+
+					return res.ok();
+
+				}).catch(function(err) { throw err; });
+
+		}).catch(res.negotiate);
 	}
 	
 };

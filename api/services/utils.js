@@ -12,6 +12,17 @@ module.exports = {
       })
     ).catch(function(err) { throw err; });
   },
+
+  /**
+   * Returns a promise that returns true if the discussion exists.
+   */
+  discussionExists: function(discussionId) {
+    return Promise.resolve(
+      Discussion.findOne(discussionId).then(function(found) {
+        return typeof found !== 'undefined' ? true : false;
+      })
+    ).catch(function(err) { throw err; });
+  },
 	/**
 	 * Takes an array of source objects and returns a promise
 	 * that adds any sources not yet in the local sources database.

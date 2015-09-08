@@ -66,8 +66,10 @@ module.exports.routes = {
   // Account
   'GET /account': 'IndexController.index',
 
-  // Avatars
+  // Users
   'POST /user/avatar': 'UserController.updateAvatar',
-  'GET  /user/:id/avatar': 'UserController.avatar',
+  'GET /user/:id/avatar': 'UserController.avatar',
+  'GET /user/:userId/follow/discussion/:discussionId': 'UserController.followDiscussion',
+  'GET /user/:userId/unfollow/discussion/:discussionId': 'UserController.unfollowDiscussion'
 
 };
