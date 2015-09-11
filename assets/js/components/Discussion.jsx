@@ -4,6 +4,10 @@
 (function() {
   'use strict';
 
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var classNames = require('classnames');
+
   // React
   var React = require('react');
 
@@ -370,27 +374,61 @@
 	    };
   	},
 
+    isFollowed: function() {
+      var id = this.props.discussions.value[0] ? this.props.discussions.value[0].id : null;
+      var followed = _.pluck(this.props.user.value.followedDiscussions, 'id');
+      return followed.some(function(v) { return id == v });
+    },
+
+    handleClick: function(e) {
+      var userId, discussionId, followOrUnFollow;
+
+      e.preventDefault();
+
+      switch (e.target.id) {
+        case 'bookmark':   
+          userId = this.props.user.value.id;
+          discussionId = this.props.discussions.value[0].id;
+          followOrUnFollow = this.isFollowed() ? 'unfollow' : 'follow';
+          $.get('/user/' + userId + '/' + followOrUnFollow + '/discussion/' + discussionId)
+            .done(function(data) {
+              Actions.refreshCurrentUser();
+            })
+            .fail(function(jqXhr) {
+              console.log(jqXhr);
+            });
+          break;
+      }
+    },
+
   	render: function() {
-  		var discussion, id, title, privacy, comments;
+  		var discussion, id, title, privacy, comments, followed, followClasses;
 
   		discussion = this.props.discussions.value ? this.props.discussions.value[0] : null;
       id = discussion ? discussion.get('id') : null;
   		title = discussion ? discussion.get('title') : null;
   		privacy = discussion ? discussion.get('private') : null;
 
-
       comments = discussion ? discussion.get('comments').map(function(comment, i) {
         return <Comment key={i} comment={comment} />;
       }) : null;
 
+      followed = this.isFollowed();
+      followClasses = classNames('fa', {
+        'fa-bookmark': followed, 
+        'fa-bookmark-o': !followed
+      });
+
   		return (
 	  		<div className="discussion">
   				<header className="discussion-header">
-  					<h4 className="title">{title}</h4>
-  					<div className="meta">
-  						<span className="privacy-icon"><i className={privacy ? 'fa fa-lock' : 'fa fa-unlock'}></i></span>
-  						<span className="privacy-label">{privacy ? 'Private' : 'Public'} Discussion</span>
-  					</div>
+            <div className="discussion-title-wrap">
+              <span className="privacy-label">{privacy ? 'Private Discussion' : 'Public Discussion'}</span>
+    					<h4 className="title">{title}</h4>
+            </div>
+            <div className="discussion-meta">
+              <i id="bookmark" className={followClasses} onClick={this.handleClick}></i>
+            </div>
   				</header>
           {comments}
           <CommentForm user={this.props.user} discussionId={id} />

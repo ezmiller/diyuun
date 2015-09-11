@@ -42,6 +42,7 @@
 			avatarFd: '',
 			recommendations: [],
   		discussions: [],
+  		followedDiscussions: []
 		},
 
 		dispatcherToken: null,
@@ -80,10 +81,10 @@
 			}.bind(this));
 		},
 
-		refeshCurrentUser: function() {
-			return this.fetch({
-				url: '/authorized'
-			});
+		refreshCurrentUser: function() {
+			return this.fetch({url: '/authorized'}).done(function(data) {
+				this.trigger(UPDATE, this.toJSON());
+			}.bind(this));
 		},
 
 		getCurrentUser: function() {
@@ -170,6 +171,9 @@
 				break;
 			case AuthConstants.updateCurrentUserAvatar:
 				AuthStore.updateAvatar(action.payload);
+				break;
+			case AuthConstants.refreshCurrentUser:
+				AuthStore.refreshCurrentUser();
 				break;
 		}
 	}

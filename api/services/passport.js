@@ -367,7 +367,7 @@ passport.serializeUser(function (user, next) {
 
 passport.deserializeUser(function (id, next) {
   console.log('PassportService::deserializeUser() called with id:', id);
-  User.findOne(id, next);
+  User.findOne(id).populate('followedDiscussions').exec(next);
 });
 
 module.exports = passport;

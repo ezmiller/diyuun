@@ -18,6 +18,7 @@
       // Authorization
       AuthConstants.updateCurrentUser,
       AuthConstants.updateCurrentUserAvatar,
+      AuthConstants.refreshCurrentUser,
 
       // Sources
       SourceConstants.getSource,

@@ -14,6 +14,8 @@
 		addComment: null,
 		updateComment: null,
 		deleteComment: null,
+		followDiscussion: null,
+		unfollowDiscussion: null
 	});
 
 	module.exports = DiscussionConstants;

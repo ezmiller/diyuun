@@ -28,6 +28,18 @@ a:hover {
   }
 }
 
+i.fa {
+  color: $silver-chalice;
+}
+
+i.fa:hover {
+  color: $mine-shaft;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
 /* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 

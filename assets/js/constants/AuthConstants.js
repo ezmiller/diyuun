@@ -9,6 +9,7 @@
 	var AuthConstants = keyMirror({
 		updateCurrentUser: null,
 		updateCurrentUserAvatar: null,
+		refreshCurrentUser: null,
 	});
 
 	module.exports = AuthConstants;
