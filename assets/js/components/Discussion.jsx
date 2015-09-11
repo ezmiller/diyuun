@@ -1,5 +1,7 @@
 /**
  * Discussion
+ *
+ * //TODO: The EditableComment and the CommentForm can probably be merged to avoid duplicate code.
  */
 (function() {
   'use strict';
@@ -43,6 +45,7 @@
 
     getInitialState: function () {
       return {
+        mode: 'default',
         commentText: this.props.comment.text,
         textAreaHeight: undefined     
       };
@@ -71,11 +74,41 @@
       this.props.clickHandler(e, updatePayload);
     },
 
+    handlePreviewToggle: function(e) {
+      e.preventDefault();
+      this.setState({mode: this.state.mode ==='default' ? 'preview' : 'default'});
+    },
+
     render: function() {
 
       var txtStyles = {
         'height': this.state.textAreaHeight
       };
+
+      var contentArea = this.state.mode === 'default' ? (
+        <textarea
+          ref="text"
+          className="text" 
+          style={txtStyles}
+          onChange={this.handleChange}
+          value={this.state.commentText}></textarea>
+      ) : (
+        <div 
+          className="text" 
+          dangerouslySetInnerHTML={{__html: marked(this.state.commentText)}}></div>
+      );
+
+      var controls = this.state.mode === 'default' ? (
+        <div className="controls-wrap">
+          <button name="cancel" className="button flat cancel" onClick={this.props.clickHandler}>Cancel</button>
+          <button name="cancel" className="button flat preview" onClick={this.handlePreviewToggle}>Preview</button>
+          <button name="submit" className="button outline submit" onClick={this.handleSubmit}>Submit</button>
+        </div>
+      ) : (
+        <div className="controls-wrap">
+          <button name="edit" className="button flat edit" onClick={this.handlePreviewToggle}>Edit</button>
+        </div>
+      );
 
       return (
         <form className="editable-comment">
@@ -83,16 +116,8 @@
             <span className="form-prompt">Edit</span>
           </div>
           <div className="fields-wrap">
-            <textarea
-              ref="text"
-              className="text" 
-              style={txtStyles}
-              onChange={this.handleChange}
-              value={this.state.commentText}></textarea>
-            <div className="controls-wrap">
-              <button name="cancel" className="button flat cancel" onClick={this.props.clickHandler}>Cancel</button>
-              <button name="submit" className="button outline submit" onClick={this.handleSubmit}>Submit</button>
-            </div>
+            {contentArea}
+            {controls}
           </div>
         </form>
       );
