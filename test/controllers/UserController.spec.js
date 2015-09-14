@@ -28,17 +28,35 @@ describe("UserController Tests", function(done) {
 
 		it('register user', registerUser(testUser));
 
-		it('should return 200', function(done) {
+		it('get by username should return 200', function(done) {
 			server
-				.get('/users?username=' + testUser.username)
+				.get('/user?username=' + testUser.username)
 				.expect(200)
 				.end(function(err, res) {
-					var user = res.body[0];
+					var user = res.body;
 					if (err) return done(err);
 					user.password = testUser.password;
 					testUser = user;
 					return done();
 				});
+		});
+
+		it('user object is valid', function(done) {
+			testUser.should.have.properties([
+				'id',
+				'role',
+				'email',
+				'username',
+				'firstName',
+				'lastName',
+				'title',
+				'affiliation',
+				'discussions',
+				'followedDiscussions',
+				'avatar'
+			]);
+			testUser.should.not.have.properties(['passports']);
+			done();
 		});
 
   });

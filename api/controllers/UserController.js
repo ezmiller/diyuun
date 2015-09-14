@@ -13,12 +13,24 @@ module.exports = {
 	 * (GET /users/:id)
 	 */
 	findOne: function(req, res, next) {
+		var id, username, queryTerm;
+
+		id = req.param('id');
+		username = req.param('username');
+
+		if (typeof id == 'undefine' || username == 'undefined') {
+			return res.badRequest('Invalid parameters: no user id or username supplied when trying to get user.');
+		}
+
+		queryTerm = typeof id == 'undefined' ? {'username': username} : id;
+
 		User
-		.findOne(req.param('id'))
+		.findOne(queryTerm)
 		.populate('discussions')
 		.populate('recommendations')
 		.populate('followedDiscussions')
 		.then(function(found) {
+			delete found.passports;
 			res.send(found);
 		})
 		.catch(function(err) {
