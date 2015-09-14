@@ -249,44 +249,6 @@
 
   });
 
-  var ContentEditable = React.createClass({
-
-    shouldComponentUpdate: function(nextProps){
-      return nextProps.html !== this.getDOMNode().innerHTML;
-    },
-
-    componentDidUpdate: function() {
-      if ( this.props.html !== this.getDOMNode().innerHTML ) {
-         this.getDOMNode().innerHTML = this.props.html;
-      }
-    },
-
-    emitChange: function(){
-      var html = this.getDOMNode().innerHTML;
-      if (this.props.onChange && html !== this.lastHtml) {
-          this.props.onChange({
-              target: {
-                  value: html
-              }
-          });
-      }
-      this.lastHtml = html;
-    },
-
-    render: function() {
-      return <div 
-              className={this.props.className}
-              id="contenteditable"
-              onKeyDown={this.handleKeyDown}
-              onChange={this.handleChange}
-              onInput={this.emitChange}
-              onBlur={this.emitChange}
-              contentEditable
-              dangerouslySetInnerHTML={{__html: this.props.html}}></div>;
-    }
-
-  });
-
   var CommentForm = React.createClass({
 
     propTypes: {
