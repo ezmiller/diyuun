@@ -40,7 +40,7 @@
 
     propTypes: {
       comment: React.PropTypes.object.isRequired,
-      clickHandler: React.PropTypes.func.isRequired
+      clickHandler: React.PropTypes.func.isRequired,
     },
 
     getInitialState: function () {
@@ -129,13 +129,15 @@
 
   	propTypes: {
   		comment: React.PropTypes.object.isRequired,
-      clickHandler: React.PropTypes.func.isRequired
+      clickHandler: React.PropTypes.func.isRequired,
+      owned: React.PropTypes.bool.isRequired
   	},
 
   	getDefaultProps: function () {
 	    return {
 	      comment: null,
-        clickHandler: undefined
+        clickHandler: undefined,
+        owned: false
 	    };
   	},
 
@@ -144,7 +146,7 @@
     },
 
   	render: function() {
-      var comment, user, date, dateStr, name, text;
+      var comment, user, date, dateStr, name, text, owned;
 
       var months = ["January", "February", "March", "April", "May", "June", 
         "July", "August", "September", "October", "November", "December"
@@ -155,6 +157,7 @@
       name = user.firstName + ' ' + user.lastName;
       date = new Date(Date.parse(comment.createdAt));
       text = marked(Helpers.decodeHTMLEntities(comment.text));
+      owned = this.props.owned;
 
   		return (
   			<article className="comment">
@@ -166,10 +169,19 @@
             </div>
             <span className="date">{months[date.getMonth()] + ' ' + date.getDay() + ', ' + date.getFullYear()} at {date.getHours() + ':' +date.getSeconds()}</span>
             <div className="controls">
-              <a href="#" name="edit" className="comment-edit-button" onClick={this.props.clickHandler}>
+              <a 
+                href="#" 
+                name="edit" 
+                className="comment-edit-button" 
+                style={{display: owned == true ? 'initial' : 'none'}}
+                onClick={this.props.clickHandler}>
                 <i name="edit" className="fa fa-pencil"></i>
               </a>
-              <a href="#" name="delete" className="comment-delete-button" onClick={this.handleDeleteClick}>
+              <a 
+                href="#" name="delete" 
+                className="comment-delete-button" 
+                style={{display: owned == true ? 'initial' : 'none'}} 
+                onClick={this.handleDeleteClick}>
                 <i className="fa fa-times"></i>
               </a>
             </div>
@@ -188,12 +200,14 @@
   var Comment = React.createClass({
 
     propTypes: {
-      comment: React.PropTypes.object.isRequired
+      comment: React.PropTypes.object.isRequired,
+      owned: React.PropTypes.bool.isRequired
     },
 
     getDefaultProps: function () {
       return {
-        comment: null  
+        comment: null,
+        owned: false
       };
     },
 
@@ -226,7 +240,7 @@
     render: function() {
 
      return this.state.mode === 'default' ? (
-        <DefaultComment comment={this.props.comment} clickHandler={this.handleClick} />
+        <DefaultComment comment={this.props.comment} clickHandler={this.handleClick} owned={this.props.owned} />
       ) : (
         <EditableComment comment={this.props.comment} clickHandler={this.handleClick} />
       );
@@ -405,6 +419,11 @@
       return followed.some(function(v) { return id == v });
     },
 
+    commentOwnedByUser: function(comment) {
+      var currUserId = this.props.user.value.id;
+      return comment.user.id === currUserId;
+    },
+
     handleClick: function(e) {
       var userId, discussionId, followOrUnFollow;
 
@@ -435,8 +454,8 @@
   		privacy = discussion ? discussion.get('private') : null;
 
       comments = discussion ? discussion.get('comments').map(function(comment, i) {
-        return <Comment key={i} comment={comment} />;
-      }) : null;
+        return <Comment key={i} comment={comment} owned={this.commentOwnedByUser(comment)} />;
+      }.bind(this)) : null;
 
       followed = this.isFollowed();
       followClasses = classNames('fa', {
