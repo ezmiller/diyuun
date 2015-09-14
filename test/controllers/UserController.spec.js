@@ -180,6 +180,10 @@ describe("UserController Tests", function(done) {
 
 	});
 
+	// TODO: Write a test to validate avatar download.
+	// Had trouble getting this working. See this stackoverflow:
+	// https://stackoverflow.com/questions/32155688/how-do-i-write-a-test-for-a-binary-download-using-mocha-and-should-js-with-sails
+	// 
 	// describe('try to download a user avatar', function() {
 	// 	var download;
 	// 	it('should return 200', function(done) {
