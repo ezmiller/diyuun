@@ -51,6 +51,7 @@ describe("UserController Tests", function(done) {
 				'lastName',
 				'title',
 				'affiliation',
+				'discipline',
 				'discussions',
 				'followedDiscussions',
 				'avatar'
