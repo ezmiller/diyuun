@@ -27,8 +27,8 @@ module.exports = {
 			title: title,
 			prompt: prompt,
 			owner: owner,
-			private: isPrivate,
-			visible: isVisible
+			isPrivate: isPrivate,
+			isVisible: isVisible
 		};
 
 		function handleError(err) {

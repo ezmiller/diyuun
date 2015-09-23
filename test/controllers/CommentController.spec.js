@@ -32,8 +32,8 @@
       owner: '',
       title: chance.sentence({words: 3}),
       prompt:chance.sentence({words: 4}),
-      private: true,
-      visible: false
+      isPrivate: true,
+      isVisible: false
     };
 
     before(function() {

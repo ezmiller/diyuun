@@ -28,11 +28,11 @@ module.exports = {
       collection: 'source',
       via: 'discussions'
     },
-    private: {
+    isPrivate: {
       type: 'boolean',
       required: true
     },
-    visible: {
+    isVisible: {
       type: 'boolean',
       required: true
     },
