@@ -14,6 +14,17 @@ module.exports = {
   },
 
   /**
+   * Returns a promise that return strue if comment exists
+   */
+  commentExists: function(commentId) {
+    return Promise.resolve(
+      Comment.findOne(commentId).then(function(found) {
+        return typeof found !== 'undefined' ? true : false;
+      })
+    ).catch(function(err) { throw err; });
+  },
+
+  /**
    * Returns a promise that returns true if the discussion exists.
    */
   discussionExists: function(discussionId) {

@@ -67,9 +67,12 @@ module.exports.routes = {
   'GET /account': 'IndexController.index',
 
   // Users
+  'GET /user': 'UserController.findOne',
   'POST /user/avatar': 'UserController.updateAvatar',
   'GET /user/:id/avatar': 'UserController.avatar',
   'GET /user/:userId/follow/discussion/:discussionId': 'UserController.followDiscussion',
-  'GET /user/:userId/unfollow/discussion/:discussionId': 'UserController.unfollowDiscussion'
+  'GET /user/:userId/unfollow/discussion/:discussionId': 'UserController.unfollowDiscussion',
+  'GET /user/:userId/like/comment/:commentId': 'UserController.likeComment',
+  'GET /user/:userId/unlike/comment/:commentId': 'UserController.unlikeComment'
 
 };

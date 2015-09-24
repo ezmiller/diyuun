@@ -25,7 +25,11 @@ module.exports = {
   	sources: {
   		collection: 'source',
   		via: 'comments'
-  	}
+  	},
+    likes: {
+      collection: 'user',
+      via: 'likedComments'
+    }
 
   },
 

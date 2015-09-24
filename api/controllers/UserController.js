@@ -29,6 +29,7 @@ module.exports = {
 		.populate('discussions')
 		.populate('recommendations')
 		.populate('followedDiscussions')
+		.populate('likedComments')
 		.then(function(found) {
 			delete found.passports;
 			res.send(found);
@@ -190,6 +191,90 @@ module.exports = {
 					
 					if (_.isEmpty(success)) {
 						throw new Error('Something went wrong while trying to set a follow discussion on user.');
+					}
+
+					return res.ok();
+
+				}).catch(function(err) { throw err; });
+
+		}).catch(res.negotiate);
+	},
+
+	likeComment: function(req, res, next) {
+		var userId, commentId;
+
+		console.log('UserController:likeComment():', req.params.all());
+
+		userId = req.param('userId');
+		commentId = req.param('commentId');
+
+		Promise.all([
+			utils.userExists(userId),
+			utils.commentExists(commentId)
+		]).then(function(results) {
+			
+			if (_.some(results, function(v) { return v == false })) {
+				return res.badRequest('Invalid request: either the user or discussion does not exist.');
+			}
+
+			return User.findOne(userId)
+				.populate('likedComments')
+				.then(function(found) {
+					return found;
+				}).catch(function(err) { throw err; });
+
+		}).then(function(user) {
+
+			user.likedComments.push(commentId);
+
+			User.update(userId, {'likedComments': user.likedComments})
+				.then(function(success) {
+					
+					if (_.isEmpty(success)) {
+						throw new Error('Something went wrong while trying to set a follow comment on user.');
+					}
+
+					return res.ok();
+
+				}).catch(function(err) { throw err; });
+
+		}).catch(res.negotiate);
+	},
+
+	unlikeComment: function(req, res, next) {
+		var userId, commentId;
+
+		console.log('UserController:unlikeComment():', req.params.all());
+
+		userId = req.param('userId');
+		commentId = req.param('commentId');
+
+		Promise.all([
+			utils.userExists(userId),
+			utils.commentExists(commentId)
+		]).then(function(results) {
+			
+			if (_.some(results, function(v) { return v == false })) {
+				return res.badRequest('Invalid request: either the user or discussion does not exist.');
+			}
+
+			return User.findOne(userId)
+				.populate('likedComments')
+				.then(function(found) {
+					return found;
+				}).catch(function(err) { throw err; });
+
+		}).then(function(user) {
+
+			var newLiked = user.likedComments.filter(function(v) {
+				return v.id != commentId;
+			});
+
+			User.update(userId, {'likedComments': newLiked})
+				.then(function(success) {
+					
+					if (_.isEmpty(success)) {
+						throw new Error('Something went wrong while trying to set a follow comment on user.');
 					}
 
 					return res.ok();

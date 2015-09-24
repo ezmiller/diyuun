@@ -71,6 +71,10 @@ module.exports = {
         followedDiscussions: {
             collection: 'discussion',
             via: 'followers'
+        },
+        likedComments: {
+            collection: 'comment',
+            via: 'likes'
         }
     },
 
