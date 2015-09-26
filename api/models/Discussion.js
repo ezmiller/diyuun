@@ -46,7 +46,8 @@ module.exports = {
     },
     updatedAt: {
       type: 'datetime',
-      defaultsTo: function() { return new Date(); }
+      defaultsTo: function() { return new Date(); },
+      required: true
     }
   }
 };

@@ -62,42 +62,65 @@ module.exports = {
 
 	},
 
+	/**
+	 * Get a discussion.
+	 *
+	 * (GET /discussions/:id)
+	 */
 	findOne: function(req, res, next) {
 
 		console.log('DiscussionController::findOne() ', req.params.all());
 
 		Discussion
-			.find(req.param('id'))
+			.findOne(req.param('id'))
 			.populate('comments')
-			.then(function(found) {
+			.populate('sources')
+			.then(function(foundDiscussion) {
 
-				if (_.isEmpty(found)) {
+				if (_.isEmpty(foundDiscussion)) {
 					throw CustomErrors.createRecordNotFoundError('Unable to find discussion.');
 				}
 
-				return _.first(found);
+				console.log({foundDiscussion:foundDiscussion});
+
+				return foundDiscussion;
 
 			})
-			.then(function(found) {
-		
-				Promise.all(found.comments.map(function(comment) {
+			.then(function(foundDiscussion) {
 
-					// For each comment get the user info and include in result.
-					return User.find(comment.user).then(function(found) {
-						if (_.isEmpty(found)) {
-							throw CustomErrors.createRecordNotFoundError('Unable to find user while fetching discussion.');
-						}
-						comment.user = _.first(found);
-						return;			
-					}).catch(function(err) { throw err; });
-
+				// Get associated fields for each comment.
+				return Promise.all(foundDiscussion.comments.map(function(comment) {
+					return Comment
+						.findOne(comment.id)
+						.populate('likes')
+						.populate('sources')
+						.then(function(foundComment) {
+							comment = foundComment;
+						}).catch(function(err) { throw err; });
 				})).then(function() {
-
-					res.send(found);
-
+					return foundDiscussion;
 				}).catch(function(err) { throw err; });
 
-			}).catch(function(err) {
+			})
+			.then(function(foundDiscussion) {
+
+				// For each comment get the user info and include in result.
+				return Promise.all(foundDiscussion.comments.map(function(comment) {
+					return User.findOne(comment.user).then(function(foundUser) {
+						if (_.isEmpty(foundUser)) {
+							throw CustomErrors.createRecordNotFoundError('Unable to find user while fetching discussion.');
+						}
+						comment.user = foundUser;
+					}).catch(function(err) { throw err; });
+				})).then(function() {
+					return foundDiscussion;
+				}).catch(function(err) { throw err; });
+
+			})
+			.then(function(foundDiscussion) {
+				res.send(foundDiscussion);
+			})
+			.catch(function(err) {
 
 				sails.log.error(err);
 
