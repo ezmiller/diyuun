@@ -71,59 +71,56 @@ module.exports = {
 
 		console.log('DiscussionController::findOne() ', req.params.all());
 
+		var getComments = function(comments) {
+			return Promise.all(comments.map(function(comment) {
+				return Comment
+					.findOne(comment.id)
+					.populate('likes')
+					.populate('sources')
+					.populate('discussions')
+					.then(function(foundComment) {
+						return foundComment;
+					}).catch(function(err) { throw err; });
+			}));
+		};
+
+		var getUserHash = function(comments) {
+			var hash = {};
+			return Promise.all(comments.map(function(comment) {
+				return User.findOne(comment.user).then(function(foundUser) {
+					hash[comment.id] = foundUser;
+				}).catch(function(err) { throw err; });
+			})).then(function() {
+				return hash;
+			}).catch(function(err) { throw err; });
+		};
+
 		Discussion
 			.findOne(req.param('id'))
 			.populate('comments')
 			.populate('sources')
-			.then(function(foundDiscussion) {
-
-				if (_.isEmpty(foundDiscussion)) {
-					throw CustomErrors.createRecordNotFoundError('Unable to find discussion.');
-				}
-
-				console.log({foundDiscussion:foundDiscussion});
-
-				return foundDiscussion;
-
-			})
-			.then(function(foundDiscussion) {
-
-				// Get associated fields for each comment.
-				return Promise.all(foundDiscussion.comments.map(function(comment) {
-					return Comment
-						.findOne(comment.id)
-						.populate('likes')
-						.populate('sources')
-						.then(function(foundComment) {
-							comment = foundComment;
-						}).catch(function(err) { throw err; });
-				})).then(function() {
-					return foundDiscussion;
-				}).catch(function(err) { throw err; });
-
-			})
-			.then(function(foundDiscussion) {
-
-				// For each comment get the user info and include in result.
-				return Promise.all(foundDiscussion.comments.map(function(comment) {
-					return User.findOne(comment.user).then(function(foundUser) {
-						if (_.isEmpty(foundUser)) {
-							throw CustomErrors.createRecordNotFoundError('Unable to find user while fetching discussion.');
-						}
-						comment.user = foundUser;
+			.then(function(discussion) {
+				var comments = getComments(discussion.comments)
+					.then(function(comments) {
+						return comments;
 					}).catch(function(err) { throw err; });
-				})).then(function() {
-					return foundDiscussion;
-				}).catch(function(err) { throw err; });
-
+				var userHash = getUserHash(discussion.comments)
+					.then(function(hash) {
+						return hash;
+					})
+				return [discussion, comments, userHash];
 			})
-			.then(function(foundDiscussion) {
-				res.send(foundDiscussion);
+			.spread(function(discussion, comments, userHash) {
+				// Unable to set comments on object without cloning.
+				var cloned  = _.clone(discussion);
+				comments.forEach(function(comment) {
+					comment.user = userHash[comment.id];
+				});
+				cloned.comments = comments;
+				res.json(cloned);
 			})
 			.catch(function(err) {
-
 				sails.log.error(err);
-
 				if (err.name === 'RecordNotFoundError') {
 					res.notFound(err.message);
 				} else {

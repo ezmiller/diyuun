@@ -11,7 +11,7 @@
       chance = require('chance').Chance();
 
   describe('DiscussionController Tests', function(done) {
-    var server, testUser, testDiscipline, testDiscussion;
+    var server, testUser, testDiscipline, testDiscussion, testComment;
 
   	testUser = generateUser(true, true, true, true, true, true);
 
@@ -127,7 +127,6 @@
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err);
-            console.log({body: res.body});
             result = res.body;
             return done();
           });
@@ -145,6 +144,75 @@
           'updatedAt',
         ]);
         done();
+      });
+    });
+
+    describe('try to validate a discussion with a comment', function() {
+      before(function() {
+        Comment.create(generateTestComment(testUser.id,true,[testDiscussion.id]))
+        .then(function(comment) {
+          testComment = comment;
+          return comment;
+        })
+        .then(function(comment) {
+          Discussion.update({comments: [comment.id]}).catch(console.log);
+        })
+        .catch(console.log);
+      });
+      it('should be valid', function(done) {
+        server
+        .get('/discussions/' + testDiscussion.id)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          var result = res.body;
+          result.should.not.be.empty;
+          result.should.have.properties([
+            'owner',
+            'title',
+            'prompt',
+            'isPrivate',
+            'isVisible',
+            'sources',
+            'comments',
+            'updatedAt',
+          ]);
+          result.comments[0].should.not.be.empty;
+          result.comments[0].should.have.properties(['id', 'user', 'text', 'likes', 'sources']);
+          result.comments[0].user.should.be.object;
+          return done();
+        });
+      });
+    });
+
+    describe('try to validate a discussion with a liked comment', function() {
+      it('like the comment', function(done) {
+        console.log('/user/' + testUser.id + '/like/comment/' + testComment.id);
+        server
+        .get('/user/' + testUser.id + '/like/comment/' + testComment.id)
+        .expect(200,done);
+      });
+      it('comment property should contain like', function(done) {
+        server
+        .get('/discussions/' + testDiscussion.id)
+        .expect(200)
+        .end(function(err, res) {
+          var result;
+          if (err) return done(err);
+          result = res.body;
+          console.log({result:result.comments});
+          result.should.not.be.empty;
+          result.comments[0].should.not.be.empty;
+          result.comments[0].should.have.properties([
+            'id',
+            'user',
+            'text',
+            'discussions',
+            'sources',
+            'likes'
+          ]);
+          return done();
+        });
       });
     });
 
@@ -217,6 +285,16 @@
     if (isWebSource) source.websource = typeof isWebSource === 'string' ? isWebSource : 'google_books';
 
     return source;
+  }
+
+  function generateTestComment(hasUser, hasText, hasDiscussions, hasAtReference) {
+    var comment = {};
+
+    comment.user = typeof hasUser === 'string' ? hasUser: null; 
+    comment.discussions = hasDiscussions ? hasDiscussions : '';
+    if (hasText) comment.text = (typeof hasText === 'string') ? hasText : chance.paragraph();
+
+    return comment;
   }
 
 }());
