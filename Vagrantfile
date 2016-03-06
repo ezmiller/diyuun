@@ -52,7 +52,7 @@ sudo apt-get install -y mongodb-org=3.2.3 mongodb-org-server=3.2.3 mongodb-org-s
 MONGOSETUP
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.post_up_message = MESSAGE
 
@@ -73,9 +73,15 @@ Vagrant.configure(2) do |config|
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
   config.vm.provision "file", source: ".infrastructure/vagrant/zshrc", destination: "~/.zshrc"
 
-  # config.vm.provision :puppet do |puppet|
-  #   puppet.manifests_path = ".infrastructure/puppet/manifests"
-  # end
+  # tuned options for best webpack watch performance, see
+  # https://blog.inovex.de/doh-my-vagrant-nfs-is-slow/
+  config.vm.synced_folder ".", "/vagrant",  type: 'nfs', mount_options: ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=1']
+
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = ".infrastructure/puppet/manifests"
+    puppet.manifest_file = "main.pp"
+    puppet.options       = ["--verbose"]
+  end
 
   # # configure mongodb
   # config.vm.define :mongodb do |mongodb|
