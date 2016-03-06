@@ -4,13 +4,10 @@
 MESSAGE = <<-MESSAGE
 
 WELCOME to
-              _             _
- _ __   ___  | |_   _ _ __ | |__  _   _ ___
-| '_ \ / _ \| | | | | '_ \| '_ \| | | / __|
-| |_) | (_) | | |_| | |_) | | | | |_| \__ \
-| .__/ \___/|_|\__, | .__/|_| |_|\__,_|___/
-|_|            |___/|_|
 
+ _____   _____         __   __  _____  _     _ _     _ _______
+|_____] |     | |        \\_/   |_____] |_____| |     | |______
+|       |_____| |_____    |    |       |     | |_____| ______|
 
 Have fun!
 
@@ -18,10 +15,11 @@ MESSAGE
 
 # The list of packages we want to install
 INSTALL = <<-INSTALL
-
-
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 sudo apt-get update
 sudo apt-get install -y nodejs npm zsh git tmux libffi-dev libncurses5-dev xvfb build-essential libssl-dev curl git-core
+sudo apt-get install -y mongodb-org=3.2.3 mongodb-org-server=3.2.3 mongodb-org-shell=3.2.3 mongodb-org-mongos=3.2.3 mongodb-org-tools=3.2.3
 
 INSTALL
 
@@ -43,14 +41,6 @@ sudo chsh -s /bin/zsh vagrant
 
 SETUP
 
-MONGOSETUP = <<-MONGOSETUP
-
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-sudo apt-get install -y mongodb-org=3.2.3 mongodb-org-server=3.2.3 mongodb-org-shell=3.2.3 mongodb-org-mongos=3.2.3 mongodb-org-tools=3.2.3
-
-MONGOSETUP
-
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
@@ -65,13 +55,13 @@ Vagrant.configure(2) do |config|
   # using a specific IP.
   config.vm.network "private_network", ip: "10.1.1.10"
 
-  # config.vm.provision "shell", inline: INSTALL
+  config.vm.provision "shell", inline: INSTALL
   # config.vm.provision "shell", inline: SETUP
-  # config.vm.provision "shell", inline: MONGOSETUP
+
 
   # add local git and zsh config
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
-  config.vm.provision "file", source: ".infrastructure/vagrant/zshrc", destination: "~/.zshrc"
+  # config.vm.provision "file", source: ".infrastructure/vagrant/zshrc", destination: "~/.zshrc"
 
   # tuned options for best webpack watch performance, see
   # https://blog.inovex.de/doh-my-vagrant-nfs-is-slow/
@@ -79,6 +69,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = ".infrastructure/puppet/manifests"
+    puppet.module_path    = ".infrastructure/puppet/modules"
     puppet.manifest_file = "main.pp"
     puppet.options       = ["--verbose"]
   end
