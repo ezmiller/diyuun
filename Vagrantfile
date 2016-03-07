@@ -6,7 +6,7 @@ MESSAGE = <<-MESSAGE
 WELCOME to
 
  _____   _____         __   __  _____  _     _ _     _ _______
-|_____] |     | |        \\_/   |_____] |_____| |     | |______
+|_____] |     | |        \\_/  |_____] |_____| |     | |______
 |       |_____| |_____    |    |       |     | |_____| ______|
 
 Have fun!
@@ -18,6 +18,7 @@ INSTALL = <<-INSTALL
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 sudo apt-get update
+sudo apt-get auto-remove
 sudo apt-get install -y nodejs npm zsh git tmux libffi-dev libncurses5-dev xvfb build-essential libssl-dev curl git-core
 sudo apt-get install -y mongodb-org=3.2.3 mongodb-org-server=3.2.3 mongodb-org-shell=3.2.3 mongodb-org-mongos=3.2.3 mongodb-org-tools=3.2.3
 
@@ -26,7 +27,8 @@ INSTALL
 SETUP = <<-SETUP
 
 # install latest nvm to vagrant
-git clone git://github.com/creationix/nvm.git /home/vagrant/.nvm
+git clone https://github.com/creationix/nvm.git /home/vagrant/.nvm
+cd /home/vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
 . /home/vagrant/.nvm/nvm.sh
 
 # install latest stable node
@@ -34,7 +36,7 @@ nvm install stable
 nvm alias default stable
 
 # make sure npm is up to date
-sudo npm install -g npm
+npm install -g npm
 
 # set user bash to zsh
 sudo chsh -s /bin/zsh vagrant
@@ -43,6 +45,10 @@ SETUP
 
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+  end
 
   config.vm.post_up_message = MESSAGE
 
@@ -55,13 +61,12 @@ Vagrant.configure(2) do |config|
   # using a specific IP.
   config.vm.network "private_network", ip: "10.1.1.10"
 
-  config.vm.provision "shell", inline: INSTALL
-  # config.vm.provision "shell", inline: SETUP
-
-
   # add local git and zsh config
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
-  # config.vm.provision "file", source: ".infrastructure/vagrant/zshrc", destination: "~/.zshrc"
+  config.vm.provision "file", source: ".infrastructure/vagrant/zshrc", destination: "~/.zshrc"
+
+  config.vm.provision "shell", inline: INSTALL
+  config.vm.provision "shell", inline: SETUP, privileged: false
 
   # tuned options for best webpack watch performance, see
   # https://blog.inovex.de/doh-my-vagrant-nfs-is-slow/
