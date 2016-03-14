@@ -62,14 +62,14 @@ module.exports.connections = {
     port: 27017,
     // user: 'username',
     // password: 'password',
-    database: 'kanon'
+    database: 'polyphus'
   },
 
   testdb: {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    database: 'kanon-test'
+    database: 'polyphus-test'
   }
 
   /***************************************************************************

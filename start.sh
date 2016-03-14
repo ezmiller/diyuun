@@ -14,7 +14,7 @@ if [ "$?" -eq 1 ] ; then
   tmux new-window -t $SESSION:1 -n
   tmux split-window -v
   tmux select-pane -t 1
-  tmux send-keys "npm install -g sails && npm install --all && sails lift"  C-m
+  tmux send-keys "npm install --all && sails lift"  C-m
   tmux select-pane -t 0
 fi
 tmux -2 attach-session -t $SESSION

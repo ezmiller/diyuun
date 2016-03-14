@@ -19,7 +19,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 sudo apt-get update
 sudo apt-get auto-remove
-sudo apt-get install -y nodejs npm zsh git tmux libffi-dev libncurses5-dev xvfb build-essential libssl-dev curl git-core
+sudo apt-get install -y nodejs npm zsh git tmux libffi-dev libncurses5-dev xvfb build-essential libssl-dev curl git-core ruby-full
 sudo apt-get install -y mongodb-org=3.2.3 mongodb-org-server=3.2.3 mongodb-org-shell=3.2.3 mongodb-org-mongos=3.2.3 mongodb-org-tools=3.2.3
 
 INSTALL
@@ -29,6 +29,11 @@ SETUP = <<-SETUP
 # install latest nvm to vagrant
 git clone https://github.com/creationix/nvm.git /home/vagrant/.nvm
 cd /home/vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
+
+# make sure vagrant user has access to vm
+sudo chown -R vagrant:vagrant /home/vagrant/.nvm
+
+# start vagrant
 . /home/vagrant/.nvm/nvm.sh
 
 # install latest stable node
@@ -40,6 +45,12 @@ npm install -g npm
 
 # set user bash to zsh
 sudo chsh -s /bin/zsh vagrant
+
+# install sails
+npm install -g sails
+
+# install compass
+sudo gem install compass
 
 SETUP
 
