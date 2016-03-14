@@ -15,7 +15,43 @@ module.exports.bootstrap = function(cb) {
 	// Part of sails-generate-auth passport setup
 	sails.services.passport.loadStrategies();
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+	username = 'admin@example.org';
+
+	User.findOrCreate({email: username}, {
+    username	: username,
+		email			: username,
+    role			: 'admin',
+  }, function (err, user) {
+
+		console.log('findOrCreate result: ', user);
+
+		if (err) {
+      console.log('Error creating user during bootstrap: ', err);
+      return cb(err)
+    }
+
+		if (!user) {
+			console.log('USER EXISTS!!');
+			return;
+		}
+
+    Passport.create({
+	      protocol : 'local',
+				password : 'password',
+				user     : user.id
+    }, function (err, passport) {
+      if (err) {
+        if (err.code === 'E_VALIDATION') {
+          console.log('error', 'Error.Passport.Password.Invalid');
+        }
+
+        return user.destroy(function (destroyErr) {
+          cb(destroyErr || err);
+        });
+      }
+
+      cb(null, user);
+    });
+  });
+
 };
