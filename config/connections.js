@@ -62,14 +62,14 @@ module.exports.connections = {
     port: 27017,
     // user: 'username',
     // password: 'password',
-    database: 'polyphus'
+    database: 'diyuun'
   },
 
   testdb: {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    database: 'polyphus-test'
+    database: 'diyuun-test'
   }
 
   /***************************************************************************

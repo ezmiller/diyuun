@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SESSION="polyphus"
+SESSION="diyuun"
 
 tmux has-session -t $SESSION 2>/dev/null
 
