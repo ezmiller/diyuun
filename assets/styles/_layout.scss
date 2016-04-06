@@ -3,62 +3,62 @@
  */
 
 #app {
-	min-height: 100vh;
+  min-height: 100vh;
 }
 
 #container {
-	@extend .container; 
+  @extend .container; 
 }
 
 .content {
-	@extend .row;
+  @extend .row;
 }
 
 .logged-in .content {
-	margin: 2rem 0 0 0;
-	@media screen and (min-width: $larger-than-phablet) {
-		margin: 4rem 0 0 0;
-	}
+  margin: 2rem 0 0 0;
+  @media screen and (min-width: $larger-than-phablet) {
+    margin: 4rem 0 0 0;
+  }
 }
 
 .not-logged-in .content {
-	margin: 3rem 0 0 0;
-	@media screen and (min-width: $larger-than-phablet) {
-		margin: 5rem 0 0 0; 
-	}
+  margin: 3rem 0 0 0;
+  @media screen and (min-width: $larger-than-phablet) {
+    margin: 5rem 0 0 0; 
+  }
 }
 
 #container > header {
-	height: $controlbar-mobile-height;
-	@media screen and (min-width: $larger-than-phablet) {
-		height: $controlbar-height;
-	}
+  height: $controlbar-mobile-height;
+  @media screen and (min-width: $larger-than-phablet) {
+    height: $controlbar-height;
+  }
 }
 
 #controlbar {
-	position: fixed;
+  position: fixed;
   top: 0; left: 0;
-	width: 100%;
-	height: $controlbar-mobile-height;
+  width: 100%;
+  height: $controlbar-mobile-height;
 
-	@media screen and (min-width: $larger-than-phablet) {
-		height: $controlbar-height;
-	}
+  @media screen and (min-width: $larger-than-phablet) {
+    height: $controlbar-height;
+  }
 
-	.controlbar-wrapper {
-		position: relative;
-		height: 100%;
-		max-width: $max-width;
-		margin: 0 auto;
+  .controlbar-wrapper {
+    position: relative;
+    height: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
 
-		@media screen and (min-width: $larger-than-mobile) {
-			width: $larger-than-mobile-width;
-		}
+    @media screen and (min-width: $larger-than-mobile) {
+      width: $larger-than-mobile-width;
+    }
 
-		@media screen and (min-width: $larger-than-phablet) {
-			width: $larger-than-phablet-width;
-		}
-	}
+    @media screen and (min-width: $larger-than-phablet) {
+      width: $larger-than-phablet-width;
+    }
+  }
 
 
 }

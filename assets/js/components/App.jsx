@@ -2,153 +2,153 @@
  * App
  */
 (function() {
-	'use strict';
+  'use strict';
 
-	var _ = require('underscore');
+  var _ = require('underscore');
 
-	// Flux.
-	var AuthStore = require('../stores/AuthStore.js');
-	var SourceStore = require('../stores/SourceStore.js');
-	var DiscussionStore = require('../stores/DiscussionStore.js');
-	var Actions = require('../actions/Actions.js');
+  // Flux.
+  var AuthStore = require('../stores/AuthStore.js');
+  var SourceStore = require('../stores/SourceStore.js');
+  var DiscussionStore = require('../stores/DiscussionStore.js');
+  var Actions = require('../actions/Actions.js');
 
-	// React Cursor
-	var Cursor = require('react-cursor').Cursor;
+  // React Cursor
+  var Cursor = require('react-cursor').Cursor;
 
-	// React & Components.
-	var React = require('react');
-	var Router = require('react-router');
-	var Login = require('./Login.jsx');
-	var Controlbar = require('./Controlbar.jsx');
-	var Link = Router.Link;
-	var Route = Router.Route;
-	var RouteHandler = Router.RouteHandler;
-	var Navigation = Router.Navigation;
-	var Classable = require('./mixins/classable.js');
+  // React & Components.
+  var React = require('react');
+  var Router = require('react-router');
+  var Login = require('./Login.jsx');
+  var Controlbar = require('./Controlbar.jsx');
+  var Link = Router.Link;
+  var Route = Router.Route;
+  var RouteHandler = Router.RouteHandler;
+  var Navigation = Router.Navigation;
+  var Classable = require('./mixins/classable.js');
 
-	var App = React.createClass({
+  var App = React.createClass({
 
-		mixins: [Classable, Router.State, Navigation],
+    mixins: [Classable, Router.State, Navigation],
 
-		contextTypes: {
-	    router: React.PropTypes.func
-	  },
+    contextTypes: {
+      router: React.PropTypes.func
+    },
 
-		getInitialState: function () {
-	    return {
-				loggedIn: false,
-				user: null,
-				sources: null,
-				discussions: [],
-				error: null
-	    };
-		},
+    getInitialState: function () {
+      return {
+        loggedIn: false,
+        user: null,
+        sources: null,
+        discussions: [],
+        error: null
+      };
+    },
 
-		componentDidMount: function () {
-		 	AuthStore.addLoginListener(this.onLogin);
-		 	AuthStore.addLogoutListener(this.onLogout);
-		 	AuthStore.addErrorListener(this.onError);
-		 	AuthStore.addUpdateListener(this.onCurrentUserUpdate);
-		 	SourceStore.addUpdateListener(this.onSourcesUpdate);
-		 	SourceStore.addResetListener(this.onSourcesUpdate);
-		 	DiscussionStore.addEventListener('reset', this.onDiscussionsUpdate);
-			DiscussionStore.addEventListener('error', this.onError);
+    componentDidMount: function () {
+      AuthStore.addLoginListener(this.onLogin);
+      AuthStore.addLogoutListener(this.onLogout);
+      AuthStore.addErrorListener(this.onError);
+      AuthStore.addUpdateListener(this.onCurrentUserUpdate);
+      SourceStore.addUpdateListener(this.onSourcesUpdate);
+      SourceStore.addResetListener(this.onSourcesUpdate);
+      DiscussionStore.addEventListener('reset', this.onDiscussionsUpdate);
+      DiscussionStore.addEventListener('error', this.onError);
 
-		 	// Catch navigation actions using minpubsub.
-		 	subscribe('/app/transitionTo', this.navigate);
+      // Catch navigation actions using minpubsub.
+      subscribe('/app/transitionTo', this.navigate);
 
-		 	if (this.getParams().sourceId) {
-		 		Actions.getSource(this.getParams().sourceId);
-		 	} 
-		 	else if (this.getParams().discussionId) {
-		 		Actions.getDiscussions(this.getParams().discussionId);
-		 	}
+      if (this.getParams().sourceId) {
+        Actions.getSource(this.getParams().sourceId);
+      } 
+      else if (this.getParams().discussionId) {
+        Actions.getDiscussions(this.getParams().discussionId);
+      }
 
-		},
+    },
 
-		componentWillUnmount: function () {
-			AuthStore.removeLoginListener(this.onLogin);
-			AuthStore.removeLoginListener(this.onLogout);
-			AuthStore.removeUpdateListener(this.onCurrentUserUpdate);
-			AuthStore.removeErrorListener(this.onError);
-			SourceStore.removeUpdateListener(this.onSourcesUpdate);
-			SourceStore.removeResetListener(this.onSourcesUpdate);
-			DiscussionStore.removeEventListener('reset', this.onDiscussionsUpdate);
-			DiscussionStore.removeEventListener('error', this.onError);
-		},
+    componentWillUnmount: function () {
+      AuthStore.removeLoginListener(this.onLogin);
+      AuthStore.removeLoginListener(this.onLogout);
+      AuthStore.removeUpdateListener(this.onCurrentUserUpdate);
+      AuthStore.removeErrorListener(this.onError);
+      SourceStore.removeUpdateListener(this.onSourcesUpdate);
+      SourceStore.removeResetListener(this.onSourcesUpdate);
+      DiscussionStore.removeEventListener('reset', this.onDiscussionsUpdate);
+      DiscussionStore.removeEventListener('error', this.onError);
+    },
 
-		navigate: function(path, params, query) {
-			this.context.router.transitionTo(path, params, query);
-			console.log(this.context.router.getCurrentPathname());
-		},
+    navigate: function(path, params, query) {
+      this.context.router.transitionTo(path, params, query);
+      console.log(this.context.router.getCurrentPathname());
+    },
 
-		render: function() {
-			var cursor = Cursor.build(this);
+    render: function() {
+      var cursor = Cursor.build(this);
 
-			console.log('App::render() logged in:', this.state.loggedIn);
+      console.log('App::render() logged in:', this.state.loggedIn);
 
-			return !this.state.loggedIn ? (
-				<div id="app" className="loading">
-				</div>
-			) : (
-				<div id="app" className="logged-in">
-					<div id="container">
-						<header>
-							<Controlbar user={cursor.refine('user')} />
-						</header>
-						<div className="content">
-							<RouteHandler 
-								user={cursor.refine('user')} 
-								sources={cursor.refine('sources')} 
-								discussions={cursor.refine('discussions')}
-								error={cursor.refine('error')} />
-						</div>
-					</div>
-				</div>
-			);
+      return !this.state.loggedIn ? (
+        <div id="app" className="loading">
+        </div>
+      ) : (
+        <div id="app" className="logged-in">
+          <div id="container">
+            <header>
+              <Controlbar user={cursor.refine('user')} />
+            </header>
+            <div className="content">
+              <RouteHandler 
+                user={cursor.refine('user')} 
+                sources={cursor.refine('sources')} 
+                discussions={cursor.refine('discussions')}
+                error={cursor.refine('error')} />
+            </div>
+          </div>
+        </div>
+      );
 
-		},
+    },
 
-		onLogin: function(currentUser) {
-			console.log('App::onLogin()');
-			var path = this.getPathname() === '/login' ? '/' : this.getPathname();
-			this.setState({loggedIn: true, user: currentUser});
-			this.context.router.transitionTo(path);
-		},
+    onLogin: function(currentUser) {
+      console.log('App::onLogin()');
+      var path = this.getPathname() === '/login' ? '/' : this.getPathname();
+      this.setState({loggedIn: true, user: currentUser});
+      this.context.router.transitionTo(path);
+    },
 
-		onLogout: function() {
-			console.log('App::onLogout()');
-			this.setState({loggedIn: false, user: null});
-			window.location.replace('/login');
-		},
+    onLogout: function() {
+      console.log('App::onLogout()');
+      this.setState({loggedIn: false, user: null});
+      window.location.replace('/login');
+    },
 
-		onCurrentUserUpdate: function(user) {
-			console.log('App::onCurrentUserUpdate() user:', user);
-			this.setState({user:user});
-		},
-	
-		onSourcesUpdate: function(update) {
-			console.log('App::onSourcesUpdate(): ', update);
-			this.setState({sources: update});
-		}, 
+    onCurrentUserUpdate: function(user) {
+      console.log('App::onCurrentUserUpdate() user:', user);
+      this.setState({user:user});
+    },
+  
+    onSourcesUpdate: function(update) {
+      console.log('App::onSourcesUpdate(): ', update);
+      this.setState({sources: update});
+    }, 
 
-		onDiscussionsUpdate: function(update) {
-			console.log('App::onDiscussionsUpdate(): ', update);
-			this.setState({discussions: update.models})
-		},
+    onDiscussionsUpdate: function(update) {
+      console.log('App::onDiscussionsUpdate(): ', update);
+      this.setState({discussions: update.models})
+    },
 
-		onError: function(error) {
-			console.log('App::onError() error: ', error);
-			if (error.status === 500) {
-				this.setState({error: _.pick(error, 'status', 'responseJSON')});
-			}
-			if (error.status === 404) {
-				window.location.replace('/404')
-			}
-		}
+    onError: function(error) {
+      console.log('App::onError() error: ', error);
+      if (error.status === 500) {
+        this.setState({error: _.pick(error, 'status', 'responseJSON')});
+      }
+      if (error.status === 404) {
+        window.location.replace('/404')
+      }
+    }
 
-	});
+  });
 
-	module.exports = App;
+  module.exports = App;
 
 }());

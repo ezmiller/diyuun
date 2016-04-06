@@ -2,40 +2,40 @@
  * GlobalError
  */
 (function() {
-	'use strict';
+  'use strict';
 
-	var React = require('react');
+  var React = require('react');
 
-	var GlobalError = React.createClass({
+  var GlobalError = React.createClass({
 
-		propTypes: {	
-			error: React.PropTypes.object
-		},
+    propTypes: {  
+      error: React.PropTypes.object
+    },
 
-		getDefaultProps: function() {
-		  return {
-				error: null
-		  };
-		},
+    getDefaultProps: function() {
+      return {
+        error: null
+      };
+    },
 
-		render: function() {
-			var error, msg;
+    render: function() {
+      var error, msg;
 
-			error = this.props.error;
-			msg = null
+      error = this.props.error;
+      msg = null
 
-			if (error !== null && error.status === 500) {
-				msg = error.responseJSON.message;
-			}
+      if (error !== null && error.status === 500) {
+        msg = error.responseJSON.message;
+      }
 
-			return error !== null && error.status === 500 ? (
-				<span className="global-error">{msg}</span>
-			) : null;
-			
-		}
+      return error !== null && error.status === 500 ? (
+        <span className="global-error">{msg}</span>
+      ) : null;
+      
+    }
 
-	});
+  });
 
-	module.exports = GlobalError;
+  module.exports = GlobalError;
 
 }());
