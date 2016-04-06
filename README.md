@@ -6,11 +6,18 @@
 
 [Live version](http://nothing.yet) here.
 
-### Installation for Node & Npm:
+### Vagrant Instructions
 
-### Installation of App:
+To run the development environment simply do:
 
-### Features:
+```bash
+$ vagrant up
+```
 
+Once the vagrant is running, do the following to intialize the server and the development environment:
 
-### ToDo:
+```
+vagrant ssh
+./start.sh
+```
+ 
