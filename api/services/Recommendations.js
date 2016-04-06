@@ -97,7 +97,14 @@
 	  	var self = this;
 	  	return this.getUser(userId)
 	  		.then(function(user) {
-	  			return Recommendation.find()
+
+          if(!user || !user.discipline) {
+            throw CustomErrors.createRecommenderError(
+              "User has no discipline, so cannot editor recommendations."
+            );
+          }
+
+          return Recommendation.find()
 	  				.where({discipline: user.discipline.id})
 	  				.groupBy('source')
 	  				.sum('rating')
