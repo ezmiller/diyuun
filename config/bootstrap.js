@@ -29,7 +29,7 @@ module.exports.bootstrap = function(cb) {
     }
 
 		if (!user) {
-			console.log('USER EXISTS!!');
+			console.log('User already exists. Not recreating.');
 			return;
 		}
 
