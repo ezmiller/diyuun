@@ -23,8 +23,6 @@ module.exports.bootstrap = function(cb) {
     role			: 'admin',
   }, function (err, user) {
 
-		console.log('findOrCreate result: ', user);
-
 		if (err) {
       console.log('Error creating user during bootstrap: ', err);
       return cb(err)
