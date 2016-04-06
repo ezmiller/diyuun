@@ -25,7 +25,7 @@ module.exports.bootstrap = function(cb) {
 
 		if (err) {
       console.log('Error creating user during bootstrap: ', err);
-      return cb(err)
+      return cb(err);
     }
 
 		if (!user) {
